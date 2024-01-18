@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO.Compression;
 using System.Text;
 using yylcha.pub.common;
@@ -11,6 +12,8 @@ namespace yylcha.pub
         {
             InitializeComponent();
         }
+
+        #region tabPage1
 
         private void btnOk_Click(object sender, EventArgs e)
         {
@@ -123,5 +126,100 @@ namespace yylcha.pub
             }
             this.dgvFileInfo.Refresh();
         }
+
+        #endregion
+
+        #region tabPage2
+        static ProcessStartInfo psi = new ProcessStartInfo
+        {
+            FileName = "cmd.exe",
+            RedirectStandardInput = true,
+            RedirectStandardOutput = true,
+            CreateNoWindow = true,
+            UseShellExecute = false
+        };
+
+        private List<PushNugetModel> pushList = new List<PushNugetModel>();
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            var commandStr = this.tbCommand.Text;
+            var filePath = this.tbFilePath.Text;
+            var serverPath = this.tbServerPath.Text;
+            var apiKey = this.tbApiKey.Text;
+            if (string.IsNullOrEmpty(commandStr) || string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(serverPath) || string.IsNullOrEmpty(apiKey))
+            {
+                MessageBox.Show("请输入必填项！");
+            }
+
+            if (Directory.Exists(filePath))
+            {
+                pushList.Clear();
+                this.dgvFileLoad.Rows.Clear();
+                string[] files = Directory.GetFiles(filePath, "*", SearchOption.AllDirectories);
+
+                if (files.Length == 0)
+                {
+                    MessageBox.Show("文件目录下没有文件！");
+                }
+                else
+                {
+                    foreach (var file in files)
+                    {
+                        string fPath = file.Substring(0, file.LastIndexOf('\\'));
+                        string fileName = file.Substring(file.LastIndexOf('\\') + 1);
+
+                        string suffix = fileName.Substring(fileName.LastIndexOf('.') + 1);
+                        if (string.IsNullOrEmpty(suffix))
+                            continue;
+                        if (suffix.Equals("nupkg"))
+                        {
+                            pushList.Add(new PushNugetModel()
+                            {
+                                FileName = fileName,
+                                FilePath = file,
+                                PushResult = "暂未推送"
+                            });
+                        }
+                    }
+
+                    if (pushList.Count > 0)
+                    {
+                        this.dgvFileLoad.DataSource = pushList;
+
+                        DialogResult result = MessageBox.Show("是否上传？", "上传提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result.Equals(DialogResult.Yes))
+                        {
+                            foreach (var pItem in pushList)
+                            {
+                                string command = string.Format(commandStr, pItem.FilePath, apiKey,serverPath);
+                                using (Process process = new Process { StartInfo = psi })
+                                {
+                                    process.StartInfo.Arguments = $"/c {command} /n";
+                                    process.StartInfo.StandardOutputEncoding=Encoding.UTF8;
+                                    process.Start();
+                                    string commandResult = process.StandardOutput.ReadToEnd();
+                                    if (commandResult.IndexOf("已推送包") > -1)
+                                    {
+                                        pItem.PushResult = "已推送包";
+                                    }
+                                    else
+                                    {
+                                        pItem.PushResult = commandResult;
+                                    }
+                                }
+                            }
+                            this.dgvFileLoad.Refresh();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("文件路径不存在");
+            }
+        }
+
+
+        #endregion
     }
 }
