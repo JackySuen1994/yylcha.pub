@@ -186,6 +186,15 @@ namespace yylcha.pub
                     if (pushList.Count > 0)
                     {
                         this.dgvFileLoad.DataSource = pushList;
+                        this.dgvFileLoad.Columns["FileName"].Width = 100;
+                        this.dgvFileLoad.Columns["FileName"].DisplayIndex = 0;
+
+                        this.dgvFileLoad.Columns["PushResult"].Width = 80;
+                        this.dgvFileLoad.Columns["PushResult"].DisplayIndex = 1;
+
+                        this.dgvFileLoad.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        this.dgvFileLoad.Columns["FilePath"].DisplayIndex = 2;
+
 
                         DialogResult result = MessageBox.Show("是否上传？", "上传提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (result.Equals(DialogResult.Yes))
