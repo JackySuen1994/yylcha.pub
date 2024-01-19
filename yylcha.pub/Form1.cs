@@ -1,4 +1,4 @@
-using System.Diagnostics;
+ï»¿using System.Diagnostics;
 using System.IO.Compression;
 using System.Text;
 using yylcha.pub.common;
@@ -11,6 +11,8 @@ namespace yylcha.pub
         public Form1()
         {
             InitializeComponent();
+
+            this.tsslCopyRight.Text = $"Copyright Â© 2024-{System.DateTime.Now} yyliucha. All rights reserved.";
         }
 
         #region tabPage1
@@ -20,7 +22,7 @@ namespace yylcha.pub
             string sourcePath = this.txtSourcePath.Text;
             if (string.IsNullOrEmpty(sourcePath))
             {
-                MessageBox.Show("ÇëÊäÈëĞèÒª½âÎöµÄÎÄ¼şÂ·¾¶£¡");
+                MessageBox.Show("è¯·è¾“å…¥éœ€è¦è§£æçš„æ–‡ä»¶è·¯å¾„ï¼");
                 return;
             }
 
@@ -37,7 +39,7 @@ namespace yylcha.pub
 
             if (deZipList.Count == 0)
             {
-                MessageBox.Show("ÎÄ¼ş¼ĞÖĞÃ»ÓĞ´ı½âÎöµÄÎÄ¼ş");
+                MessageBox.Show("æ–‡ä»¶å¤¹ä¸­æ²¡æœ‰å¾…è§£æçš„æ–‡ä»¶");
             }
             this.dgvFileInfo.DataSource = deZipList;
             this.lblTarget.Visible = true;
@@ -57,15 +59,15 @@ namespace yylcha.pub
             string targetPath = this.txtTargetPath.Text;
             if (string.IsNullOrEmpty(targetPath))
             {
-                MessageBox.Show("ÇëÊäÈëÑ¹ËõÂ·¾¶£¡");
+                MessageBox.Show("è¯·è¾“å…¥å‹ç¼©è·¯å¾„ï¼");
                 return;
             }
-            if (deZipList.FirstOrDefault().IsDeResult.Equals("½âÎö³É¹¦"))
+            if (deZipList.FirstOrDefault().IsDeResult.Equals("è§£ææˆåŠŸ"))
             {
-                MessageBox.Show("ÒÑ¾­½âÎö¹ı£¬²»¿ÉÖØ¸´½âÎö");
+                MessageBox.Show("å·²ç»è§£æè¿‡ï¼Œä¸å¯é‡å¤è§£æ");
                 return;
             }
-            //0 ±¸·İ 1 É¾³ı 2 ±£Áô
+            //0 å¤‡ä»½ 1 åˆ é™¤ 2 ä¿ç•™
             int endType = this.cbxEndType.SelectedIndex;
             foreach (var item in deZipList)
             {
@@ -73,24 +75,24 @@ namespace yylcha.pub
                 {
                     using (ZipArchive archive = ZipFile.OpenRead(item.Path))
                     {
-                        // ±éÀúzipÎÄ¼şÖĞµÄÃ¿¸öÎÄ¼ş
+                        // éå†zipæ–‡ä»¶ä¸­çš„æ¯ä¸ªæ–‡ä»¶
                         foreach (ZipArchiveEntry entry in archive.Entries)
                         {
 
-                            // ´´½¨ÎÄ¼ş±£´æÂ·¾¶
+                            // åˆ›å»ºæ–‡ä»¶ä¿å­˜è·¯å¾„
                             string fullPath = Path.Combine(targetPath, entry.FullName);
 
-                            // ´´½¨ÎÄ¼ş¼Ğ
+                            // åˆ›å»ºæ–‡ä»¶å¤¹
                             if (entry.FullName.EndsWith("/"))
                             {
                                 Directory.CreateDirectory(fullPath);
                                 continue;
                             }
 
-                            // ´´½¨ÎÄ¼şÁ÷
+                            // åˆ›å»ºæ–‡ä»¶æµ
                             using (FileStream fileStream = new FileStream(fullPath, FileMode.Create))
                             {
-                                // ¸´ÖÆzipÎÄ¼şµÄÁ÷µ½ÎÄ¼şÁ÷ÖĞ
+                                // å¤åˆ¶zipæ–‡ä»¶çš„æµåˆ°æ–‡ä»¶æµä¸­
                                 using (Stream stream = entry.Open())
                                 {
                                     stream.CopyTo(fileStream);
@@ -112,11 +114,11 @@ namespace yylcha.pub
                         case 2: break;
                         default: break;
                     }
-                    item.IsDeResult = "½âÎö³É¹¦";
+                    item.IsDeResult = "è§£ææˆåŠŸ";
                 }
                 catch (Exception ex)
                 {
-                    item.IsDeResult = "½âÎöÊ§°Ü:" + ex.Message;
+                    item.IsDeResult = "è§£æå¤±è´¥:" + ex.Message;
                 }
             }
             if (endType == 1)
@@ -148,7 +150,7 @@ namespace yylcha.pub
             var apiKey = this.tbApiKey.Text;
             if (string.IsNullOrEmpty(commandStr) || string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(serverPath) || string.IsNullOrEmpty(apiKey))
             {
-                MessageBox.Show("ÇëÊäÈë±ØÌîÏî£¡");
+                MessageBox.Show("è¯·è¾“å…¥å¿…å¡«é¡¹ï¼");
             }
 
             if (Directory.Exists(filePath))
@@ -159,7 +161,7 @@ namespace yylcha.pub
 
                 if (files.Length == 0)
                 {
-                    MessageBox.Show("ÎÄ¼şÄ¿Â¼ÏÂÃ»ÓĞÎÄ¼ş£¡");
+                    MessageBox.Show("æ–‡ä»¶ç›®å½•ä¸‹æ²¡æœ‰æ–‡ä»¶ï¼");
                 }
                 else
                 {
@@ -176,7 +178,7 @@ namespace yylcha.pub
                             {
                                 FileName = fileName,
                                 FilePath = file,
-                                PushResult = "ÔİÎ´ÍÆËÍ"
+                                PushResult = "æš‚æœªæ¨é€"
                             });
                         }
                     }
@@ -185,7 +187,7 @@ namespace yylcha.pub
                     {
                         this.dgvFileLoad.DataSource = pushList;
 
-                        DialogResult result = MessageBox.Show("ÊÇ·ñÉÏ´«£¿", "ÉÏ´«ÌáÊ¾", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        DialogResult result = MessageBox.Show("æ˜¯å¦ä¸Šä¼ ï¼Ÿ", "ä¸Šä¼ æç¤º", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (result.Equals(DialogResult.Yes))
                         {
                             foreach (var pItem in pushList)
@@ -198,12 +200,12 @@ namespace yylcha.pub
             }
             else
             {
-                MessageBox.Show("ÎÄ¼şÂ·¾¶²»´æÔÚ");
+                MessageBox.Show("æ–‡ä»¶è·¯å¾„ä¸å­˜åœ¨");
             }
         }
 
         /// <summary>
-        /// Òì²½Ö´ĞĞcmdÃüÁî
+        /// å¼‚æ­¥æ‰§è¡Œcmdå‘½ä»¤
         /// </summary>
         /// <param name="commandStr"></param>
         /// <param name="apiKey"></param>
@@ -217,9 +219,9 @@ namespace yylcha.pub
                 process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
                 process.Start();
                 string commandResult = process.StandardOutput.ReadToEnd();
-                if (commandResult.IndexOf("ÒÑÍÆËÍ°ü") > -1)
+                if (commandResult.IndexOf("å·²æ¨é€åŒ…") > -1)
                 {
-                    pItem.PushResult = "ÒÑÍÆËÍ°ü";
+                    pItem.PushResult = "å·²æ¨é€åŒ…";
                 }
                 else
                 {

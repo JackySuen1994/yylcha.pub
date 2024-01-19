@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             plMain = new Panel();
             tcMain = new TabControl();
             tpDeZip = new TabPage();
@@ -43,6 +44,8 @@
             txtSourcePath = new TextBox();
             lblSource = new Label();
             tpPushNugetPkg = new TabPage();
+            tbApiKey = new TextBox();
+            label5 = new Label();
             dgvFileLoad = new DataGridView();
             tbServerPath = new TextBox();
             lblServerPath = new Label();
@@ -58,8 +61,8 @@
             deZipModelBindingSource = new BindingSource(components);
             deZipModelBindingSource1 = new BindingSource(components);
             deZipModelBindingSource3 = new BindingSource(components);
-            tbApiKey = new TextBox();
-            label5 = new Label();
+            statusStrip1 = new StatusStrip();
+            tsslCopyRight = new ToolStripStatusLabel();
             plMain.SuspendLayout();
             tcMain.SuspendLayout();
             tpDeZip.SuspendLayout();
@@ -72,6 +75,7 @@
             ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource3).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // plMain
@@ -236,6 +240,23 @@
             tpPushNugetPkg.Text = "推送Nuget包到服务器";
             tpPushNugetPkg.UseVisualStyleBackColor = true;
             // 
+            // tbApiKey
+            // 
+            tbApiKey.Location = new Point(301, 119);
+            tbApiKey.Name = "tbApiKey";
+            tbApiKey.Size = new Size(146, 23);
+            tbApiKey.TabIndex = 11;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.ForeColor = Color.Black;
+            label5.Location = new Point(229, 122);
+            label5.Name = "label5";
+            label5.Size = new Size(62, 17);
+            label5.TabIndex = 10;
+            label5.Text = "api key：";
+            // 
             // dgvFileLoad
             // 
             dgvFileLoad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -327,32 +348,31 @@
             label1.TabIndex = 0;
             label1.Text = "命令：";
             // 
-            // tbApiKey
+            // statusStrip1
             // 
-            tbApiKey.Location = new Point(301, 119);
-            tbApiKey.Name = "tbApiKey";
-            tbApiKey.Size = new Size(146, 23);
-            tbApiKey.TabIndex = 11;
+            statusStrip1.Items.AddRange(new ToolStripItem[] { tsslCopyRight });
+            statusStrip1.Location = new Point(0, 360);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(672, 22);
+            statusStrip1.TabIndex = 1;
+            statusStrip1.Text = "statusStrip1";
             // 
-            // label5
+            // tsslCopyRight
             // 
-            label5.AutoSize = true;
-            label5.ForeColor = Color.Black;
-            label5.Location = new Point(229, 122);
-            label5.Name = "label5";
-            label5.Size = new Size(62, 17);
-            label5.TabIndex = 10;
-            label5.Text = "api key：";
+            tsslCopyRight.Name = "tsslCopyRight";
+            tsslCopyRight.Size = new Size(0, 17);
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(672, 382);
+            Controls.Add(statusStrip1);
             Controls.Add(plMain);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
-            Text = "Form1";
+            Text = "源远流长:yyliucha.com";
             plMain.ResumeLayout(false);
             tcMain.ResumeLayout(false);
             tpDeZip.ResumeLayout(false);
@@ -367,7 +387,10 @@
             ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource3).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -408,5 +431,7 @@
         private DataGridView dgvFileLoad;
         private TextBox tbApiKey;
         private Label label5;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel tsslCopyRight;
     }
 }
