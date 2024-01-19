@@ -154,7 +154,7 @@ namespace yylcha.pub
             if (Directory.Exists(filePath))
             {
                 pushList.Clear();
-                this.dgvFileLoad.Rows.Clear();
+                this.dgvFileLoad.DataSource = null;
                 string[] files = Directory.GetFiles(filePath, "*", SearchOption.AllDirectories);
 
                 if (files.Length == 0)
@@ -165,7 +165,6 @@ namespace yylcha.pub
                 {
                     foreach (var file in files)
                     {
-                        string fPath = file.Substring(0, file.LastIndexOf('\\'));
                         string fileName = file.Substring(file.LastIndexOf('\\') + 1);
 
                         string suffix = fileName.Substring(fileName.LastIndexOf('.') + 1);
@@ -191,24 +190,8 @@ namespace yylcha.pub
                         {
                             foreach (var pItem in pushList)
                             {
-                                string command = string.Format(commandStr, pItem.FilePath, apiKey,serverPath);
-                                using (Process process = new Process { StartInfo = psi })
-                                {
-                                    process.StartInfo.Arguments = $"/c {command} /n";
-                                    process.StartInfo.StandardOutputEncoding=Encoding.UTF8;
-                                    process.Start();
-                                    string commandResult = process.StandardOutput.ReadToEnd();
-                                    if (commandResult.IndexOf("已推送包") > -1)
-                                    {
-                                        pItem.PushResult = "已推送包";
-                                    }
-                                    else
-                                    {
-                                        pItem.PushResult = commandResult;
-                                    }
-                                }
+                               ExecuteCommand(commandStr,apiKey,serverPath,pItem);
                             }
-                            this.dgvFileLoad.Refresh();
                         }
                     }
                 }
@@ -219,6 +202,33 @@ namespace yylcha.pub
             }
         }
 
+        /// <summary>
+        /// 异步执行cmd命令
+        /// </summary>
+        /// <param name="commandStr"></param>
+        /// <param name="apiKey"></param>
+        /// <param name="serverPath"></param>
+        /// <param name="pItem"></param>
+        private async void ExecuteCommand(string commandStr,string apiKey,string serverPath,PushNugetModel pItem) {
+            string command = string.Format(commandStr, pItem.FilePath, apiKey, serverPath);
+            using (Process process = new Process { StartInfo = psi })
+            {
+                process.StartInfo.Arguments = $"/c {command} /n";
+                process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+                process.Start();
+                string commandResult = process.StandardOutput.ReadToEnd();
+                if (commandResult.IndexOf("已推送包") > -1)
+                {
+                    pItem.PushResult = "已推送包";
+                }
+                else
+                {
+                    pItem.PushResult = commandResult;
+                }
+            }
+
+            this.dgvFileLoad.Refresh();
+        }
 
         #endregion
     }
