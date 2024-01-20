@@ -130,6 +130,42 @@ namespace yylcha.pub
             }
         }
 
+        /// <summary>
+        /// 更改主题 单击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiChangeTheme_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            var selectTheme = e.ClickedItem.Text;
+            UIStyle uiStyle = UIStyle.Blue;
+            switch (selectTheme)
+            {
+                case "Green":
+                    uiStyle = UIStyle.Green;
+                    break;
+                case "Orange":
+                    uiStyle = UIStyle.Orange;
+                    break;
+                case "Red":
+                    uiStyle = UIStyle.Red;
+                    break;
+                case "Purple":
+                    uiStyle = UIStyle.Purple;
+                    break;
+                case "Gray":
+                    uiStyle = UIStyle.Gray;
+                    break;
+                case "Black":
+                    uiStyle = UIStyle.Black;
+                    break;
+                default:
+                    uiStyle = UIStyle.Blue;
+                    break;
+            }
+            this.Style = uiStyle;
+        }
+
         #endregion
 
         #region tabPage1
@@ -443,41 +479,5 @@ namespace yylcha.pub
 
 
         #endregion
-
-        /// <summary>
-        /// 更改主题 单击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tsmiChangeTheme_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            var selectTheme = e.ClickedItem.Text;
-            UIStyle uiStyle = UIStyle.Blue;
-            switch (selectTheme)
-            {
-                case "Green":
-                    uiStyle = UIStyle.Green;
-                    break;
-                case "Orange":
-                    uiStyle = UIStyle.Orange;
-                    break;
-                case "Red":
-                    uiStyle = UIStyle.Red;
-                    break;
-                case "Purple":
-                    uiStyle = UIStyle.Purple;
-                    break;
-                case "Gray":
-                    uiStyle = UIStyle.Gray;
-                    break;
-                case "Black":
-                    uiStyle = UIStyle.Black;
-                    break;
-                default:
-                    uiStyle = UIStyle.Blue;
-                    break;
-            }
-            this.Style = uiStyle;
-        }
     }
 }
