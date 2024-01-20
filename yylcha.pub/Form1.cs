@@ -39,8 +39,9 @@ namespace yylcha.pub
         /// <summary>
         /// 主题颜色字典
         /// </summary>
-        static List<string> themeList = new List<string> ();
+        static List<string> themeList = new List<string>();
 
+        static UIStyle selectStyle = UIStyle.Blue;
         #endregion
 
         #region 主窗体事件
@@ -48,7 +49,6 @@ namespace yylcha.pub
         public Form1()
         {
             InitializeComponent();
-            commandList = tool.GetNugetModel();
             this.tsslCopyRight.Text = $"Copyright © 2024-{System.DateTime.Now.Year} yyliucha. All rights reserved.";
 
         }
@@ -71,6 +71,8 @@ namespace yylcha.pub
             themeList.Add("Default");
 
             this.ChangeTheme();//初始化主题菜单数据源
+
+            this.tiNowTime.Enabled = true;
             #endregion
 
             #region tabPage1
@@ -80,6 +82,8 @@ namespace yylcha.pub
             #endregion
 
             #region tabPage2
+
+            commandList = tool.GetNugetModel();
 
             redisTools.Init();
             isRedis = redisTools.RedisConnectionIsOk();
@@ -91,16 +95,30 @@ namespace yylcha.pub
                     commandList = commandList.Union(redisList)?.ToList();//合并去重
                 }
             }
-            if (commandList.Count > 0)
+            if (commandList != null)
             {
-                commandList = commandList.Where(d => !string.IsNullOrEmpty(d.Command))?.ToList();
+                if (commandList.Count > 0)
+                {
+                    commandList = commandList.Where(d => !string.IsNullOrEmpty(d.Command))?.ToList();
+                }
+
+                this.uiCmbCommand.Items.Clear();
+                if (commandList.Count == 0)
+                {
+                    this.uiCmbCommand.Items.Add("dotnet nuget push {0} -k {1} -s {2}");
+                }
+                else
+                {
+                    foreach (var item in commandList.Select(d => d.Command).ToList().DistinctBy(d => d))
+                    {
+
+                        this.uiCmbCommand.Items.Add(item.ToString());
+                    }
+                }
+                //有配置，控件隐藏
+                this.Page2ControlIsShow(commandList.Count == 0);
             }
-            if (commandList.Count == 0)
-            {
-                this.uiCmbCommand.Items.Add("dotnet nuget push {0} -k {1} -s {2}");
-            }
-            //有配置，控件隐藏
-            this.Page2ControlIsShow(commandList.Count == 0);
+
             if (this.uiCmbCommand.Items.Count > 0)
             {
                 this.uiCmbCommand.SelectedIndex = 0;
@@ -164,6 +182,7 @@ namespace yylcha.pub
                     break;
             }
             this.Style = uiStyle;
+            selectStyle = uiStyle;
         }
 
         #endregion
@@ -180,7 +199,7 @@ namespace yylcha.pub
             string sourcePath = this.uiTxtSourcePath.Text;
             if (string.IsNullOrEmpty(sourcePath))
             {
-                MessageBox.Show("请输入需要解析的文件路径！");
+                UIMessageBox.ShowWarning("请输入需要解析的文件路径！");
                 return;
             }
 
@@ -201,7 +220,7 @@ namespace yylcha.pub
 
             if (deZipList.Count == 0)
             {
-                MessageBox.Show("文件夹中没有待解析的文件");
+                UIMessageBox.ShowWarning("文件夹中没有待解析的文件！");
             }
 
             this.uiDgvFileInfo.DataSource = deZipList;
@@ -215,7 +234,7 @@ namespace yylcha.pub
             this.uiDgvFileInfo.Columns["IsDeResult"].Width = 80;
             this.uiDgvFileInfo.Columns["IsDeResult"].DisplayIndex = 1;
 
-            this.uiDgvFileInfo.Columns["Path"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            this.uiDgvFileInfo.Columns["Path"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.uiDgvFileInfo.Columns["Path"].DisplayIndex = 2;
         }
 
@@ -232,12 +251,12 @@ namespace yylcha.pub
             string targetPath = this.uiTxtTargetPath.Text;
             if (string.IsNullOrEmpty(targetPath))
             {
-                MessageBox.Show("请输入压缩路径！");
+                UIMessageBox.ShowWarning("请输入压缩路径！");
                 return;
             }
             if (deZipList.FirstOrDefault().IsDeResult.Equals("解析成功"))
             {
-                MessageBox.Show("已经解析过，不可重复解析");
+                UIMessageBox.ShowWarning("已经解析过，不可重复解析！");
                 return;
             }
             //0 备份 1 删除 2 保留
@@ -378,9 +397,14 @@ namespace yylcha.pub
             }
             this.uiTxtFilePath.Text = path;
         }
+
+        /// <summary>
+        /// 上传事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void uiBtnSubmit_Click(object sender, EventArgs e)
         {
-
             var commandStr = this.uiCmbCommand.SelectedItem.ToString() ?? "";
             var filePath = this.uiTxtFilePath.Text;
             var serverPath = string.Empty;
@@ -392,7 +416,7 @@ namespace yylcha.pub
                 ExecuteCommandModel commandModel = commandList.Where(d => d.Command.Equals(commandStr))?.SingleOrDefault();
                 if (commandModel == null)
                 {
-                    MessageBox.Show("选中项在基础数据源中不存在，请验证是否有正确录入配置(xml/redis)");
+                    UIMessageBox.ShowWarning("选中项在基础数据源中不存在，请验证是否有正确录入配置(xml/redis)");
                     return;
                 }
                 else
@@ -409,7 +433,7 @@ namespace yylcha.pub
             if (string.IsNullOrEmpty(commandStr) || string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(serverPath) || string.IsNullOrEmpty(apiKey))
             {
                 this.Page2ControlIsShow(true);
-                MessageBox.Show("请输入必填项！");
+                UIMessageBox.ShowWarning("请输入必填项！");
                 return;
             }
 
@@ -421,7 +445,7 @@ namespace yylcha.pub
 
                 if (files.Length == 0)
                 {
-                    MessageBox.Show("文件目录下没有文件！");
+                    UIMessageBox.ShowWarning("文件目录下没有文件！");
                 }
                 else
                 {
@@ -452,32 +476,45 @@ namespace yylcha.pub
                         this.uiDgvFileLoad.Columns["PushResult"].Width = 80;
                         this.uiDgvFileLoad.Columns["PushResult"].DisplayIndex = 1;
 
-                        this.uiDgvFileLoad.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        this.uiDgvFileLoad.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         this.uiDgvFileLoad.Columns["FilePath"].DisplayIndex = 2;
 
-
-                        DialogResult result = MessageBox.Show("是否上传？", "上传提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (result.Equals(DialogResult.Yes))
+                        bool result = UIMessageDialog.ShowAskDialog(this, "是否上传？");
+                        if (result)
                         {
                             foreach (var pItem in pushList)
                             {
-                                ExecuteCommand(commandStr, apiKey, serverPath, pItem);
+                                Task.Run(() =>
+                                {
+                                    ExecuteCommand(commandStr, apiKey, serverPath, pItem);
+                                });
                             }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("未找到需要上传的nuget包");
+                        UIMessageBox.ShowError("未找到需要上传的nuget包！");
                     }
                 }
             }
             else
             {
-                MessageBox.Show("文件路径不存在");
+                UIMessageBox.ShowError("文件路径不存在！");
             }
         }
 
-
+        /// <summary>
+        /// 生成本地配置文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uiBtnGenerateLocalConfig_Click(object sender, EventArgs e)
+        {
+            FrmGenLocalConfig frmGen = new FrmGenLocalConfig();//子窗体沿用父窗体样式
+            frmGen.ShowForm(selectStyle);
+            this.Form1_Load(sender, e);
+        }
         #endregion
+
     }
 }

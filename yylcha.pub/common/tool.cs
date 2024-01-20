@@ -12,7 +12,7 @@ namespace yylcha.pub.common
 {
     public class tool
     {
-        private static string NugetConfig = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config/PushNuget.json");
+        private static string NugetConfig = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config\\PushNuget.json");
         public static string GetTimeSpan()
         {
             //Get timestamp with TimeSpan
@@ -26,12 +26,13 @@ namespace yylcha.pub.common
         /// 读取nuget发布包本地文件
         /// </summary>
         /// <returns></returns>
-        public static List<ExecuteCommandModel> GetNugetModel() {
+        public static List<ExecuteCommandModel> GetNugetModel()
+        {
             if (File.Exists(NugetConfig))
             {
                 try
                 {
-                    using (var reader=new StreamReader(NugetConfig))
+                    using (var reader = new StreamReader(NugetConfig))
                     {
                         string fileContent = reader.ReadToEnd();
                         if (!string.IsNullOrEmpty(fileContent))
@@ -48,8 +49,47 @@ namespace yylcha.pub.common
                 {
                 }
             }
-           
+            else
+            {
+                return ResetConfig();
+            }
+
             return null;
+        }
+
+        /// <summary>
+        /// 重置配置文件，默认为空节点
+        /// </summary>
+        /// <returns></returns>
+        public static List<ExecuteCommandModel> ResetConfig(List<ExecuteCommandModel> list =null)
+        {
+            Root root = new Root();
+            string fileContent = string.Empty;
+            if (list == null)
+            {
+                root.CommandList = new List<ExecuteCommandModel>();
+                root.CommandList.Add(new ExecuteCommandModel());
+                fileContent = JsonConvert.SerializeObject(root);
+                File.WriteAllText(NugetConfig, fileContent);
+                return root.CommandList;
+            }
+
+            root.CommandList = list;
+            File.WriteAllText(NugetConfig, JsonConvert.SerializeObject(root));
+            return list;
+        }
+
+        /// <summary>
+        /// 保存配置文件
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static List<ExecuteCommandModel> SaveNugetConfig(List<ExecuteCommandModel> list)
+        {
+            if (File.Exists(NugetConfig))
+                File.Delete(NugetConfig);
+
+            return ResetConfig(list);
         }
     }
 }

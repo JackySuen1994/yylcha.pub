@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yylcha.pub", "yylcha.pub\yylcha.pub.csproj", "{5A3B0327-7E83-4BAC-80A9-8F2A5262BA46}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "yylcha.SetupPro", "yylcha.SetupPro\yylcha.SetupPro.vdproj", "{8033B00C-45E8-4DCD-ABFB-B7CD12B2EFA5}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "yylchaSetup", "yylchaSetup\yylchaSetup.vdproj", "{F62DA157-47FA-4FB6-889A-B291F3977160}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{5A3B0327-7E83-4BAC-80A9-8F2A5262BA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A3B0327-7E83-4BAC-80A9-8F2A5262BA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A3B0327-7E83-4BAC-80A9-8F2A5262BA46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8033B00C-45E8-4DCD-ABFB-B7CD12B2EFA5}.Debug|Any CPU.ActiveCfg = Debug
-		{8033B00C-45E8-4DCD-ABFB-B7CD12B2EFA5}.Release|Any CPU.ActiveCfg = Release
+		{F62DA157-47FA-4FB6-889A-B291F3977160}.Debug|Any CPU.ActiveCfg = Debug
+		{F62DA157-47FA-4FB6-889A-B291F3977160}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

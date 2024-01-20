@@ -12,7 +12,7 @@ namespace yylcha.pub.model.nugetM
         /// <summary>
         /// 自定义命令
         /// </summary>
-        public string Command  { get; set; }
+        public string Command { get; set; }
 
         /// <summary>
         /// 服务器地址
@@ -28,7 +28,8 @@ namespace yylcha.pub.model.nugetM
     /// <summary>
     /// xml对象
     /// </summary>
-    public class Root {
+    public class Root
+    {
         public List<ExecuteCommandModel> CommandList { get; set; }
     }
 }

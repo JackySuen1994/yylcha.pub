@@ -54,6 +54,7 @@
             uiLblTarget = new Sunny.UI.UILabel();
             uiLblSource = new Sunny.UI.UILabel();
             uiTpPushNugetPkg = new TabPage();
+            uiBtnGenerateLocalConfig = new Sunny.UI.UIButton();
             uiDgvFileLoad = new Sunny.UI.UIDataGridView();
             uiBtnSubmit = new Sunny.UI.UIButton();
             uiBtnSelectPath = new Sunny.UI.UIButton();
@@ -102,12 +103,12 @@
             uiCmsMenu.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
             uiCmsMenu.Items.AddRange(new ToolStripItem[] { tsmiChangeTheme });
             uiCmsMenu.Name = "uiCmsChangeTheme";
-            uiCmsMenu.Size = new Size(181, 48);
+            uiCmsMenu.Size = new Size(139, 26);
             // 
             // tsmiChangeTheme
             // 
             tsmiChangeTheme.Name = "tsmiChangeTheme";
-            tsmiChangeTheme.Size = new Size(180, 22);
+            tsmiChangeTheme.Size = new Size(138, 22);
             tsmiChangeTheme.Text = "更改主题";
             tsmiChangeTheme.DropDownItemClicked += tsmiChangeTheme_DropDownItemClicked;
             // 
@@ -213,6 +214,7 @@
             uiBtnDecompression.Size = new Size(100, 30);
             uiBtnDecompression.TabIndex = 4;
             uiBtnDecompression.Text = "解压";
+            uiBtnDecompression.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnDecompression.Click += uiBtnDecompression_Click;
             // 
             // uiTxtTargetPath
@@ -239,7 +241,6 @@
             uiBtnOk.Size = new Size(100, 30);
             uiBtnOk.TabIndex = 3;
             uiBtnOk.Text = "解析文件";
-            uiBtnOk.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnOk.Click += uiBtnOk_Click;
             // 
             // uiTxtSourcePath
@@ -280,6 +281,7 @@
             // 
             // uiTpPushNugetPkg
             // 
+            uiTpPushNugetPkg.Controls.Add(uiBtnGenerateLocalConfig);
             uiTpPushNugetPkg.Controls.Add(uiDgvFileLoad);
             uiTpPushNugetPkg.Controls.Add(uiBtnSubmit);
             uiTpPushNugetPkg.Controls.Add(uiBtnSelectPath);
@@ -299,6 +301,19 @@
             uiTpPushNugetPkg.TabIndex = 1;
             uiTpPushNugetPkg.Text = "Nuget";
             uiTpPushNugetPkg.UseVisualStyleBackColor = true;
+            // 
+            // uiBtnGenerateLocalConfig
+            // 
+            uiBtnGenerateLocalConfig.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnGenerateLocalConfig.Location = new Point(710, 7);
+            uiBtnGenerateLocalConfig.MinimumSize = new Size(1, 1);
+            uiBtnGenerateLocalConfig.Name = "uiBtnGenerateLocalConfig";
+            uiBtnGenerateLocalConfig.Radius = 35;
+            uiBtnGenerateLocalConfig.Size = new Size(100, 35);
+            uiBtnGenerateLocalConfig.TabIndex = 12;
+            uiBtnGenerateLocalConfig.Text = "生成本地配置";
+            uiBtnGenerateLocalConfig.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnGenerateLocalConfig.Click += uiBtnGenerateLocalConfig_Click;
             // 
             // uiDgvFileLoad
             // 
@@ -355,6 +370,7 @@
             uiBtnSubmit.Size = new Size(109, 29);
             uiBtnSubmit.TabIndex = 10;
             uiBtnSubmit.Text = "上传";
+            uiBtnSubmit.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSubmit.Click += uiBtnSubmit_Click;
             // 
             // uiBtnSelectPath
@@ -367,7 +383,6 @@
             uiBtnSelectPath.Size = new Size(109, 29);
             uiBtnSelectPath.TabIndex = 9;
             uiBtnSelectPath.Text = "选择文件路径";
-            uiBtnSelectPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSelectPath.Click += uiBtnSelectPath_Click;
             // 
             // uiCmbCommand
@@ -580,5 +595,6 @@
         private System.Windows.Forms.Timer tiNowTime;
         private Sunny.UI.UIContextMenuStrip uiCmsMenu;
         private ToolStripMenuItem tsmiChangeTheme;
+        private Sunny.UI.UIButton uiBtnGenerateLocalConfig;
     }
 }
