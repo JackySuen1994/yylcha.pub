@@ -29,423 +29,556 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            plMain = new Panel();
-            tcMain = new TabControl();
-            tpDeZip = new TabPage();
-            lblEndTip = new Label();
-            cbxEndType = new ComboBox();
-            dgvFileInfo = new DataGridView();
-            deZipModelBindingSource5 = new BindingSource(components);
-            btnDecompression = new Button();
-            txtTargetPath = new TextBox();
-            lblTarget = new Label();
-            btnOk = new Button();
-            txtSourcePath = new TextBox();
-            lblSource = new Label();
-            tpPushNugetPkg = new TabPage();
-            btnSelectPath = new Button();
-            tbFilePath = new TextBox();
-            cmbCommand = new ComboBox();
-            tbApiKey = new TextBox();
-            lblApiKey = new Label();
-            dgvFileLoad = new DataGridView();
-            tbServerPath = new TextBox();
-            lblServerPath = new Label();
-            btnSubmit = new Button();
-            label4 = new Label();
-            lblFilePath = new Label();
-            label2 = new Label();
-            lblCommand = new Label();
-            deZipModelBindingSource4 = new BindingSource(components);
-            deZipModelBindingSource2 = new BindingSource(components);
-            deZipModelBindingSource = new BindingSource(components);
-            deZipModelBindingSource1 = new BindingSource(components);
-            deZipModelBindingSource3 = new BindingSource(components);
-            statusStrip1 = new StatusStrip();
+            uiTcMain = new Sunny.UI.UITabControlMenu();
+            uiCmsMenu = new Sunny.UI.UIContextMenuStrip();
+            tsmiChangeTheme = new ToolStripMenuItem();
+            uiTpDeZip = new TabPage();
+            uiDgvFileInfo = new Sunny.UI.UIDataGridView();
+            uiLblEndTip = new Sunny.UI.UILabel();
+            uiCbxEndType = new Sunny.UI.UIComboBox();
+            uiBtnDecompression = new Sunny.UI.UIButton();
+            uiTxtTargetPath = new Sunny.UI.UITextBox();
+            uiBtnOk = new Sunny.UI.UIButton();
+            uiTxtSourcePath = new Sunny.UI.UITextBox();
+            uiLblTarget = new Sunny.UI.UILabel();
+            uiLblSource = new Sunny.UI.UILabel();
+            uiTpPushNugetPkg = new TabPage();
+            uiDgvFileLoad = new Sunny.UI.UIDataGridView();
+            uiBtnSubmit = new Sunny.UI.UIButton();
+            uiBtnSelectPath = new Sunny.UI.UIButton();
+            uiCmbCommand = new Sunny.UI.UIComboBox();
+            uiTxtFilePath = new Sunny.UI.UITextBox();
+            uiTxtApiKey = new Sunny.UI.UITextBox();
+            uiTxtServerPath = new Sunny.UI.UITextBox();
+            uiLblApiKey = new Sunny.UI.UILabel();
+            uiLblServerPath = new Sunny.UI.UILabel();
+            uiLblFilePath = new Sunny.UI.UILabel();
+            uiLblCommand = new Sunny.UI.UILabel();
+            uiLblNugetTip2 = new Sunny.UI.UILabel();
+            uiLblNugetTip = new Sunny.UI.UILabel();
+            ssFootStatus = new StatusStrip();
             tsslCopyRight = new ToolStripStatusLabel();
-            plMain.SuspendLayout();
-            tcMain.SuspendLayout();
-            tpDeZip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFileInfo).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource5).BeginInit();
-            tpPushNugetPkg.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFileLoad).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource3).BeginInit();
-            statusStrip1.SuspendLayout();
+            tsslNowTime = new ToolStripStatusLabel();
+            tiNowTime = new System.Windows.Forms.Timer(components);
+            uiTcMain.SuspendLayout();
+            uiCmsMenu.SuspendLayout();
+            uiTpDeZip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)uiDgvFileInfo).BeginInit();
+            uiTpPushNugetPkg.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).BeginInit();
+            ssFootStatus.SuspendLayout();
             SuspendLayout();
             // 
-            // plMain
+            // uiTcMain
             // 
-            plMain.Controls.Add(tcMain);
-            plMain.Location = new Point(2, 4);
-            plMain.Margin = new Padding(2, 3, 2, 3);
-            plMain.Name = "plMain";
-            plMain.Size = new Size(660, 368);
-            plMain.TabIndex = 0;
+            uiTcMain.Alignment = TabAlignment.Left;
+            uiTcMain.ContextMenuStrip = uiCmsMenu;
+            uiTcMain.Controls.Add(uiTpDeZip);
+            uiTcMain.Controls.Add(uiTpPushNugetPkg);
+            uiTcMain.DrawMode = TabDrawMode.OwnerDrawFixed;
+            uiTcMain.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiTcMain.Location = new Point(3, 38);
+            uiTcMain.Multiline = true;
+            uiTcMain.Name = "uiTcMain";
+            uiTcMain.SelectedIndex = 0;
+            uiTcMain.Size = new Size(1014, 533);
+            uiTcMain.SizeMode = TabSizeMode.Fixed;
+            uiTcMain.TabIndex = 2;
             // 
-            // tcMain
+            // uiCmsMenu
             // 
-            tcMain.Controls.Add(tpDeZip);
-            tcMain.Controls.Add(tpPushNugetPkg);
-            tcMain.Location = new Point(14, 6);
-            tcMain.Margin = new Padding(2, 3, 2, 3);
-            tcMain.Name = "tcMain";
-            tcMain.SelectedIndex = 0;
-            tcMain.Size = new Size(644, 360);
-            tcMain.TabIndex = 0;
+            uiCmsMenu.BackColor = Color.FromArgb(243, 249, 255);
+            uiCmsMenu.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiCmsMenu.Items.AddRange(new ToolStripItem[] { tsmiChangeTheme });
+            uiCmsMenu.Name = "uiCmsChangeTheme";
+            uiCmsMenu.Size = new Size(181, 48);
             // 
-            // tpDeZip
+            // tsmiChangeTheme
             // 
-            tpDeZip.Controls.Add(lblEndTip);
-            tpDeZip.Controls.Add(cbxEndType);
-            tpDeZip.Controls.Add(dgvFileInfo);
-            tpDeZip.Controls.Add(btnDecompression);
-            tpDeZip.Controls.Add(txtTargetPath);
-            tpDeZip.Controls.Add(lblTarget);
-            tpDeZip.Controls.Add(btnOk);
-            tpDeZip.Controls.Add(txtSourcePath);
-            tpDeZip.Controls.Add(lblSource);
-            tpDeZip.Location = new Point(4, 26);
-            tpDeZip.Margin = new Padding(2, 3, 2, 3);
-            tpDeZip.Name = "tpDeZip";
-            tpDeZip.Padding = new Padding(2, 3, 2, 3);
-            tpDeZip.Size = new Size(636, 330);
-            tpDeZip.TabIndex = 0;
-            tpDeZip.Text = "Zip解压缩";
-            tpDeZip.UseVisualStyleBackColor = true;
+            tsmiChangeTheme.Name = "tsmiChangeTheme";
+            tsmiChangeTheme.Size = new Size(180, 22);
+            tsmiChangeTheme.Text = "更改主题";
+            tsmiChangeTheme.DropDownItemClicked += tsmiChangeTheme_DropDownItemClicked;
             // 
-            // lblEndTip
+            // uiTpDeZip
             // 
-            lblEndTip.AutoSize = true;
-            lblEndTip.ForeColor = Color.Red;
-            lblEndTip.Location = new Point(408, 65);
-            lblEndTip.Margin = new Padding(2, 0, 2, 0);
-            lblEndTip.Name = "lblEndTip";
-            lblEndTip.Size = new Size(234, 51);
-            lblEndTip.TabIndex = 9;
-            lblEndTip.Text = "备份 当前文件路径中增加backfile+时间戳\r\n删除 删掉原文件\r\n保留 不作任何操作";
-            lblEndTip.Visible = false;
+            uiTpDeZip.Controls.Add(uiDgvFileInfo);
+            uiTpDeZip.Controls.Add(uiLblEndTip);
+            uiTpDeZip.Controls.Add(uiCbxEndType);
+            uiTpDeZip.Controls.Add(uiBtnDecompression);
+            uiTpDeZip.Controls.Add(uiTxtTargetPath);
+            uiTpDeZip.Controls.Add(uiBtnOk);
+            uiTpDeZip.Controls.Add(uiTxtSourcePath);
+            uiTpDeZip.Controls.Add(uiLblTarget);
+            uiTpDeZip.Controls.Add(uiLblSource);
+            uiTpDeZip.Location = new Point(201, 0);
+            uiTpDeZip.Name = "uiTpDeZip";
+            uiTpDeZip.Size = new Size(813, 533);
+            uiTpDeZip.TabIndex = 0;
+            uiTpDeZip.Text = "Zip解压缩(仅支持Zip)";
+            uiTpDeZip.UseVisualStyleBackColor = true;
             // 
-            // cbxEndType
+            // uiDgvFileInfo
             // 
-            cbxEndType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbxEndType.FormattingEnabled = true;
-            cbxEndType.Items.AddRange(new object[] { "备份", "删除", "保留" });
-            cbxEndType.Location = new Point(518, 38);
-            cbxEndType.Margin = new Padding(2, 3, 2, 3);
-            cbxEndType.Name = "cbxEndType";
-            cbxEndType.Size = new Size(118, 25);
-            cbxEndType.TabIndex = 8;
-            cbxEndType.Visible = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(235, 243, 255);
+            uiDgvFileInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            uiDgvFileInfo.BackgroundColor = Color.White;
+            uiDgvFileInfo.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle2.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            uiDgvFileInfo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            uiDgvFileInfo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Window;
+            dataGridViewCellStyle3.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            uiDgvFileInfo.DefaultCellStyle = dataGridViewCellStyle3;
+            uiDgvFileInfo.EnableHeadersVisualStyles = false;
+            uiDgvFileInfo.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiDgvFileInfo.GridColor = Color.FromArgb(80, 160, 255);
+            uiDgvFileInfo.Location = new Point(8, 143);
+            uiDgvFileInfo.Name = "uiDgvFileInfo";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(235, 243, 255);
+            dataGridViewCellStyle4.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            uiDgvFileInfo.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiDgvFileInfo.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            uiDgvFileInfo.RowTemplate.Height = 25;
+            uiDgvFileInfo.SelectedIndex = -1;
+            uiDgvFileInfo.Size = new Size(802, 387);
+            uiDgvFileInfo.StripeOddColor = Color.FromArgb(235, 243, 255);
+            uiDgvFileInfo.TabIndex = 11;
             // 
-            // dgvFileInfo
+            // uiLblEndTip
             // 
-            dgvFileInfo.AutoGenerateColumns = false;
-            dgvFileInfo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFileInfo.DataSource = deZipModelBindingSource5;
-            dgvFileInfo.Location = new Point(5, 117);
-            dgvFileInfo.Margin = new Padding(2, 3, 2, 3);
-            dgvFileInfo.Name = "dgvFileInfo";
-            dgvFileInfo.RowHeadersWidth = 51;
-            dgvFileInfo.RowTemplate.Height = 29;
-            dgvFileInfo.Size = new Size(628, 204);
-            dgvFileInfo.TabIndex = 7;
-            dgvFileInfo.Visible = false;
+            uiLblEndTip.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblEndTip.ForeColor = Color.Red;
+            uiLblEndTip.Location = new Point(483, 86);
+            uiLblEndTip.Name = "uiLblEndTip";
+            uiLblEndTip.Size = new Size(314, 54);
+            uiLblEndTip.TabIndex = 6;
+            uiLblEndTip.Text = "备份 当前文件路径中增加backfile+时间戳\r\n删除 删掉原文件\r\n保留 不作任何操作\r\n\r\n";
+            uiLblEndTip.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // btnDecompression
+            // uiCbxEndType
             // 
-            btnDecompression.Location = new Point(425, 37);
-            btnDecompression.Margin = new Padding(2, 3, 2, 3);
-            btnDecompression.Name = "btnDecompression";
-            btnDecompression.Size = new Size(86, 25);
-            btnDecompression.TabIndex = 6;
-            btnDecompression.Text = "解压";
-            btnDecompression.UseVisualStyleBackColor = true;
-            btnDecompression.Visible = false;
-            btnDecompression.Click += btnDecompression_Click;
+            uiCbxEndType.DataSource = null;
+            uiCbxEndType.FillColor = Color.White;
+            uiCbxEndType.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiCbxEndType.ItemHoverColor = Color.FromArgb(155, 200, 255);
+            uiCbxEndType.Items.AddRange(new object[] { "备份", "删除", "保留" });
+            uiCbxEndType.ItemSelectForeColor = Color.FromArgb(235, 243, 255);
+            uiCbxEndType.Location = new Point(483, 43);
+            uiCbxEndType.Margin = new Padding(4, 5, 4, 5);
+            uiCbxEndType.MinimumSize = new Size(63, 0);
+            uiCbxEndType.Name = "uiCbxEndType";
+            uiCbxEndType.Padding = new Padding(0, 0, 30, 2);
+            uiCbxEndType.Size = new Size(150, 29);
+            uiCbxEndType.TabIndex = 5;
+            uiCbxEndType.TextAlignment = ContentAlignment.MiddleLeft;
+            uiCbxEndType.Watermark = "";
             // 
-            // txtTargetPath
+            // uiBtnDecompression
             // 
-            txtTargetPath.Location = new Point(98, 36);
-            txtTargetPath.Margin = new Padding(2, 3, 2, 3);
-            txtTargetPath.Name = "txtTargetPath";
-            txtTargetPath.Size = new Size(323, 23);
-            txtTargetPath.TabIndex = 5;
-            txtTargetPath.Visible = false;
+            uiBtnDecompression.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnDecompression.Location = new Point(366, 43);
+            uiBtnDecompression.MinimumSize = new Size(1, 1);
+            uiBtnDecompression.Name = "uiBtnDecompression";
+            uiBtnDecompression.Radius = 30;
+            uiBtnDecompression.Size = new Size(100, 30);
+            uiBtnDecompression.TabIndex = 4;
+            uiBtnDecompression.Text = "解压";
+            uiBtnDecompression.Click += uiBtnDecompression_Click;
             // 
-            // lblTarget
+            // uiTxtTargetPath
             // 
-            lblTarget.AutoSize = true;
-            lblTarget.Location = new Point(4, 37);
-            lblTarget.Margin = new Padding(2, 0, 2, 0);
-            lblTarget.Name = "lblTarget";
-            lblTarget.Size = new Size(92, 17);
-            lblTarget.TabIndex = 4;
-            lblTarget.Text = "解压缩文件目录";
-            lblTarget.Visible = false;
+            uiTxtTargetPath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiTxtTargetPath.Location = new Point(134, 44);
+            uiTxtTargetPath.Margin = new Padding(4, 5, 4, 5);
+            uiTxtTargetPath.MinimumSize = new Size(1, 16);
+            uiTxtTargetPath.Name = "uiTxtTargetPath";
+            uiTxtTargetPath.Padding = new Padding(5);
+            uiTxtTargetPath.ShowText = false;
+            uiTxtTargetPath.Size = new Size(225, 29);
+            uiTxtTargetPath.TabIndex = 3;
+            uiTxtTargetPath.TextAlignment = ContentAlignment.MiddleLeft;
+            uiTxtTargetPath.Watermark = "";
             // 
-            // btnOk
+            // uiBtnOk
             // 
-            btnOk.Location = new Point(548, 8);
-            btnOk.Margin = new Padding(2, 3, 2, 3);
-            btnOk.Name = "btnOk";
-            btnOk.Size = new Size(86, 25);
-            btnOk.TabIndex = 2;
-            btnOk.Text = "解析文件";
-            btnOk.UseVisualStyleBackColor = true;
-            btnOk.Click += btnOk_Click;
+            uiBtnOk.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnOk.Location = new Point(366, 8);
+            uiBtnOk.MinimumSize = new Size(1, 1);
+            uiBtnOk.Name = "uiBtnOk";
+            uiBtnOk.Radius = 30;
+            uiBtnOk.Size = new Size(100, 30);
+            uiBtnOk.TabIndex = 3;
+            uiBtnOk.Text = "解析文件";
+            uiBtnOk.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnOk.Click += uiBtnOk_Click;
             // 
-            // txtSourcePath
+            // uiTxtSourcePath
             // 
-            txtSourcePath.Location = new Point(96, 8);
-            txtSourcePath.Margin = new Padding(2, 3, 2, 3);
-            txtSourcePath.Name = "txtSourcePath";
-            txtSourcePath.Size = new Size(447, 23);
-            txtSourcePath.TabIndex = 1;
+            uiTxtSourcePath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiTxtSourcePath.Location = new Point(134, 9);
+            uiTxtSourcePath.Margin = new Padding(4, 5, 4, 5);
+            uiTxtSourcePath.MinimumSize = new Size(1, 16);
+            uiTxtSourcePath.Name = "uiTxtSourcePath";
+            uiTxtSourcePath.Padding = new Padding(5);
+            uiTxtSourcePath.ShowText = false;
+            uiTxtSourcePath.Size = new Size(225, 29);
+            uiTxtSourcePath.TabIndex = 2;
+            uiTxtSourcePath.TextAlignment = ContentAlignment.MiddleLeft;
+            uiTxtSourcePath.Watermark = "";
             // 
-            // lblSource
+            // uiLblTarget
             // 
-            lblSource.AutoSize = true;
-            lblSource.Location = new Point(6, 10);
-            lblSource.Margin = new Padding(2, 0, 2, 0);
-            lblSource.Name = "lblSource";
-            lblSource.Size = new Size(92, 17);
-            lblSource.TabIndex = 0;
-            lblSource.Text = "待解压文件目录";
+            uiLblTarget.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblTarget.ForeColor = Color.FromArgb(48, 48, 48);
+            uiLblTarget.Location = new Point(3, 47);
+            uiLblTarget.Name = "uiLblTarget";
+            uiLblTarget.Size = new Size(124, 23);
+            uiLblTarget.TabIndex = 1;
+            uiLblTarget.Text = "解压缩文件目录";
+            uiLblTarget.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // tpPushNugetPkg
+            // uiLblSource
             // 
-            tpPushNugetPkg.Controls.Add(btnSelectPath);
-            tpPushNugetPkg.Controls.Add(tbFilePath);
-            tpPushNugetPkg.Controls.Add(cmbCommand);
-            tpPushNugetPkg.Controls.Add(tbApiKey);
-            tpPushNugetPkg.Controls.Add(lblApiKey);
-            tpPushNugetPkg.Controls.Add(dgvFileLoad);
-            tpPushNugetPkg.Controls.Add(tbServerPath);
-            tpPushNugetPkg.Controls.Add(lblServerPath);
-            tpPushNugetPkg.Controls.Add(btnSubmit);
-            tpPushNugetPkg.Controls.Add(label4);
-            tpPushNugetPkg.Controls.Add(lblFilePath);
-            tpPushNugetPkg.Controls.Add(label2);
-            tpPushNugetPkg.Controls.Add(lblCommand);
-            tpPushNugetPkg.Location = new Point(4, 26);
-            tpPushNugetPkg.Margin = new Padding(2, 3, 2, 3);
-            tpPushNugetPkg.Name = "tpPushNugetPkg";
-            tpPushNugetPkg.Padding = new Padding(2, 3, 2, 3);
-            tpPushNugetPkg.Size = new Size(636, 330);
-            tpPushNugetPkg.TabIndex = 1;
-            tpPushNugetPkg.Text = "推送Nuget包到服务器";
-            tpPushNugetPkg.UseVisualStyleBackColor = true;
+            uiLblSource.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblSource.ForeColor = Color.FromArgb(48, 48, 48);
+            uiLblSource.Location = new Point(3, 12);
+            uiLblSource.Name = "uiLblSource";
+            uiLblSource.Size = new Size(124, 23);
+            uiLblSource.TabIndex = 0;
+            uiLblSource.Text = "待解压文件目录";
+            uiLblSource.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // btnSelectPath
+            // uiTpPushNugetPkg
             // 
-            btnSelectPath.Location = new Point(540, 85);
-            btnSelectPath.Name = "btnSelectPath";
-            btnSelectPath.Size = new Size(91, 23);
-            btnSelectPath.TabIndex = 14;
-            btnSelectPath.Text = "选择文件";
-            btnSelectPath.UseVisualStyleBackColor = true;
-            btnSelectPath.Click += btnSelectPath_Click;
+            uiTpPushNugetPkg.Controls.Add(uiDgvFileLoad);
+            uiTpPushNugetPkg.Controls.Add(uiBtnSubmit);
+            uiTpPushNugetPkg.Controls.Add(uiBtnSelectPath);
+            uiTpPushNugetPkg.Controls.Add(uiCmbCommand);
+            uiTpPushNugetPkg.Controls.Add(uiTxtFilePath);
+            uiTpPushNugetPkg.Controls.Add(uiTxtApiKey);
+            uiTpPushNugetPkg.Controls.Add(uiTxtServerPath);
+            uiTpPushNugetPkg.Controls.Add(uiLblApiKey);
+            uiTpPushNugetPkg.Controls.Add(uiLblServerPath);
+            uiTpPushNugetPkg.Controls.Add(uiLblFilePath);
+            uiTpPushNugetPkg.Controls.Add(uiLblCommand);
+            uiTpPushNugetPkg.Controls.Add(uiLblNugetTip2);
+            uiTpPushNugetPkg.Controls.Add(uiLblNugetTip);
+            uiTpPushNugetPkg.Location = new Point(201, 0);
+            uiTpPushNugetPkg.Name = "uiTpPushNugetPkg";
+            uiTpPushNugetPkg.Size = new Size(813, 533);
+            uiTpPushNugetPkg.TabIndex = 1;
+            uiTpPushNugetPkg.Text = "Nuget";
+            uiTpPushNugetPkg.UseVisualStyleBackColor = true;
             // 
-            // tbFilePath
+            // uiDgvFileLoad
             // 
-            tbFilePath.Location = new Point(64, 85);
-            tbFilePath.Name = "tbFilePath";
-            tbFilePath.Size = new Size(470, 23);
-            tbFilePath.TabIndex = 13;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(235, 243, 255);
+            uiDgvFileLoad.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            uiDgvFileLoad.BackgroundColor = Color.White;
+            uiDgvFileLoad.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle7.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            uiDgvFileLoad.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            uiDgvFileLoad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Window;
+            dataGridViewCellStyle8.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            uiDgvFileLoad.DefaultCellStyle = dataGridViewCellStyle8;
+            uiDgvFileLoad.EnableHeadersVisualStyles = false;
+            uiDgvFileLoad.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiDgvFileLoad.GridColor = Color.FromArgb(80, 160, 255);
+            uiDgvFileLoad.Location = new Point(3, 174);
+            uiDgvFileLoad.Name = "uiDgvFileLoad";
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(235, 243, 255);
+            dataGridViewCellStyle9.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.ForeColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle9.SelectionForeColor = Color.White;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            uiDgvFileLoad.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.BackColor = Color.White;
+            dataGridViewCellStyle10.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiDgvFileLoad.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            uiDgvFileLoad.RowTemplate.Height = 25;
+            uiDgvFileLoad.SelectedIndex = -1;
+            uiDgvFileLoad.Size = new Size(807, 356);
+            uiDgvFileLoad.StripeOddColor = Color.FromArgb(235, 243, 255);
+            uiDgvFileLoad.TabIndex = 11;
             // 
-            // cmbCommand
+            // uiBtnSubmit
             // 
-            cmbCommand.FormattingEnabled = true;
-            cmbCommand.Location = new Point(64, 54);
-            cmbCommand.Name = "cmbCommand";
-            cmbCommand.Size = new Size(567, 25);
-            cmbCommand.TabIndex = 12;
+            uiBtnSubmit.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnSubmit.Location = new Point(518, 124);
+            uiBtnSubmit.MinimumSize = new Size(1, 1);
+            uiBtnSubmit.Name = "uiBtnSubmit";
+            uiBtnSubmit.Radius = 29;
+            uiBtnSubmit.Size = new Size(109, 29);
+            uiBtnSubmit.TabIndex = 10;
+            uiBtnSubmit.Text = "上传";
+            uiBtnSubmit.Click += uiBtnSubmit_Click;
             // 
-            // tbApiKey
+            // uiBtnSelectPath
             // 
-            tbApiKey.Location = new Point(301, 119);
-            tbApiKey.Name = "tbApiKey";
-            tbApiKey.Size = new Size(146, 23);
-            tbApiKey.TabIndex = 11;
+            uiBtnSelectPath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnSelectPath.Location = new Point(518, 91);
+            uiBtnSelectPath.MinimumSize = new Size(1, 1);
+            uiBtnSelectPath.Name = "uiBtnSelectPath";
+            uiBtnSelectPath.Radius = 29;
+            uiBtnSelectPath.Size = new Size(109, 29);
+            uiBtnSelectPath.TabIndex = 9;
+            uiBtnSelectPath.Text = "选择文件路径";
+            uiBtnSelectPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnSelectPath.Click += uiBtnSelectPath_Click;
             // 
-            // lblApiKey
+            // uiCmbCommand
             // 
-            lblApiKey.AutoSize = true;
-            lblApiKey.ForeColor = Color.Black;
-            lblApiKey.Location = new Point(229, 122);
-            lblApiKey.Name = "lblApiKey";
-            lblApiKey.Size = new Size(62, 17);
-            lblApiKey.TabIndex = 10;
-            lblApiKey.Text = "api key：";
+            uiCmbCommand.DataSource = null;
+            uiCmbCommand.FillColor = Color.White;
+            uiCmbCommand.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiCmbCommand.ItemHoverColor = Color.FromArgb(155, 200, 255);
+            uiCmbCommand.ItemSelectForeColor = Color.FromArgb(235, 243, 255);
+            uiCmbCommand.Location = new Point(111, 56);
+            uiCmbCommand.Margin = new Padding(4, 5, 4, 5);
+            uiCmbCommand.MinimumSize = new Size(63, 0);
+            uiCmbCommand.Name = "uiCmbCommand";
+            uiCmbCommand.Padding = new Padding(0, 0, 30, 2);
+            uiCmbCommand.Size = new Size(394, 29);
+            uiCmbCommand.TabIndex = 8;
+            uiCmbCommand.TextAlignment = ContentAlignment.MiddleLeft;
+            uiCmbCommand.Watermark = "";
             // 
-            // dgvFileLoad
+            // uiTxtFilePath
             // 
-            dgvFileLoad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFileLoad.Location = new Point(3, 148);
-            dgvFileLoad.Name = "dgvFileLoad";
-            dgvFileLoad.ReadOnly = true;
-            dgvFileLoad.RowTemplate.Height = 25;
-            dgvFileLoad.Size = new Size(628, 176);
-            dgvFileLoad.TabIndex = 9;
+            uiTxtFilePath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiTxtFilePath.Location = new Point(109, 90);
+            uiTxtFilePath.Margin = new Padding(4, 5, 4, 5);
+            uiTxtFilePath.MinimumSize = new Size(1, 16);
+            uiTxtFilePath.Name = "uiTxtFilePath";
+            uiTxtFilePath.Padding = new Padding(5);
+            uiTxtFilePath.ShowText = false;
+            uiTxtFilePath.Size = new Size(396, 29);
+            uiTxtFilePath.TabIndex = 7;
+            uiTxtFilePath.TextAlignment = ContentAlignment.MiddleLeft;
+            uiTxtFilePath.Watermark = "";
             // 
-            // tbServerPath
+            // uiTxtApiKey
             // 
-            tbServerPath.Location = new Point(89, 119);
-            tbServerPath.Name = "tbServerPath";
-            tbServerPath.Size = new Size(132, 23);
-            tbServerPath.TabIndex = 8;
+            uiTxtApiKey.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiTxtApiKey.Location = new Point(355, 126);
+            uiTxtApiKey.Margin = new Padding(4, 5, 4, 5);
+            uiTxtApiKey.MinimumSize = new Size(1, 16);
+            uiTxtApiKey.Name = "uiTxtApiKey";
+            uiTxtApiKey.Padding = new Padding(5);
+            uiTxtApiKey.ShowText = false;
+            uiTxtApiKey.Size = new Size(150, 29);
+            uiTxtApiKey.TabIndex = 7;
+            uiTxtApiKey.TextAlignment = ContentAlignment.MiddleLeft;
+            uiTxtApiKey.Watermark = "";
             // 
-            // lblServerPath
+            // uiTxtServerPath
             // 
-            lblServerPath.AutoSize = true;
-            lblServerPath.ForeColor = Color.Black;
-            lblServerPath.Location = new Point(3, 122);
-            lblServerPath.Name = "lblServerPath";
-            lblServerPath.Size = new Size(80, 17);
-            lblServerPath.TabIndex = 7;
-            lblServerPath.Text = "服务器路径：";
+            uiTxtServerPath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiTxtServerPath.Location = new Point(109, 126);
+            uiTxtServerPath.Margin = new Padding(4, 5, 4, 5);
+            uiTxtServerPath.MinimumSize = new Size(1, 16);
+            uiTxtServerPath.Name = "uiTxtServerPath";
+            uiTxtServerPath.Padding = new Padding(5);
+            uiTxtServerPath.ShowText = false;
+            uiTxtServerPath.Size = new Size(150, 29);
+            uiTxtServerPath.TabIndex = 6;
+            uiTxtServerPath.TextAlignment = ContentAlignment.MiddleLeft;
+            uiTxtServerPath.Watermark = "";
             // 
-            // btnSubmit
+            // uiLblApiKey
             // 
-            btnSubmit.Location = new Point(516, 119);
-            btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(75, 23);
-            btnSubmit.TabIndex = 6;
-            btnSubmit.Text = "上传";
-            btnSubmit.UseVisualStyleBackColor = true;
-            btnSubmit.Click += btnSubmit_Click;
+            uiLblApiKey.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblApiKey.ForeColor = Color.Black;
+            uiLblApiKey.Location = new Point(270, 128);
+            uiLblApiKey.Name = "uiLblApiKey";
+            uiLblApiKey.Size = new Size(80, 23);
+            uiLblApiKey.TabIndex = 5;
+            uiLblApiKey.Text = "api Key:";
+            uiLblApiKey.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label4
+            // uiLblServerPath
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(21, 28);
-            label4.Name = "label4";
-            label4.Size = new Size(140, 17);
-            label4.TabIndex = 5;
-            label4.Text = "支持上传包含下级的文件";
+            uiLblServerPath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblServerPath.ForeColor = Color.Black;
+            uiLblServerPath.Location = new Point(3, 131);
+            uiLblServerPath.Name = "uiLblServerPath";
+            uiLblServerPath.Size = new Size(98, 23);
+            uiLblServerPath.TabIndex = 4;
+            uiLblServerPath.Text = "服务器路径:";
+            uiLblServerPath.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // lblFilePath
+            // uiLblFilePath
             // 
-            lblFilePath.AutoSize = true;
-            lblFilePath.ForeColor = Color.Black;
-            lblFilePath.Location = new Point(5, 88);
-            lblFilePath.Name = "lblFilePath";
-            lblFilePath.Size = new Size(56, 17);
-            lblFilePath.TabIndex = 3;
-            lblFilePath.Text = "文件路径";
+            uiLblFilePath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblFilePath.ForeColor = Color.Black;
+            uiLblFilePath.Location = new Point(9, 96);
+            uiLblFilePath.Name = "uiLblFilePath";
+            uiLblFilePath.Size = new Size(92, 23);
+            uiLblFilePath.TabIndex = 3;
+            uiLblFilePath.Text = "文件路径:";
+            uiLblFilePath.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label2
+            // uiLblCommand
             // 
-            label2.AutoSize = true;
-            label2.ForeColor = Color.Red;
-            label2.Location = new Point(17, 6);
-            label2.Name = "label2";
-            label2.Size = new Size(361, 17);
-            label2.TabIndex = 2;
-            label2.Text = "命令：输入命令，关键词请使用占位符(只支持文件名+服务器地址)";
+            uiLblCommand.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblCommand.ForeColor = Color.Black;
+            uiLblCommand.Location = new Point(12, 58);
+            uiLblCommand.Name = "uiLblCommand";
+            uiLblCommand.Size = new Size(92, 23);
+            uiLblCommand.TabIndex = 2;
+            uiLblCommand.Text = "命令:";
+            uiLblCommand.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // lblCommand
+            // uiLblNugetTip2
             // 
-            lblCommand.AutoSize = true;
-            lblCommand.ForeColor = Color.Black;
-            lblCommand.Location = new Point(17, 56);
-            lblCommand.Name = "lblCommand";
-            lblCommand.Size = new Size(44, 17);
-            lblCommand.TabIndex = 0;
-            lblCommand.Text = "命令：";
+            uiLblNugetTip2.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblNugetTip2.ForeColor = Color.Black;
+            uiLblNugetTip2.Location = new Point(9, 33);
+            uiLblNugetTip2.Name = "uiLblNugetTip2";
+            uiLblNugetTip2.Size = new Size(518, 23);
+            uiLblNugetTip2.TabIndex = 1;
+            uiLblNugetTip2.Text = "支持上传包含下级的文件";
+            uiLblNugetTip2.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // statusStrip1
+            // uiLblNugetTip
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { tsslCopyRight });
-            statusStrip1.Location = new Point(0, 360);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(672, 22);
-            statusStrip1.TabIndex = 1;
-            statusStrip1.Text = "statusStrip1";
+            uiLblNugetTip.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblNugetTip.ForeColor = Color.Red;
+            uiLblNugetTip.Location = new Point(9, 10);
+            uiLblNugetTip.Name = "uiLblNugetTip";
+            uiLblNugetTip.Size = new Size(518, 23);
+            uiLblNugetTip.TabIndex = 0;
+            uiLblNugetTip.Text = "命令：输入命令，关键词请使用占位符(只支持文件名+服务器地址)";
+            uiLblNugetTip.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // ssFootStatus
+            // 
+            ssFootStatus.Items.AddRange(new ToolStripItem[] { tsslCopyRight, tsslNowTime });
+            ssFootStatus.Location = new Point(0, 575);
+            ssFootStatus.Name = "ssFootStatus";
+            ssFootStatus.Size = new Size(1020, 22);
+            ssFootStatus.TabIndex = 3;
+            ssFootStatus.Text = "statusStrip1";
             // 
             // tsslCopyRight
             // 
             tsslCopyRight.Name = "tsslCopyRight";
             tsslCopyRight.Size = new Size(0, 17);
             // 
+            // tsslNowTime
+            // 
+            tsslNowTime.Name = "tsslNowTime";
+            tsslNowTime.Size = new Size(0, 17);
+            // 
+            // tiNowTime
+            // 
+            tiNowTime.Tick += tiNowTime_Tick;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(672, 382);
-            Controls.Add(statusStrip1);
-            Controls.Add(plMain);
+            AutoScaleMode = AutoScaleMode.None;
+            ClientSize = new Size(1020, 597);
+            Controls.Add(ssFootStatus);
+            Controls.Add(uiTcMain);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
+            Style = Sunny.UI.UIStyle.Custom;
             Text = "源远流长:yyliucha.com";
+            ZoomScaleRect = new Rectangle(15, 15, 672, 382);
             Load += Form1_Load;
-            plMain.ResumeLayout(false);
-            tcMain.ResumeLayout(false);
-            tpDeZip.ResumeLayout(false);
-            tpDeZip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFileInfo).EndInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource5).EndInit();
-            tpPushNugetPkg.ResumeLayout(false);
-            tpPushNugetPkg.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFileLoad).EndInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)deZipModelBindingSource3).EndInit();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
+            uiTcMain.ResumeLayout(false);
+            uiCmsMenu.ResumeLayout(false);
+            uiTpDeZip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)uiDgvFileInfo).EndInit();
+            uiTpPushNugetPkg.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).EndInit();
+            ssFootStatus.ResumeLayout(false);
+            ssFootStatus.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Panel plMain;
-        private TabControl tcMain;
-        private TabPage tpDeZip;
-        private Label lblSource;
-        private TabPage tpPushNugetPkg;
-        private Button btnOk;
-        private TextBox txtSourcePath;
-        private BindingSource deZipModelBindingSource;
-        private Button btnDecompression;
-        private TextBox txtTargetPath;
-        private Label lblTarget;
-        private BindingSource deZipModelBindingSource1;
-        private BindingSource deZipModelBindingSource2;
-        private DataGridView dgvFileInfo;
         private DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn isDeResultDataGridViewTextBoxColumn;
-        private BindingSource deZipModelBindingSource4;
-        private BindingSource deZipModelBindingSource3;
-        private BindingSource deZipModelBindingSource5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn pathDataGridViewTextBoxColumn;
-        private ComboBox cbxEndType;
-        private Label lblEndTip;
-        private Label label2;
-        private Label lblCommand;
-        private Label lblFilePath;
-        private Button btnSubmit;
-        private Label label4;
-        private TextBox tbServerPath;
-        private Label lblServerPath;
-        private DataGridView dgvFileLoad;
-        private TextBox tbApiKey;
-        private Label lblApiKey;
-        private StatusStrip statusStrip1;
+        private Sunny.UI.UITabControlMenu uiTcMain;
+        private TabPage uiTpDeZip;
+        private TabPage uiTpPushNugetPkg;
+        private Sunny.UI.UIButton uiBtnOk;
+        private Sunny.UI.UITextBox uiTxtSourcePath;
+        private Sunny.UI.UILabel uiLblTarget;
+        private Sunny.UI.UILabel uiLblSource;
+        private Sunny.UI.UIDataGridView uiDgvFileInfo;
+        private Sunny.UI.UILabel uiLblEndTip;
+        private Sunny.UI.UIComboBox uiCbxEndType;
+        private Sunny.UI.UIButton uiBtnDecompression;
+        private Sunny.UI.UITextBox uiTxtTargetPath;
+        private Sunny.UI.UIComboBox uiCmbCommand;
+        private Sunny.UI.UITextBox uiTxtFilePath;
+        private Sunny.UI.UITextBox uiTxtApiKey;
+        private Sunny.UI.UITextBox uiTxtServerPath;
+        private Sunny.UI.UILabel uiLblApiKey;
+        private Sunny.UI.UILabel uiLblServerPath;
+        private Sunny.UI.UILabel uiLblFilePath;
+        private Sunny.UI.UILabel uiLblCommand;
+        private Sunny.UI.UILabel uiLblNugetTip2;
+        private Sunny.UI.UILabel uiLblNugetTip;
+        private Sunny.UI.UIButton uiBtnSubmit;
+        private Sunny.UI.UIButton uiBtnSelectPath;
+        private Sunny.UI.UIDataGridView uiDgvFileLoad;
+        private StatusStrip ssFootStatus;
         private ToolStripStatusLabel tsslCopyRight;
-        private ComboBox cmbCommand;
-        private Button btnSelectPath;
-        private TextBox tbFilePath;
+        private ToolStripStatusLabel tsslNowTime;
+        private System.Windows.Forms.Timer tiNowTime;
+        private Sunny.UI.UIContextMenuStrip uiCmsMenu;
+        private ToolStripMenuItem tsmiChangeTheme;
     }
 }
