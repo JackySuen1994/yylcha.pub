@@ -13,4 +13,15 @@
     <Content Include="resource\b2-750_750.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="ServiceStack.Redis" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config\PushNuget.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

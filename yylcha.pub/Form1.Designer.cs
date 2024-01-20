@@ -44,18 +44,19 @@
             txtSourcePath = new TextBox();
             lblSource = new Label();
             tpPushNugetPkg = new TabPage();
+            btnSelectPath = new Button();
+            tbFilePath = new TextBox();
+            cmbCommand = new ComboBox();
             tbApiKey = new TextBox();
-            label5 = new Label();
+            lblApiKey = new Label();
             dgvFileLoad = new DataGridView();
             tbServerPath = new TextBox();
             lblServerPath = new Label();
             btnSubmit = new Button();
             label4 = new Label();
-            tbFilePath = new TextBox();
-            label3 = new Label();
+            lblFilePath = new Label();
             label2 = new Label();
-            tbCommand = new TextBox();
-            label1 = new Label();
+            lblCommand = new Label();
             deZipModelBindingSource4 = new BindingSource(components);
             deZipModelBindingSource2 = new BindingSource(components);
             deZipModelBindingSource = new BindingSource(components);
@@ -170,17 +171,17 @@
             // 
             // txtTargetPath
             // 
-            txtTargetPath.Location = new Point(96, 36);
+            txtTargetPath.Location = new Point(98, 36);
             txtTargetPath.Margin = new Padding(2, 3, 2, 3);
             txtTargetPath.Name = "txtTargetPath";
-            txtTargetPath.Size = new Size(325, 23);
+            txtTargetPath.Size = new Size(323, 23);
             txtTargetPath.TabIndex = 5;
             txtTargetPath.Visible = false;
             // 
             // lblTarget
             // 
             lblTarget.AutoSize = true;
-            lblTarget.Location = new Point(6, 36);
+            lblTarget.Location = new Point(4, 37);
             lblTarget.Margin = new Padding(2, 0, 2, 0);
             lblTarget.Name = "lblTarget";
             lblTarget.Size = new Size(92, 17);
@@ -219,18 +220,19 @@
             // 
             // tpPushNugetPkg
             // 
+            tpPushNugetPkg.Controls.Add(btnSelectPath);
+            tpPushNugetPkg.Controls.Add(tbFilePath);
+            tpPushNugetPkg.Controls.Add(cmbCommand);
             tpPushNugetPkg.Controls.Add(tbApiKey);
-            tpPushNugetPkg.Controls.Add(label5);
+            tpPushNugetPkg.Controls.Add(lblApiKey);
             tpPushNugetPkg.Controls.Add(dgvFileLoad);
             tpPushNugetPkg.Controls.Add(tbServerPath);
             tpPushNugetPkg.Controls.Add(lblServerPath);
             tpPushNugetPkg.Controls.Add(btnSubmit);
             tpPushNugetPkg.Controls.Add(label4);
-            tpPushNugetPkg.Controls.Add(tbFilePath);
-            tpPushNugetPkg.Controls.Add(label3);
+            tpPushNugetPkg.Controls.Add(lblFilePath);
             tpPushNugetPkg.Controls.Add(label2);
-            tpPushNugetPkg.Controls.Add(tbCommand);
-            tpPushNugetPkg.Controls.Add(label1);
+            tpPushNugetPkg.Controls.Add(lblCommand);
             tpPushNugetPkg.Location = new Point(4, 26);
             tpPushNugetPkg.Margin = new Padding(2, 3, 2, 3);
             tpPushNugetPkg.Name = "tpPushNugetPkg";
@@ -240,6 +242,31 @@
             tpPushNugetPkg.Text = "推送Nuget包到服务器";
             tpPushNugetPkg.UseVisualStyleBackColor = true;
             // 
+            // btnSelectPath
+            // 
+            btnSelectPath.Location = new Point(540, 85);
+            btnSelectPath.Name = "btnSelectPath";
+            btnSelectPath.Size = new Size(91, 23);
+            btnSelectPath.TabIndex = 14;
+            btnSelectPath.Text = "选择文件";
+            btnSelectPath.UseVisualStyleBackColor = true;
+            btnSelectPath.Click += btnSelectPath_Click;
+            // 
+            // tbFilePath
+            // 
+            tbFilePath.Location = new Point(64, 85);
+            tbFilePath.Name = "tbFilePath";
+            tbFilePath.Size = new Size(470, 23);
+            tbFilePath.TabIndex = 13;
+            // 
+            // cmbCommand
+            // 
+            cmbCommand.FormattingEnabled = true;
+            cmbCommand.Location = new Point(64, 54);
+            cmbCommand.Name = "cmbCommand";
+            cmbCommand.Size = new Size(567, 25);
+            cmbCommand.TabIndex = 12;
+            // 
             // tbApiKey
             // 
             tbApiKey.Location = new Point(301, 119);
@@ -247,15 +274,15 @@
             tbApiKey.Size = new Size(146, 23);
             tbApiKey.TabIndex = 11;
             // 
-            // label5
+            // lblApiKey
             // 
-            label5.AutoSize = true;
-            label5.ForeColor = Color.Black;
-            label5.Location = new Point(229, 122);
-            label5.Name = "label5";
-            label5.Size = new Size(62, 17);
-            label5.TabIndex = 10;
-            label5.Text = "api key：";
+            lblApiKey.AutoSize = true;
+            lblApiKey.ForeColor = Color.Black;
+            lblApiKey.Location = new Point(229, 122);
+            lblApiKey.Name = "lblApiKey";
+            lblApiKey.Size = new Size(62, 17);
+            lblApiKey.TabIndex = 10;
+            lblApiKey.Text = "api key：";
             // 
             // dgvFileLoad
             // 
@@ -269,9 +296,9 @@
             // 
             // tbServerPath
             // 
-            tbServerPath.Location = new Point(75, 119);
+            tbServerPath.Location = new Point(89, 119);
             tbServerPath.Name = "tbServerPath";
-            tbServerPath.Size = new Size(146, 23);
+            tbServerPath.Size = new Size(132, 23);
             tbServerPath.TabIndex = 8;
             // 
             // lblServerPath
@@ -303,22 +330,15 @@
             label4.TabIndex = 5;
             label4.Text = "支持上传包含下级的文件";
             // 
-            // tbFilePath
+            // lblFilePath
             // 
-            tbFilePath.Location = new Point(64, 84);
-            tbFilePath.Name = "tbFilePath";
-            tbFilePath.Size = new Size(567, 23);
-            tbFilePath.TabIndex = 4;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.ForeColor = Color.Black;
-            label3.Location = new Point(5, 88);
-            label3.Name = "label3";
-            label3.Size = new Size(56, 17);
-            label3.TabIndex = 3;
-            label3.Text = "文件路径";
+            lblFilePath.AutoSize = true;
+            lblFilePath.ForeColor = Color.Black;
+            lblFilePath.Location = new Point(5, 88);
+            lblFilePath.Name = "lblFilePath";
+            lblFilePath.Size = new Size(56, 17);
+            lblFilePath.TabIndex = 3;
+            lblFilePath.Text = "文件路径";
             // 
             // label2
             // 
@@ -330,23 +350,15 @@
             label2.TabIndex = 2;
             label2.Text = "命令：输入命令，关键词请使用占位符(只支持文件名+服务器地址)";
             // 
-            // tbCommand
+            // lblCommand
             // 
-            tbCommand.Location = new Point(64, 53);
-            tbCommand.Name = "tbCommand";
-            tbCommand.Size = new Size(567, 23);
-            tbCommand.TabIndex = 1;
-            tbCommand.Text = "dotnet nuget push {0} -k {1} -s {2}";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.ForeColor = Color.Black;
-            label1.Location = new Point(17, 56);
-            label1.Name = "label1";
-            label1.Size = new Size(44, 17);
-            label1.TabIndex = 0;
-            label1.Text = "命令：";
+            lblCommand.AutoSize = true;
+            lblCommand.ForeColor = Color.Black;
+            lblCommand.Location = new Point(17, 56);
+            lblCommand.Name = "lblCommand";
+            lblCommand.Size = new Size(44, 17);
+            lblCommand.TabIndex = 0;
+            lblCommand.Text = "命令：";
             // 
             // statusStrip1
             // 
@@ -373,6 +385,7 @@
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
             Text = "源远流长:yyliucha.com";
+            Load += Form1_Load;
             plMain.ResumeLayout(false);
             tcMain.ResumeLayout(false);
             tpDeZip.ResumeLayout(false);
@@ -420,18 +433,19 @@
         private ComboBox cbxEndType;
         private Label lblEndTip;
         private Label label2;
-        private TextBox tbCommand;
-        private Label label1;
-        private TextBox tbFilePath;
-        private Label label3;
+        private Label lblCommand;
+        private Label lblFilePath;
         private Button btnSubmit;
         private Label label4;
         private TextBox tbServerPath;
         private Label lblServerPath;
         private DataGridView dgvFileLoad;
         private TextBox tbApiKey;
-        private Label label5;
+        private Label lblApiKey;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel tsslCopyRight;
+        private ComboBox cmbCommand;
+        private Button btnSelectPath;
+        private TextBox tbFilePath;
     }
 }

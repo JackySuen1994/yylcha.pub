@@ -1,18 +1,53 @@
-﻿using System.Diagnostics;
+﻿using ServiceStack;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Compression;
 using System.Text;
 using yylcha.pub.common;
-using yylcha.pub.model;
+using yylcha.pub.model.nugetM;
+using yylcha.pub.model.zip;
 
 namespace yylcha.pub
 {
     public partial class Form1 : Form
     {
+        public static List<ExecuteCommandModel> commandList = new List<ExecuteCommandModel>();
+        bool isRedis = false;
         public Form1()
         {
             InitializeComponent();
+            commandList = tool.GetNugetModel();
+            this.tsslCopyRight.Text = $"Copyright © 2024-{System.DateTime.Now.Year} yyliucha. All rights reserved.";
 
-            this.tsslCopyRight.Text = $"Copyright © 2024-{System.DateTime.Now} yyliucha. All rights reserved.";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            redisTools.Init();
+            isRedis = redisTools.RedisConnectionIsOk();
+            if (isRedis)
+            {
+                List<ExecuteCommandModel> redisList = redisTools.GetCommandModels();
+                if (redisList != null && redisList.Count > 0)
+                {
+                    commandList = commandList.Union(redisList)?.ToList();//合并去重
+                }
+            }
+            if (commandList.Count > 0)
+            {
+                commandList = commandList.Where(d => !d.Command.IsNullOrEmpty())?.ToList();
+            }
+            if (commandList.Count == 0)
+            {
+                this.cmbCommand.Items.Add("dotnet nuget push {0} -k {1} -s {2}");
+            }
+            //有配置，控件隐藏
+            this.Page2ControlIsShow(commandList.Count == 0);
+            if (this.cmbCommand.Items.Count > 0)
+            {
+                this.cmbCommand.SelectedIndex = 0;
+            }
+
         }
 
         #region tabPage1
@@ -132,6 +167,7 @@ namespace yylcha.pub
         #endregion
 
         #region tabPage2
+
         static ProcessStartInfo psi = new ProcessStartInfo
         {
             FileName = "cmd.exe",
@@ -144,13 +180,36 @@ namespace yylcha.pub
         private List<PushNugetModel> pushList = new List<PushNugetModel>();
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            var commandStr = this.tbCommand.Text;
+            var commandStr = this.cmbCommand.SelectedItem.ToString() ?? "";
             var filePath = this.tbFilePath.Text;
-            var serverPath = this.tbServerPath.Text;
-            var apiKey = this.tbApiKey.Text;
+            var serverPath = string.Empty;
+            var apiKey = string.Empty;
+            //如果redis/本地的xml文件中有配置，则读取配置，原本需要录入的控件隐藏
+            //如果配置文件中录入的是空，则对应的控件会显示
+            if (commandList.Count > 0)
+            {
+                ExecuteCommandModel commandModel = commandList.Where(d => d.Command.Equals(commandStr))?.SingleOrDefault();
+                if (commandModel == null)
+                {
+                    MessageBox.Show("选中项在基础数据源中不存在，请验证是否有正确录入配置(xml/redis)");
+                    return;
+                }
+                else
+                {
+                    serverPath = commandModel.ServicePath;
+                    apiKey = commandModel.Apikey;
+                }
+            }
+            else
+            {
+                serverPath = this.tbServerPath.Text;
+                apiKey = this.tbApiKey.Text;
+            }
             if (string.IsNullOrEmpty(commandStr) || string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(serverPath) || string.IsNullOrEmpty(apiKey))
             {
+                this.Page2ControlIsShow(true);
                 MessageBox.Show("请输入必填项！");
+                return;
             }
 
             if (Directory.Exists(filePath))
@@ -201,9 +260,13 @@ namespace yylcha.pub
                         {
                             foreach (var pItem in pushList)
                             {
-                               ExecuteCommand(commandStr,apiKey,serverPath,pItem);
+                                ExecuteCommand(commandStr, apiKey, serverPath, pItem);
                             }
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("未找到需要上传的nuget包");
                     }
                 }
             }
@@ -220,7 +283,8 @@ namespace yylcha.pub
         /// <param name="apiKey"></param>
         /// <param name="serverPath"></param>
         /// <param name="pItem"></param>
-        private async void ExecuteCommand(string commandStr,string apiKey,string serverPath,PushNugetModel pItem) {
+        private async void ExecuteCommand(string commandStr, string apiKey, string serverPath, PushNugetModel pItem)
+        {
             string command = string.Format(commandStr, pItem.FilePath, apiKey, serverPath);
             using (Process process = new Process { StartInfo = psi })
             {
@@ -239,6 +303,35 @@ namespace yylcha.pub
             }
 
             this.dgvFileLoad.Refresh();
+        }
+
+        /// <summary>
+        /// 控制控件显示与隐藏
+        /// </summary>
+        /// <param name="isShow"></param>
+        private void Page2ControlIsShow(bool isShow)
+        {
+
+            this.lblServerPath.Visible = isShow;
+            this.tbServerPath.Visible = isShow;
+            this.lblApiKey.Visible = isShow;
+            this.tbApiKey.Visible = isShow;
+        }
+
+        /// <summary>
+        /// 选择本地文件 按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSelectPath_Click(object sender, EventArgs e)
+        {
+            string path = string.Empty;
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                path = fbd.SelectedPath;
+            }
+            this.tbFilePath.Text = path;
         }
 
         #endregion

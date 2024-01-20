@@ -1,3 +1,5 @@
+using yylcha.pub.common;
+
 namespace yylcha.pub
 {
     internal static class Program
