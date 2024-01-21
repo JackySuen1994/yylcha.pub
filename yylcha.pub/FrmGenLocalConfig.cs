@@ -228,7 +228,7 @@ namespace yylcha.pub
         /// <param name="e"></param>
         private void uiDgvLocalConfig_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            this.ValidateCell();
+            //this.ValidateCell();
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace yylcha.pub
         /// <param name="e"></param>
         private void uiDgvLocalConfig_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            this.ValidateCell();
+            //this.ValidateCell();
         }
     }
 }
