@@ -366,7 +366,7 @@ namespace yylcha.pub
                 }
             }
 
-            this.uiDgvFileLoad.Refresh();
+            uiDgvFileLoad.Refresh();
         }
 
         /// <summary>

@@ -13,6 +13,7 @@ namespace yylcha.pub.common
     public class tool
     {
         private static string NugetConfig = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config\\PushNuget.json");
+        private static string ConfigPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config");
         public static string GetTimeSpan()
         {
             //Get timestamp with TimeSpan
@@ -28,7 +29,7 @@ namespace yylcha.pub.common
         /// <returns></returns>
         public static List<ExecuteCommandModel> GetNugetModel()
         {
-            if (File.Exists(NugetConfig))
+           if (File.Exists(NugetConfig))
             {
                 try
                 {
@@ -70,6 +71,9 @@ namespace yylcha.pub.common
                 root.CommandList = new List<ExecuteCommandModel>();
                 root.CommandList.Add(new ExecuteCommandModel());
                 fileContent = JsonConvert.SerializeObject(root);
+                if (!Directory.Exists(ConfigPath))
+                    Directory.CreateDirectory(ConfigPath);
+
                 File.WriteAllText(NugetConfig, fileContent);
                 return root.CommandList;
             }
