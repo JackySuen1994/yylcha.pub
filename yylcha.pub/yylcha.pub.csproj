@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="ServiceStack.Redis" Version="8.0.0" />
+    <PackageReference Include="ServiceStack.Redis" Version="8.1.2" />
     <PackageReference Include="SunnyUI" Version="3.6.3" />
   </ItemGroup>
 

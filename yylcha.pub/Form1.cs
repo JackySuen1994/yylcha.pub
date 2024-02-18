@@ -3,7 +3,9 @@ using Sunny.UI;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 using yylcha.pub.common;
 using yylcha.pub.model.nugetM;
 using yylcha.pub.model.zip;
@@ -18,6 +20,11 @@ namespace yylcha.pub
         /// 读取本地文件/redis的默认配置集合
         /// </summary>
         public static List<ExecuteCommandModel> commandList = new List<ExecuteCommandModel>();
+
+        /// <summary>
+        /// 配置文件集合
+        /// </summary>
+        public static Dictionary<string, Feed> configDic = new Dictionary<string, Feed>();
 
         /// <summary>
         /// 判定redis是否有配置
@@ -50,7 +57,6 @@ namespace yylcha.pub
         {
             InitializeComponent();
             this.tsslCopyRight.Text = $"Copyright © 2024-{System.DateTime.Now.Year} yyliucha. All rights reserved.";
-
         }
 
         /// <summary>
@@ -73,6 +79,7 @@ namespace yylcha.pub
             this.ChangeTheme();//初始化主题菜单数据源
 
             this.tiNowTime.Enabled = true;
+
             #endregion
 
             #region tabPage1
@@ -185,6 +192,19 @@ namespace yylcha.pub
             selectStyle = uiStyle;
         }
 
+        /// <summary>
+        /// 跳转到博客
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiyyliucha_Click(object sender, EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://yyliucha.com/",
+                UseShellExecute = true//用当前系统默认浏览器打开
+            });
+        }
         #endregion
 
         #region tabPage1
@@ -375,7 +395,6 @@ namespace yylcha.pub
         /// <param name="isShow"></param>
         private void Page2ControlIsShow(bool isShow)
         {
-
             this.uiLblServerPath.Visible = isShow;
             this.uiTxtServerPath.Visible = isShow;
             this.uiLblApiKey.Visible = isShow;
@@ -514,6 +533,120 @@ namespace yylcha.pub
             frmGen.ShowForm(selectStyle);
             this.Form1_Load(sender, e);
         }
+
+        /// <summary>
+        /// menu单击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uiTcMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tcM = sender as UITabControlMenu;
+            int selIndex = tcM.SelectedIndex;
+            if (selIndex == 1)//tabIndex为1表示为nuget页签
+            {
+                UIProcessBar uiProcessBar = new UIProcessBar
+                {
+                    Maximum = 10,
+                    Visible = false
+                };
+
+                uiProcessBar.Visible = true;
+                Task.Run(() =>
+                {
+                    getNugetPkgs();//读取服务器packages集合
+
+                    Invoke(new Action(() =>
+                    {
+                        uiProcessBar.Visible = true;
+                        uiProcessBar.Value = 4;
+                        uiProcessBar.Text = "准备请求获取服务器包";
+                    }));
+
+                    Invoke(new Action(() =>
+                    {
+                        uiProcessBar.Value = 4;
+                        uiProcessBar.Text = "获取服务器包成功";
+                    }));
+                    Task.Delay(20000).Wait();
+
+                    Invoke(new Action(() => uiProcessBar.Value = 7));//进度条调整到读取配置的位置
+                    Task.Delay(20000).Wait();
+
+                    Invoke(new Action(() => uiProcessBar.Value = 10));//进度条调整到读取配置的位置
+                    Invoke(new Action(() => uiProcessBar.Visible = false));//关闭进度条
+
+                    Application.DoEvents();//确保UI及时更新
+                });
+                //Task.Run(() =>
+                //{
+                //    Invoke(new Action(() => uiProcessBar.Visible = true));
+                //    Invoke(new Action(() => uiProcessBar.Value = 1));
+                //    Invoke(new Action(() => uiProcessBar.Text = "准备请求获取服务器包"));
+
+                //    Invoke(new Action(() => getNugetPkgs()));//读取服务器packages集合
+
+                //    Task.Delay(20000);
+                //    Invoke(new Action(() => uiProcessBar.Value = 4));//进度条调整到读取配置的位置
+                //    Invoke(new Action(() => uiProcessBar.Text = "获取服务器包成功"));
+
+                //    Task.Delay(20000);
+                //    Invoke(new Action(() => uiProcessBar.Value = 7));//进度条调整到读取配置的位置
+
+                //    Task.Delay(20000);
+                //    Invoke(new Action(() => uiProcessBar.Value = 10));//进度条调整到读取配置的位置
+
+                //    Invoke(new Action(() => uiProcessBar.Visible = false));//关闭进度条
+
+                //    Application.DoEvents();//确保UI及时更新
+                //});
+            }
+        }
+
+        /// <summary>
+        /// 通过配置文件，读取对应服务器上的nuget所有版本包
+        /// </summary>
+        private async void getNugetPkgs()
+        {
+
+            List<ExecuteCommandModel> defConfigList = tool.GetNugetModel();
+
+            redisTools.Init();
+            isRedis = redisTools.RedisConnectionIsOk();
+            if (isRedis)
+            {
+                List<ExecuteCommandModel> redisList = redisTools.GetCommandModels();
+                if (redisList != null && redisList.Count > 0)
+                {
+                    defConfigList = defConfigList.Union(redisList)?.ToList();//合并去重
+                }
+            }
+            if (defConfigList != null && defConfigList.Count > 0)
+            {
+                defConfigList = defConfigList.Where(d => !string.IsNullOrEmpty(d.Command))?.ToList();
+            }
+
+            if (defConfigList != null && defConfigList.Count > 0)
+            {
+                foreach (var config in defConfigList)
+                {
+                    if (string.IsNullOrEmpty(config.ServicePath)) continue;
+
+                    HttpClient client = new HttpClient();
+                    string response = await client.GetStringAsync(Path.Combine(config.ServicePath, "nuget/Packages"));
+                    if (!string.IsNullOrEmpty(response) && !configDic.ContainsKey(config.ServicePath))
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(Feed));
+                        using (StringReader sr = new StringReader(response))
+                        {
+                            Feed feed = (Feed)serializer.Deserialize(sr);
+                            configDic.Add(config.ServicePath, feed);
+                        }
+                    }
+                }
+            }
+        }
+
         #endregion
 
     }
