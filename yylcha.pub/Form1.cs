@@ -578,28 +578,6 @@ namespace yylcha.pub
 
                     Application.DoEvents();//确保UI及时更新
                 });
-                //Task.Run(() =>
-                //{
-                //    Invoke(new Action(() => uiProcessBar.Visible = true));
-                //    Invoke(new Action(() => uiProcessBar.Value = 1));
-                //    Invoke(new Action(() => uiProcessBar.Text = "准备请求获取服务器包"));
-
-                //    Invoke(new Action(() => getNugetPkgs()));//读取服务器packages集合
-
-                //    Task.Delay(20000);
-                //    Invoke(new Action(() => uiProcessBar.Value = 4));//进度条调整到读取配置的位置
-                //    Invoke(new Action(() => uiProcessBar.Text = "获取服务器包成功"));
-
-                //    Task.Delay(20000);
-                //    Invoke(new Action(() => uiProcessBar.Value = 7));//进度条调整到读取配置的位置
-
-                //    Task.Delay(20000);
-                //    Invoke(new Action(() => uiProcessBar.Value = 10));//进度条调整到读取配置的位置
-
-                //    Invoke(new Action(() => uiProcessBar.Visible = false));//关闭进度条
-
-                //    Application.DoEvents();//确保UI及时更新
-                //});
             }
         }
 
@@ -649,5 +627,21 @@ namespace yylcha.pub
 
         #endregion
 
+        /// <summary>
+        /// 清空列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiClearList_Click(object sender, EventArgs e)
+        {
+            if (this.uiDgvFileInfo.DataSource != null)
+            {
+                this.uiDgvFileInfo.DataSource = new List<DeZipModel>();
+            }
+            if (this.uiDgvFileLoad.DataSource != null)
+            {
+                this.uiDgvFileLoad.DataSource = new List<PushNugetModel>();
+            }
+        }
     }
 }

@@ -73,6 +73,7 @@
             tsslCopyRight = new ToolStripStatusLabel();
             tsslNowTime = new ToolStripStatusLabel();
             tiNowTime = new System.Windows.Forms.Timer(components);
+            tsmiClearList = new ToolStripMenuItem();
             uiTcMain.SuspendLayout();
             uiCmsMenu.SuspendLayout();
             uiTpDeZip.SuspendLayout();
@@ -103,21 +104,21 @@
             // 
             uiCmsMenu.BackColor = Color.FromArgb(243, 249, 255);
             uiCmsMenu.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            uiCmsMenu.Items.AddRange(new ToolStripItem[] { tsmiChangeTheme, tsmiyyliucha });
+            uiCmsMenu.Items.AddRange(new ToolStripItem[] { tsmiChangeTheme, tsmiyyliucha, tsmiClearList });
             uiCmsMenu.Name = "uiCmsChangeTheme";
-            uiCmsMenu.Size = new Size(139, 48);
+            uiCmsMenu.Size = new Size(181, 92);
             // 
             // tsmiChangeTheme
             // 
             tsmiChangeTheme.Name = "tsmiChangeTheme";
-            tsmiChangeTheme.Size = new Size(138, 22);
+            tsmiChangeTheme.Size = new Size(180, 22);
             tsmiChangeTheme.Text = "更改主题";
             tsmiChangeTheme.DropDownItemClicked += tsmiChangeTheme_DropDownItemClicked;
             // 
             // tsmiyyliucha
             // 
             tsmiyyliucha.Name = "tsmiyyliucha";
-            tsmiyyliucha.Size = new Size(138, 22);
+            tsmiyyliucha.Size = new Size(180, 22);
             tsmiyyliucha.Text = "yyliucha";
             tsmiyyliucha.Click += tsmiyyliucha_Click;
             // 
@@ -141,6 +142,8 @@
             // 
             // uiDgvFileInfo
             // 
+            uiDgvFileInfo.AllowUserToAddRows = false;
+            uiDgvFileInfo.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(235, 243, 255);
             uiDgvFileInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             uiDgvFileInfo.BackgroundColor = Color.White;
@@ -165,8 +168,9 @@
             uiDgvFileInfo.EnableHeadersVisualStyles = false;
             uiDgvFileInfo.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
             uiDgvFileInfo.GridColor = Color.FromArgb(80, 160, 255);
-            uiDgvFileInfo.Location = new Point(8, 143);
+            uiDgvFileInfo.Location = new Point(5, 143);
             uiDgvFileInfo.Name = "uiDgvFileInfo";
+            uiDgvFileInfo.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = Color.FromArgb(235, 243, 255);
             dataGridViewCellStyle4.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -180,7 +184,7 @@
             uiDgvFileInfo.RowsDefaultCellStyle = dataGridViewCellStyle5;
             uiDgvFileInfo.RowTemplate.Height = 25;
             uiDgvFileInfo.SelectedIndex = -1;
-            uiDgvFileInfo.Size = new Size(802, 387);
+            uiDgvFileInfo.Size = new Size(785, 387);
             uiDgvFileInfo.StripeOddColor = Color.FromArgb(235, 243, 255);
             uiDgvFileInfo.TabIndex = 11;
             // 
@@ -325,6 +329,8 @@
             // 
             // uiDgvFileLoad
             // 
+            uiDgvFileLoad.AllowUserToAddRows = false;
+            uiDgvFileLoad.AllowUserToDeleteRows = false;
             dataGridViewCellStyle6.BackColor = Color.FromArgb(235, 243, 255);
             uiDgvFileLoad.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             uiDgvFileLoad.BackgroundColor = Color.White;
@@ -351,6 +357,7 @@
             uiDgvFileLoad.GridColor = Color.FromArgb(80, 160, 255);
             uiDgvFileLoad.Location = new Point(3, 174);
             uiDgvFileLoad.Name = "uiDgvFileLoad";
+            uiDgvFileLoad.ReadOnly = true;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.FromArgb(235, 243, 255);
             dataGridViewCellStyle9.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -541,6 +548,13 @@
             // 
             tiNowTime.Tick += tiNowTime_Tick;
             // 
+            // tsmiClearList
+            // 
+            tsmiClearList.Name = "tsmiClearList";
+            tsmiClearList.Size = new Size(180, 22);
+            tsmiClearList.Text = "清空列表";
+            tsmiClearList.Click += tsmiClearList_Click;
+            // 
             // Form1
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -605,5 +619,6 @@
         private ToolStripMenuItem tsmiChangeTheme;
         private Sunny.UI.UIButton uiBtnGenerateLocalConfig;
         private ToolStripMenuItem tsmiyyliucha;
+        private ToolStripMenuItem tsmiClearList;
     }
 }
