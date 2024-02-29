@@ -1,4 +1,5 @@
 ﻿using ServiceStack;
+using ServiceStack.Redis;
 using Sunny.UI;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -205,6 +206,24 @@ namespace yylcha.pub
                 UseShellExecute = true//用当前系统默认浏览器打开
             });
         }
+
+        /// <summary>
+        /// 清空列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiClearList_Click(object sender, EventArgs e)
+        {
+            if (this.uiDgvFileInfo.DataSource != null)
+            {
+                this.uiDgvFileInfo.DataSource = new List<DeZipModel>();
+            }
+            if (this.uiDgvFileLoad.DataSource != null)
+            {
+                this.uiDgvFileLoad.DataSource = new List<PushNugetModel>();
+            }
+        }
+
         #endregion
 
         #region tabPage1
@@ -456,6 +475,28 @@ namespace yylcha.pub
                 return;
             }
 
+            this.loadFileInfo(filePath);
+            if (this.pushList.Count() > 0)
+            {
+                bool result = UIMessageDialog.ShowAskDialog(this, "是否上传？");
+                if (result)
+                {
+                    foreach (var pItem in pushList)
+                    {
+                        Task.Run(() =>
+                        {
+                            ExecuteCommand(commandStr, apiKey, serverPath, pItem);
+                        });
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 加载文件目录
+        /// </summary>
+        /// <param name="filePath"></param>
+        private void loadFileInfo(string filePath) {
             if (Directory.Exists(filePath))
             {
                 pushList.Clear();
@@ -485,35 +526,22 @@ namespace yylcha.pub
                             });
                         }
                     }
+                }
+                if (pushList.Count > 0)
+                {
+                    this.uiDgvFileLoad.DataSource = pushList;
+                    this.uiDgvFileLoad.Columns["FileName"].Width = 100;
+                    this.uiDgvFileLoad.Columns["FileName"].DisplayIndex = 0;
 
-                    if (pushList.Count > 0)
-                    {
-                        this.uiDgvFileLoad.DataSource = pushList;
-                        this.uiDgvFileLoad.Columns["FileName"].Width = 100;
-                        this.uiDgvFileLoad.Columns["FileName"].DisplayIndex = 0;
+                    this.uiDgvFileLoad.Columns["PushResult"].Width = 80;
+                    this.uiDgvFileLoad.Columns["PushResult"].DisplayIndex = 1;
 
-                        this.uiDgvFileLoad.Columns["PushResult"].Width = 80;
-                        this.uiDgvFileLoad.Columns["PushResult"].DisplayIndex = 1;
-
-                        this.uiDgvFileLoad.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                        this.uiDgvFileLoad.Columns["FilePath"].DisplayIndex = 2;
-
-                        bool result = UIMessageDialog.ShowAskDialog(this, "是否上传？");
-                        if (result)
-                        {
-                            foreach (var pItem in pushList)
-                            {
-                                Task.Run(() =>
-                                {
-                                    ExecuteCommand(commandStr, apiKey, serverPath, pItem);
-                                });
-                            }
-                        }
-                    }
-                    else
-                    {
-                        UIMessageBox.ShowError("未找到需要上传的nuget包！");
-                    }
+                    this.uiDgvFileLoad.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    this.uiDgvFileLoad.Columns["FilePath"].DisplayIndex = 2;
+                }
+                else
+                {
+                    UIMessageBox.ShowError("未找到需要上传的nuget包！");
                 }
             }
             else
@@ -586,7 +614,6 @@ namespace yylcha.pub
         /// </summary>
         private async void getNugetPkgs()
         {
-
             List<ExecuteCommandModel> defConfigList = tool.GetNugetModel();
 
             redisTools.Init();
@@ -625,23 +652,23 @@ namespace yylcha.pub
             }
         }
 
-        #endregion
-
         /// <summary>
-        /// 清空列表
+        /// 加载文件目录下的所有文件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tsmiClearList_Click(object sender, EventArgs e)
+        private void uiBtnLoadPath_Click(object sender, EventArgs e)
         {
-            if (this.uiDgvFileInfo.DataSource != null)
+            var filePath = this.uiTxtFilePath.Text;
+            if (string.IsNullOrEmpty(filePath))
             {
-                this.uiDgvFileInfo.DataSource = new List<DeZipModel>();
+                UIMessageBox.ShowWarning("请填写文件路径！");
+                return;
             }
-            if (this.uiDgvFileLoad.DataSource != null)
-            {
-                this.uiDgvFileLoad.DataSource = new List<PushNugetModel>();
-            }
+
+            this.loadFileInfo(filePath);
         }
+        #endregion
+
     }
 }
