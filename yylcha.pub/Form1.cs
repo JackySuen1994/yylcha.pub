@@ -58,6 +58,15 @@ namespace yylcha.pub
         {
             InitializeComponent();
             this.tsslCopyRight.Text = $"Copyright © 2024-{System.DateTime.Now.Year} yyliucha. All rights reserved.";
+
+            //校验是否已经打开一个程序
+            bool isOkOpen = true;
+            Mutex mutex = new Mutex(true, this.Name, out isOkOpen);
+            if (!isOkOpen)
+            {
+                UIMessageBox.ShowError("只能运行一个程序！");
+                Environment.Exit(0);//退出程序
+            }
         }
 
         /// <summary>
@@ -316,6 +325,18 @@ namespace yylcha.pub
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 关闭事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            bool result = UIMessageDialog.ShowAskDialog(this, "确定要退出yyliucha吗？");
+            if (result) Environment.Exit(0);
+            else e.Cancel = true;
         }
         #endregion
 
@@ -756,5 +777,6 @@ namespace yylcha.pub
             this.loadFileInfo();
         }
         #endregion
+
     }
 }
