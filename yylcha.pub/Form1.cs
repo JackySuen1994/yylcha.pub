@@ -208,19 +208,75 @@ namespace yylcha.pub
         }
 
         /// <summary>
-        /// 清空列表
+        /// 快捷键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tsmiClearList_Click(object sender, EventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (this.uiDgvFileInfo.DataSource != null)
+            int selIndex = this.uiTcMain.SelectedIndex;
+            //根据点击的菜单，刷新对应的grid
+            if (selIndex == 1)
             {
-                this.uiDgvFileInfo.DataSource = new List<DeZipModel>();
+                if (e.KeyCode.Equals(Keys.F5))
+                {
+                    this.loadFileInfo();//刷新nuget列表
+                }
+                if (e.Control && e.KeyCode.Equals(Keys.Delete))
+                {
+                    this.clearNugetList();//清空nuget列表
+                }
+                if (e.Control && e.KeyCode.Equals(Keys.S))
+                {
+                    this.submitNuget();
+                }
             }
-            if (this.uiDgvFileLoad.DataSource != null)
+        }
+
+        /// <summary>
+        /// menu单击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uiTcMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tcM = sender as UITabControlMenu;
+            int selIndex = tcM.SelectedIndex;
+            if (selIndex == 1)//tabIndex为1表示为nuget页签
             {
-                this.uiDgvFileLoad.DataSource = new List<PushNugetModel>();
+                UIProcessBar uiProcessBar = new UIProcessBar
+                {
+                    Maximum = 10,
+                    Visible = false
+                };
+
+                uiProcessBar.Visible = true;
+                Task.Run(() =>
+                {
+                    getNugetPkgs();//读取服务器packages集合
+
+                    Invoke(new Action(() =>
+                    {
+                        uiProcessBar.Visible = true;
+                        uiProcessBar.Value = 4;
+                        uiProcessBar.Text = "准备请求获取服务器包";
+                    }));
+
+                    Invoke(new Action(() =>
+                    {
+                        uiProcessBar.Value = 4;
+                        uiProcessBar.Text = "获取服务器包成功";
+                    }));
+                    Task.Delay(20000).Wait();
+
+                    Invoke(new Action(() => uiProcessBar.Value = 7));//进度条调整到读取配置的位置
+                    Task.Delay(20000).Wait();
+
+                    Invoke(new Action(() => uiProcessBar.Value = 10));//进度条调整到读取配置的位置
+                    Invoke(new Action(() => uiProcessBar.Visible = false));//关闭进度条
+
+                    Application.DoEvents();//确保UI及时更新
+                });
             }
         }
 
@@ -443,6 +499,14 @@ namespace yylcha.pub
         /// <param name="e"></param>
         private void uiBtnSubmit_Click(object sender, EventArgs e)
         {
+            this.submitNuget();
+        }
+
+        /// <summary>
+        /// 上传nuget包
+        /// </summary>
+        private void submitNuget() {
+
             var commandStr = this.uiCmbCommand.SelectedItem.ToString() ?? "";
             var filePath = this.uiTxtFilePath.Text;
             var serverPath = string.Empty;
@@ -475,7 +539,7 @@ namespace yylcha.pub
                 return;
             }
 
-            this.loadFileInfo(filePath);
+            this.loadFileInfo();
             if (this.pushList.Count() > 0)
             {
                 bool result = UIMessageDialog.ShowAskDialog(this, "是否上传？");
@@ -496,7 +560,15 @@ namespace yylcha.pub
         /// 加载文件目录
         /// </summary>
         /// <param name="filePath"></param>
-        private void loadFileInfo(string filePath) {
+        private void loadFileInfo()
+        {
+            var filePath = this.uiTxtFilePath.Text;
+            if (string.IsNullOrEmpty(filePath))
+            {
+                UIMessageBox.ShowWarning("请填写文件路径！");
+                return;
+            }
+
             if (Directory.Exists(filePath))
             {
                 pushList.Clear();
@@ -551,6 +623,17 @@ namespace yylcha.pub
         }
 
         /// <summary>
+        /// 清空nuget列表
+        /// </summary>
+        private void clearNugetList() {
+
+            if (this.uiDgvFileLoad.DataSource != null)
+            {
+                this.uiDgvFileLoad.DataSource = new List<PushNugetModel>();
+            }
+        }
+
+        /// <summary>
         /// 生成本地配置文件
         /// </summary>
         /// <param name="sender"></param>
@@ -560,53 +643,6 @@ namespace yylcha.pub
             FrmGenLocalConfig frmGen = new FrmGenLocalConfig();//子窗体沿用父窗体样式
             frmGen.ShowForm(selectStyle);
             this.Form1_Load(sender, e);
-        }
-
-        /// <summary>
-        /// menu单击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void uiTcMain_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var tcM = sender as UITabControlMenu;
-            int selIndex = tcM.SelectedIndex;
-            if (selIndex == 1)//tabIndex为1表示为nuget页签
-            {
-                UIProcessBar uiProcessBar = new UIProcessBar
-                {
-                    Maximum = 10,
-                    Visible = false
-                };
-
-                uiProcessBar.Visible = true;
-                Task.Run(() =>
-                {
-                    getNugetPkgs();//读取服务器packages集合
-
-                    Invoke(new Action(() =>
-                    {
-                        uiProcessBar.Visible = true;
-                        uiProcessBar.Value = 4;
-                        uiProcessBar.Text = "准备请求获取服务器包";
-                    }));
-
-                    Invoke(new Action(() =>
-                    {
-                        uiProcessBar.Value = 4;
-                        uiProcessBar.Text = "获取服务器包成功";
-                    }));
-                    Task.Delay(20000).Wait();
-
-                    Invoke(new Action(() => uiProcessBar.Value = 7));//进度条调整到读取配置的位置
-                    Task.Delay(20000).Wait();
-
-                    Invoke(new Action(() => uiProcessBar.Value = 10));//进度条调整到读取配置的位置
-                    Invoke(new Action(() => uiProcessBar.Visible = false));//关闭进度条
-
-                    Application.DoEvents();//确保UI及时更新
-                });
-            }
         }
 
         /// <summary>
@@ -653,20 +689,33 @@ namespace yylcha.pub
         }
 
         /// <summary>
-        /// 加载文件目录下的所有文件
+        /// 移除选中行
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uiBtnLoadPath_Click(object sender, EventArgs e)
+        private void tsmiRemoveSelected_Click(object sender, EventArgs e)
         {
-            var filePath = this.uiTxtFilePath.Text;
-            if (string.IsNullOrEmpty(filePath))
-            {
-                UIMessageBox.ShowWarning("请填写文件路径！");
-                return;
-            }
 
-            this.loadFileInfo(filePath);
+        }
+
+        /// <summary>
+        /// 清空nuget列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiClearNugetList_Click(object sender, EventArgs e)
+        {
+            this.clearNugetList();
+        }
+
+        /// <summary>
+        /// 刷新nuget列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiRefreshNugetList_Click(object sender, EventArgs e)
+        {
+            this.loadFileInfo();
         }
         #endregion
 

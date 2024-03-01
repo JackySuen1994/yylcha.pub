@@ -44,7 +44,6 @@
             uiCmsMenu = new Sunny.UI.UIContextMenuStrip();
             tsmiChangeTheme = new ToolStripMenuItem();
             tsmiyyliucha = new ToolStripMenuItem();
-            tsmiClearList = new ToolStripMenuItem();
             uiTpDeZip = new TabPage();
             uiDgvFileInfo = new Sunny.UI.UIDataGridView();
             uiLblEndTip = new Sunny.UI.UILabel();
@@ -56,9 +55,13 @@
             uiLblTarget = new Sunny.UI.UILabel();
             uiLblSource = new Sunny.UI.UILabel();
             uiTpPushNugetPkg = new TabPage();
-            uiBtnLoadPath = new Sunny.UI.UIButton();
+            uiLblPushType = new Sunny.UI.UILabel();
             uiBtnGenerateLocalConfig = new Sunny.UI.UIButton();
             uiDgvFileLoad = new Sunny.UI.UIDataGridView();
+            uiCmsNugetGrdMenu = new Sunny.UI.UIContextMenuStrip();
+            tsmiRemoveSelected = new ToolStripMenuItem();
+            tsmiClearNugetList = new ToolStripMenuItem();
+            tsmiRefreshNugetList = new ToolStripMenuItem();
             uiBtnSubmit = new Sunny.UI.UIButton();
             uiBtnSelectPath = new Sunny.UI.UIButton();
             uiCmbCommand = new Sunny.UI.UIComboBox();
@@ -75,13 +78,13 @@
             tsslCopyRight = new ToolStripStatusLabel();
             tsslNowTime = new ToolStripStatusLabel();
             tiNowTime = new System.Windows.Forms.Timer(components);
-            uiLblPushType = new Sunny.UI.UILabel();
             uiTcMain.SuspendLayout();
             uiCmsMenu.SuspendLayout();
             uiTpDeZip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)uiDgvFileInfo).BeginInit();
             uiTpPushNugetPkg.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).BeginInit();
+            uiCmsNugetGrdMenu.SuspendLayout();
             ssFootStatus.SuspendLayout();
             SuspendLayout();
             // 
@@ -106,9 +109,9 @@
             // 
             uiCmsMenu.BackColor = Color.FromArgb(243, 249, 255);
             uiCmsMenu.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            uiCmsMenu.Items.AddRange(new ToolStripItem[] { tsmiChangeTheme, tsmiyyliucha, tsmiClearList });
+            uiCmsMenu.Items.AddRange(new ToolStripItem[] { tsmiChangeTheme, tsmiyyliucha });
             uiCmsMenu.Name = "uiCmsChangeTheme";
-            uiCmsMenu.Size = new Size(139, 70);
+            uiCmsMenu.Size = new Size(139, 48);
             // 
             // tsmiChangeTheme
             // 
@@ -123,13 +126,6 @@
             tsmiyyliucha.Size = new Size(138, 22);
             tsmiyyliucha.Text = "yyliucha";
             tsmiyyliucha.Click += tsmiyyliucha_Click;
-            // 
-            // tsmiClearList
-            // 
-            tsmiClearList.Name = "tsmiClearList";
-            tsmiClearList.Size = new Size(138, 22);
-            tsmiClearList.Text = "清空列表";
-            tsmiClearList.Click += tsmiClearList_Click;
             // 
             // uiTpDeZip
             // 
@@ -193,7 +189,7 @@
             uiDgvFileInfo.RowsDefaultCellStyle = dataGridViewCellStyle5;
             uiDgvFileInfo.RowTemplate.Height = 25;
             uiDgvFileInfo.SelectedIndex = -1;
-            uiDgvFileInfo.Size = new Size(785, 387);
+            uiDgvFileInfo.Size = new Size(805, 387);
             uiDgvFileInfo.StripeOddColor = Color.FromArgb(235, 243, 255);
             uiDgvFileInfo.TabIndex = 11;
             // 
@@ -236,7 +232,6 @@
             uiBtnDecompression.Size = new Size(100, 30);
             uiBtnDecompression.TabIndex = 4;
             uiBtnDecompression.Text = "解压";
-            uiBtnDecompression.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnDecompression.Click += uiBtnDecompression_Click;
             // 
             // uiTxtTargetPath
@@ -263,6 +258,7 @@
             uiBtnOk.Size = new Size(100, 30);
             uiBtnOk.TabIndex = 3;
             uiBtnOk.Text = "解析文件";
+            uiBtnOk.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnOk.Click += uiBtnOk_Click;
             // 
             // uiTxtSourcePath
@@ -304,7 +300,6 @@
             // uiTpPushNugetPkg
             // 
             uiTpPushNugetPkg.Controls.Add(uiLblPushType);
-            uiTpPushNugetPkg.Controls.Add(uiBtnLoadPath);
             uiTpPushNugetPkg.Controls.Add(uiBtnGenerateLocalConfig);
             uiTpPushNugetPkg.Controls.Add(uiDgvFileLoad);
             uiTpPushNugetPkg.Controls.Add(uiBtnSubmit);
@@ -326,18 +321,16 @@
             uiTpPushNugetPkg.Text = "Nuget";
             uiTpPushNugetPkg.UseVisualStyleBackColor = true;
             // 
-            // uiBtnLoadPath
+            // uiLblPushType
             // 
-            uiBtnLoadPath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            uiBtnLoadPath.Location = new Point(633, 90);
-            uiBtnLoadPath.MinimumSize = new Size(1, 1);
-            uiBtnLoadPath.Name = "uiBtnLoadPath";
-            uiBtnLoadPath.Radius = 29;
-            uiBtnLoadPath.Size = new Size(117, 29);
-            uiBtnLoadPath.TabIndex = 13;
-            uiBtnLoadPath.Text = "加载文件目录";
-            uiBtnLoadPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            uiBtnLoadPath.Click += uiBtnLoadPath_Click;
+            uiLblPushType.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblPushType.ForeColor = Color.FromArgb(48, 48, 48);
+            uiLblPushType.Location = new Point(518, 58);
+            uiLblPushType.Name = "uiLblPushType";
+            uiLblPushType.Size = new Size(87, 23);
+            uiLblPushType.TabIndex = 14;
+            uiLblPushType.Text = "上传方式：";
+            uiLblPushType.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // uiBtnGenerateLocalConfig
             // 
@@ -349,7 +342,6 @@
             uiBtnGenerateLocalConfig.Size = new Size(100, 35);
             uiBtnGenerateLocalConfig.TabIndex = 12;
             uiBtnGenerateLocalConfig.Text = "生成本地配置";
-            uiBtnGenerateLocalConfig.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnGenerateLocalConfig.Click += uiBtnGenerateLocalConfig_Click;
             // 
             // uiDgvFileLoad
@@ -369,6 +361,7 @@
             dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
             uiDgvFileLoad.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             uiDgvFileLoad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            uiDgvFileLoad.ContextMenuStrip = uiCmsNugetGrdMenu;
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = SystemColors.Window;
             dataGridViewCellStyle8.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -400,6 +393,35 @@
             uiDgvFileLoad.StripeOddColor = Color.FromArgb(235, 243, 255);
             uiDgvFileLoad.TabIndex = 11;
             // 
+            // uiCmsNugetGrdMenu
+            // 
+            uiCmsNugetGrdMenu.BackColor = Color.FromArgb(243, 249, 255);
+            uiCmsNugetGrdMenu.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiCmsNugetGrdMenu.Items.AddRange(new ToolStripItem[] { tsmiRemoveSelected, tsmiClearNugetList, tsmiRefreshNugetList });
+            uiCmsNugetGrdMenu.Name = "uiCmsNugetGrdMenu";
+            uiCmsNugetGrdMenu.Size = new Size(259, 70);
+            // 
+            // tsmiRemoveSelected
+            // 
+            tsmiRemoveSelected.Name = "tsmiRemoveSelected";
+            tsmiRemoveSelected.Size = new Size(258, 22);
+            tsmiRemoveSelected.Text = "移除选中行";
+            tsmiRemoveSelected.Click += tsmiRemoveSelected_Click;
+            // 
+            // tsmiClearNugetList
+            // 
+            tsmiClearNugetList.Name = "tsmiClearNugetList";
+            tsmiClearNugetList.Size = new Size(258, 22);
+            tsmiClearNugetList.Text = "清空列表(L-Ctrl+Delete)";
+            tsmiClearNugetList.Click += tsmiClearNugetList_Click;
+            // 
+            // tsmiRefreshNugetList
+            // 
+            tsmiRefreshNugetList.Name = "tsmiRefreshNugetList";
+            tsmiRefreshNugetList.Size = new Size(258, 22);
+            tsmiRefreshNugetList.Text = "刷新列表(F5)";
+            tsmiRefreshNugetList.Click += tsmiRefreshNugetList_Click;
+            // 
             // uiBtnSubmit
             // 
             uiBtnSubmit.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -407,10 +429,9 @@
             uiBtnSubmit.MinimumSize = new Size(1, 1);
             uiBtnSubmit.Name = "uiBtnSubmit";
             uiBtnSubmit.Radius = 29;
-            uiBtnSubmit.Size = new Size(109, 29);
+            uiBtnSubmit.Size = new Size(123, 29);
             uiBtnSubmit.TabIndex = 10;
-            uiBtnSubmit.Text = "上传";
-            uiBtnSubmit.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnSubmit.Text = "上传(L-Ctrl+S)";
             uiBtnSubmit.Click += uiBtnSubmit_Click;
             // 
             // uiBtnSelectPath
@@ -420,9 +441,10 @@
             uiBtnSelectPath.MinimumSize = new Size(1, 1);
             uiBtnSelectPath.Name = "uiBtnSelectPath";
             uiBtnSelectPath.Radius = 29;
-            uiBtnSelectPath.Size = new Size(109, 29);
+            uiBtnSelectPath.Size = new Size(123, 29);
             uiBtnSelectPath.TabIndex = 9;
             uiBtnSelectPath.Text = "选择文件路径";
+            uiBtnSelectPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSelectPath.Click += uiBtnSelectPath_Click;
             // 
             // uiCmbCommand
@@ -573,17 +595,6 @@
             // 
             tiNowTime.Tick += tiNowTime_Tick;
             // 
-            // uiLblPushType
-            // 
-            uiLblPushType.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            uiLblPushType.ForeColor = Color.FromArgb(48, 48, 48);
-            uiLblPushType.Location = new Point(518, 58);
-            uiLblPushType.Name = "uiLblPushType";
-            uiLblPushType.Size = new Size(87, 23);
-            uiLblPushType.TabIndex = 14;
-            uiLblPushType.Text = "上传方式：";
-            uiLblPushType.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // Form1
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -591,18 +602,21 @@
             Controls.Add(ssFootStatus);
             Controls.Add(uiTcMain);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
             Style = Sunny.UI.UIStyle.Custom;
             Text = "源远流长:yyliucha.com";
             ZoomScaleRect = new Rectangle(15, 15, 672, 382);
             Load += Form1_Load;
+            KeyDown += Form1_KeyDown;
             uiTcMain.ResumeLayout(false);
             uiCmsMenu.ResumeLayout(false);
             uiTpDeZip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)uiDgvFileInfo).EndInit();
             uiTpPushNugetPkg.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).EndInit();
+            uiCmsNugetGrdMenu.ResumeLayout(false);
             ssFootStatus.ResumeLayout(false);
             ssFootStatus.PerformLayout();
             ResumeLayout(false);
@@ -648,8 +662,10 @@
         private ToolStripMenuItem tsmiChangeTheme;
         private Sunny.UI.UIButton uiBtnGenerateLocalConfig;
         private ToolStripMenuItem tsmiyyliucha;
-        private ToolStripMenuItem tsmiClearList;
-        private Sunny.UI.UIButton uiBtnLoadPath;
         private Sunny.UI.UILabel uiLblPushType;
+        private Sunny.UI.UIContextMenuStrip uiCmsNugetGrdMenu;
+        private ToolStripMenuItem tsmiRemoveSelected;
+        private ToolStripMenuItem tsmiClearNugetList;
+        private ToolStripMenuItem tsmiRefreshNugetList;
     }
 }
