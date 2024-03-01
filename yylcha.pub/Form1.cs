@@ -661,13 +661,13 @@ namespace yylcha.pub
                 if (pushList.Count > 0)
                 {
                     this.uiDgvFileLoad.DataSource = pushList;
-                    this.uiDgvFileLoad.Columns["FileName"].Width = 100;
+                    this.uiDgvFileLoad.Columns["FileName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     this.uiDgvFileLoad.Columns["FileName"].DisplayIndex = 0;
 
-                    this.uiDgvFileLoad.Columns["PushResult"].Width = 80;
+                    this.uiDgvFileLoad.Columns["PushResult"].Width = 100;
                     this.uiDgvFileLoad.Columns["PushResult"].DisplayIndex = 1;
 
-                    this.uiDgvFileLoad.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    this.uiDgvFileLoad.Columns["FilePath"].Width = 100;
                     this.uiDgvFileLoad.Columns["FilePath"].DisplayIndex = 2;
                 }
                 else
