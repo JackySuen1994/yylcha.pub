@@ -123,6 +123,31 @@
   <metadata name="uiCmsNugetGrdMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>385, 17</value>
   </metadata>
+  <data name="uiRTxtHelp.Text" xml:space="preserve">
+    <value>主窗体：
+  右键菜单：
+     更改主题：更改主窗体的主题[Green、Orange、Red、Purple、Gray、Black、Default(友好蓝)]
+     yyliucha：作者的个人博客
+
+Zip解压缩(仅支持Zip)：Zip批量解压缩，目前仅支持Zip
+  解压文件：根据左侧的文件目录，把文件夹下面的所有文件展示在最下方的列表中
+  解压：解压目录中的所有文件
+  解压=&gt;
+           右侧下拉框：有三种解压方式
+             备份：解压完成后备份所有文件到backfile+时间戳的文件目录下
+             删除：删除原文件
+             保留：保留原文件
+
+Nuget：nuget包 上传小工具
+  右键菜单：
+     移除选中行：移除列表中的选中行(待实现)
+     清空列表(L-Ctrl + Delete )：清空下方列表
+     刷新列表(F5)：刷新列表
+
+  生成本地配置：页面中的控件，如果嫌麻烦，可以在这里进行配置
+  选择文件路径(L-Ctrl + O )：选择要上传的文件路径
+  上传(L-Ctrl + S )：把文件路径里的nuget包全部上传</value>
+  </data>
   <metadata name="ssFootStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

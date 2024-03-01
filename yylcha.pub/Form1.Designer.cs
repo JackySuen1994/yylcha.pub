@@ -74,6 +74,8 @@
             uiLblCommand = new Sunny.UI.UILabel();
             uiLblNugetTip2 = new Sunny.UI.UILabel();
             uiLblNugetTip = new Sunny.UI.UILabel();
+            uiTpHelp = new TabPage();
+            uiRTxtHelp = new Sunny.UI.UIRichTextBox();
             ssFootStatus = new StatusStrip();
             tsslCopyRight = new ToolStripStatusLabel();
             tsslNowTime = new ToolStripStatusLabel();
@@ -85,6 +87,7 @@
             uiTpPushNugetPkg.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).BeginInit();
             uiCmsNugetGrdMenu.SuspendLayout();
+            uiTpHelp.SuspendLayout();
             ssFootStatus.SuspendLayout();
             SuspendLayout();
             // 
@@ -94,6 +97,7 @@
             uiTcMain.ContextMenuStrip = uiCmsMenu;
             uiTcMain.Controls.Add(uiTpDeZip);
             uiTcMain.Controls.Add(uiTpPushNugetPkg);
+            uiTcMain.Controls.Add(uiTpHelp);
             uiTcMain.DrawMode = TabDrawMode.OwnerDrawFixed;
             uiTcMain.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
             uiTcMain.Location = new Point(3, 38);
@@ -232,6 +236,7 @@
             uiBtnDecompression.Size = new Size(100, 30);
             uiBtnDecompression.TabIndex = 4;
             uiBtnDecompression.Text = "解压";
+            uiBtnDecompression.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnDecompression.Click += uiBtnDecompression_Click;
             // 
             // uiTxtTargetPath
@@ -258,7 +263,6 @@
             uiBtnOk.Size = new Size(100, 30);
             uiBtnOk.TabIndex = 3;
             uiBtnOk.Text = "解析文件";
-            uiBtnOk.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnOk.Click += uiBtnOk_Click;
             // 
             // uiTxtSourcePath
@@ -342,6 +346,7 @@
             uiBtnGenerateLocalConfig.Size = new Size(100, 35);
             uiBtnGenerateLocalConfig.TabIndex = 12;
             uiBtnGenerateLocalConfig.Text = "生成本地配置";
+            uiBtnGenerateLocalConfig.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnGenerateLocalConfig.Click += uiBtnGenerateLocalConfig_Click;
             // 
             // uiDgvFileLoad
@@ -389,7 +394,7 @@
             uiDgvFileLoad.RowsDefaultCellStyle = dataGridViewCellStyle10;
             uiDgvFileLoad.RowTemplate.Height = 25;
             uiDgvFileLoad.SelectedIndex = -1;
-            uiDgvFileLoad.Size = new Size(791, 356);
+            uiDgvFileLoad.Size = new Size(807, 356);
             uiDgvFileLoad.StripeOddColor = Color.FromArgb(235, 243, 255);
             uiDgvFileLoad.TabIndex = 11;
             // 
@@ -399,52 +404,52 @@
             uiCmsNugetGrdMenu.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
             uiCmsNugetGrdMenu.Items.AddRange(new ToolStripItem[] { tsmiRemoveSelected, tsmiClearNugetList, tsmiRefreshNugetList });
             uiCmsNugetGrdMenu.Name = "uiCmsNugetGrdMenu";
-            uiCmsNugetGrdMenu.Size = new Size(259, 70);
+            uiCmsNugetGrdMenu.Size = new Size(155, 70);
             // 
             // tsmiRemoveSelected
             // 
             tsmiRemoveSelected.Name = "tsmiRemoveSelected";
-            tsmiRemoveSelected.Size = new Size(258, 22);
+            tsmiRemoveSelected.Size = new Size(154, 22);
             tsmiRemoveSelected.Text = "移除选中行";
             tsmiRemoveSelected.Click += tsmiRemoveSelected_Click;
             // 
             // tsmiClearNugetList
             // 
             tsmiClearNugetList.Name = "tsmiClearNugetList";
-            tsmiClearNugetList.Size = new Size(258, 22);
-            tsmiClearNugetList.Text = "清空列表(L-Ctrl+Delete)";
+            tsmiClearNugetList.Size = new Size(154, 22);
+            tsmiClearNugetList.Text = "清空列表";
             tsmiClearNugetList.Click += tsmiClearNugetList_Click;
             // 
             // tsmiRefreshNugetList
             // 
             tsmiRefreshNugetList.Name = "tsmiRefreshNugetList";
-            tsmiRefreshNugetList.Size = new Size(258, 22);
-            tsmiRefreshNugetList.Text = "刷新列表(F5)";
+            tsmiRefreshNugetList.Size = new Size(154, 22);
+            tsmiRefreshNugetList.Text = "刷新列表";
             tsmiRefreshNugetList.Click += tsmiRefreshNugetList_Click;
             // 
             // uiBtnSubmit
             // 
             uiBtnSubmit.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            uiBtnSubmit.Location = new Point(518, 124);
+            uiBtnSubmit.Location = new Point(518, 126);
             uiBtnSubmit.MinimumSize = new Size(1, 1);
             uiBtnSubmit.Name = "uiBtnSubmit";
             uiBtnSubmit.Radius = 29;
             uiBtnSubmit.Size = new Size(123, 29);
             uiBtnSubmit.TabIndex = 10;
-            uiBtnSubmit.Text = "上传(L-Ctrl+S)";
+            uiBtnSubmit.Text = "上传";
+            uiBtnSubmit.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSubmit.Click += uiBtnSubmit_Click;
             // 
             // uiBtnSelectPath
             // 
             uiBtnSelectPath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            uiBtnSelectPath.Location = new Point(518, 91);
+            uiBtnSelectPath.Location = new Point(518, 90);
             uiBtnSelectPath.MinimumSize = new Size(1, 1);
             uiBtnSelectPath.Name = "uiBtnSelectPath";
             uiBtnSelectPath.Radius = 29;
             uiBtnSelectPath.Size = new Size(123, 29);
             uiBtnSelectPath.TabIndex = 9;
             uiBtnSelectPath.Text = "选择文件路径";
-            uiBtnSelectPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSelectPath.Click += uiBtnSelectPath_Click;
             // 
             // uiCmbCommand
@@ -572,6 +577,34 @@
             uiLblNugetTip.Text = "命令：输入命令，关键词请使用占位符(只支持文件名+服务器地址)";
             uiLblNugetTip.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // uiTpHelp
+            // 
+            uiTpHelp.Controls.Add(uiRTxtHelp);
+            uiTpHelp.Location = new Point(201, 0);
+            uiTpHelp.Name = "uiTpHelp";
+            uiTpHelp.Size = new Size(813, 533);
+            uiTpHelp.TabIndex = 2;
+            uiTpHelp.Text = "帮助";
+            uiTpHelp.UseVisualStyleBackColor = true;
+            // 
+            // uiRTxtHelp
+            // 
+            uiRTxtHelp.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            uiRTxtHelp.Enabled = false;
+            uiRTxtHelp.FillColor = Color.White;
+            uiRTxtHelp.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiRTxtHelp.Location = new Point(3, 0);
+            uiRTxtHelp.Margin = new Padding(4, 5, 4, 5);
+            uiRTxtHelp.MinimumSize = new Size(1, 1);
+            uiRTxtHelp.Name = "uiRTxtHelp";
+            uiRTxtHelp.Padding = new Padding(2);
+            uiRTxtHelp.ScrollBarStyleInherited = false;
+            uiRTxtHelp.ShowText = false;
+            uiRTxtHelp.Size = new Size(810, 532);
+            uiRTxtHelp.TabIndex = 0;
+            uiRTxtHelp.Text = resources.GetString("uiRTxtHelp.Text");
+            uiRTxtHelp.TextAlignment = ContentAlignment.MiddleCenter;
+            // 
             // ssFootStatus
             // 
             ssFootStatus.Items.AddRange(new ToolStripItem[] { tsslCopyRight, tsslNowTime });
@@ -606,8 +639,9 @@
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
             Style = Sunny.UI.UIStyle.Custom;
-            Text = "源远流长:yyliucha.com";
+            Text = "源远流长:yyliucha.com v3.1";
             ZoomScaleRect = new Rectangle(15, 15, 672, 382);
+            Activated += Form1_Activated;
             Load += Form1_Load;
             KeyDown += Form1_KeyDown;
             uiTcMain.ResumeLayout(false);
@@ -617,6 +651,7 @@
             uiTpPushNugetPkg.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).EndInit();
             uiCmsNugetGrdMenu.ResumeLayout(false);
+            uiTpHelp.ResumeLayout(false);
             ssFootStatus.ResumeLayout(false);
             ssFootStatus.PerformLayout();
             ResumeLayout(false);
@@ -667,5 +702,7 @@
         private ToolStripMenuItem tsmiRemoveSelected;
         private ToolStripMenuItem tsmiClearNugetList;
         private ToolStripMenuItem tsmiRefreshNugetList;
+        private TabPage uiTpHelp;
+        private Sunny.UI.UIRichTextBox uiRTxtHelp;
     }
 }

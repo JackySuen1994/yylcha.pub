@@ -230,6 +230,10 @@ namespace yylcha.pub
                 {
                     this.submitNuget();
                 }
+                if (e.Control && e.KeyCode.Equals(Keys.O))
+                {
+                    this.uiBtnSelectPath.PerformClick();//模拟点击选择文件路径按钮
+                }
             }
         }
 
@@ -280,6 +284,39 @@ namespace yylcha.pub
             }
         }
 
+        /// <summary>
+        /// 窗体的活动检测，当是活动窗体的时候
+        /// 检测用户的粘贴板
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            this.CheckClipboard();
+        }
+
+        /// <summary>
+        /// 检测粘贴板
+        /// 2024-3-1 16:56:30 只适配nuget tab
+        /// </summary>
+        private void CheckClipboard()
+        {
+            int selIndex = this.uiTcMain.SelectedIndex;
+            if (Clipboard.ContainsText())
+            {
+                //打开nuget tab页
+                if (selIndex == 1)
+                {
+                    string filePath = this.uiTxtFilePath.Text;
+                    string clipboardTxt = Clipboard.GetText();
+                    if (!string.IsNullOrEmpty(clipboardTxt) && Path.IsPathRooted(clipboardTxt) && !filePath.Equals(clipboardTxt))
+                    {
+                        bool isOk = UIMessageDialog.ShowAskDialog(this, "检测到你有copy文件路径，是否带入？");
+                        if (isOk) this.uiTxtFilePath.Text = clipboardTxt;
+                    }
+                }
+            }
+        }
         #endregion
 
         #region tabPage1
@@ -505,7 +542,8 @@ namespace yylcha.pub
         /// <summary>
         /// 上传nuget包
         /// </summary>
-        private void submitNuget() {
+        private void submitNuget()
+        {
 
             var commandStr = this.uiCmbCommand.SelectedItem.ToString() ?? "";
             var filePath = this.uiTxtFilePath.Text;
@@ -625,8 +663,8 @@ namespace yylcha.pub
         /// <summary>
         /// 清空nuget列表
         /// </summary>
-        private void clearNugetList() {
-
+        private void clearNugetList()
+        {
             if (this.uiDgvFileLoad.DataSource != null)
             {
                 this.uiDgvFileLoad.DataSource = new List<PushNugetModel>();
@@ -718,6 +756,5 @@ namespace yylcha.pub
             this.loadFileInfo();
         }
         #endregion
-
     }
 }
