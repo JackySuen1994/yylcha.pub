@@ -236,6 +236,7 @@
             uiBtnDecompression.Size = new Size(100, 30);
             uiBtnDecompression.TabIndex = 4;
             uiBtnDecompression.Text = "解压";
+            uiBtnDecompression.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnDecompression.Click += uiBtnDecompression_Click;
             // 
             // uiTxtTargetPath
@@ -262,7 +263,6 @@
             uiBtnOk.Size = new Size(100, 30);
             uiBtnOk.TabIndex = 3;
             uiBtnOk.Text = "解析文件";
-            uiBtnOk.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnOk.Click += uiBtnOk_Click;
             // 
             // uiTxtSourcePath
@@ -346,6 +346,7 @@
             uiBtnGenerateLocalConfig.Size = new Size(100, 35);
             uiBtnGenerateLocalConfig.TabIndex = 12;
             uiBtnGenerateLocalConfig.Text = "生成本地配置";
+            uiBtnGenerateLocalConfig.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnGenerateLocalConfig.Click += uiBtnGenerateLocalConfig_Click;
             // 
             // uiDgvFileLoad
@@ -436,6 +437,7 @@
             uiBtnSubmit.Size = new Size(123, 29);
             uiBtnSubmit.TabIndex = 10;
             uiBtnSubmit.Text = "上传";
+            uiBtnSubmit.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSubmit.Click += uiBtnSubmit_Click;
             // 
             // uiBtnSelectPath
@@ -448,7 +450,6 @@
             uiBtnSelectPath.Size = new Size(123, 29);
             uiBtnSelectPath.TabIndex = 9;
             uiBtnSelectPath.Text = "选择文件路径";
-            uiBtnSelectPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSelectPath.Click += uiBtnSelectPath_Click;
             // 
             // uiCmbCommand
@@ -470,6 +471,7 @@
             // 
             // uiTxtFilePath
             // 
+            uiTxtFilePath.Enabled = false;
             uiTxtFilePath.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
             uiTxtFilePath.Location = new Point(109, 90);
             uiTxtFilePath.Margin = new Padding(4, 5, 4, 5);
@@ -481,6 +483,7 @@
             uiTxtFilePath.TabIndex = 7;
             uiTxtFilePath.TextAlignment = ContentAlignment.MiddleLeft;
             uiTxtFilePath.Watermark = "";
+            uiTxtFilePath.TextChanged += uiTxtFilePath_TextChanged;
             // 
             // uiTxtApiKey
             // 
@@ -638,9 +641,8 @@
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
             Style = Sunny.UI.UIStyle.Custom;
-            Text = "源远流长:yyliucha.com v3.1";
+            Text = "源远流长:yyliucha.com v3.14";
             ZoomScaleRect = new Rectangle(15, 15, 672, 382);
-            Activated += Form1_Activated;
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             KeyDown += Form1_KeyDown;

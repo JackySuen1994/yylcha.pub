@@ -294,37 +294,28 @@ namespace yylcha.pub
         }
 
         /// <summary>
-        /// 窗体的活动检测，当是活动窗体的时候
-        /// 检测用户的粘贴板
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Activated(object sender, EventArgs e)
-        {
-            this.CheckClipboard();
-        }
-
-        /// <summary>
         /// 检测粘贴板
         /// 2024-3-1 16:56:30 只适配nuget tab
         /// </summary>
-        private void CheckClipboard()
+        private bool CheckClipboard()
         {
+            bool isClickOk = true;
             int selIndex = this.uiTcMain.SelectedIndex;
             if (Clipboard.ContainsText())
             {
-                //打开nuget tab页
-                if (selIndex == 1)
+                string filePath = this.uiTxtFilePath.Text;
+                string clipboardTxt = Clipboard.GetText();
+                if (!string.IsNullOrEmpty(clipboardTxt) && Path.IsPathRooted(clipboardTxt) && !filePath.Equals(clipboardTxt))
                 {
-                    string filePath = this.uiTxtFilePath.Text;
-                    string clipboardTxt = Clipboard.GetText();
-                    if (!string.IsNullOrEmpty(clipboardTxt) && Path.IsPathRooted(clipboardTxt) && !filePath.Equals(clipboardTxt))
+                    bool isOk = UIMessageDialog.ShowAskDialog(this, "检测到你有copy文件路径，是否带入？");
+                    if (isOk)
                     {
-                        bool isOk = UIMessageDialog.ShowAskDialog(this, "检测到你有copy文件路径，是否带入？");
-                        if (isOk) this.uiTxtFilePath.Text = clipboardTxt;
+                        this.uiTxtFilePath.Text = clipboardTxt;
+                        isClickOk = false;
                     }
                 }
             }
+            return isClickOk;
         }
 
         /// <summary>
@@ -541,8 +532,20 @@ namespace yylcha.pub
         /// <param name="e"></param>
         private void uiBtnSelectPath_Click(object sender, EventArgs e)
         {
+            bool isOpenDialog = this.CheckClipboard();
+            if (!isOpenDialog) return;
             string path = string.Empty;
             FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            string defPath = this.uiTxtFilePath.Text;//如果文件路径有地址，则默认打开文件路径中的地址
+            if (!string.IsNullOrEmpty(defPath))
+            {
+                fbd.SelectedPath = defPath;
+            }
+            else
+            {
+                fbd.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);//默认起始路径-桌面
+            }
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 path = fbd.SelectedPath;
@@ -775,6 +778,16 @@ namespace yylcha.pub
         private void tsmiRefreshNugetList_Click(object sender, EventArgs e)
         {
             this.loadFileInfo();
+        }
+
+        /// <summary>
+        /// 当文件路径发生改变，则自动刷新列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uiTxtFilePath_TextChanged(object sender, EventArgs e)
+        {
+            this.loadFileInfo();//刷新nuget列表
         }
         #endregion
 
