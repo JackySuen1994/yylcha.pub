@@ -643,6 +643,7 @@ namespace yylcha.pub
                 }
                 else
                 {
+                    Dictionary<string, DateTime> fileDic = new Dictionary<string, DateTime>();
                     foreach (var file in files)
                     {
                         string fileName = file.Substring(file.LastIndexOf('\\') + 1);
@@ -656,13 +657,17 @@ namespace yylcha.pub
                             {
                                 FileName = fileName,
                                 FilePath = file,
-                                PushResult = "暂未推送"
+                                PushResult = "暂未推送",
+                                CreateTime = File.GetCreationTime(file)
                             });
                         }
                     }
                 }
                 if (pushList.Count > 0)
                 {
+                    PushNugetModel model = pushList.OrderByDescending(d => d.CreateTime)?.FirstOrDefault();
+                    pushList.Clear();
+                    pushList.Add(model);
                     this.uiDgvFileLoad.DataSource = pushList;
                     this.uiDgvFileLoad.Columns["FileName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     this.uiDgvFileLoad.Columns["FileName"].DisplayIndex = 0;

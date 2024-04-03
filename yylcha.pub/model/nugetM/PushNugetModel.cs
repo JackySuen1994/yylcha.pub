@@ -22,5 +22,9 @@ namespace yylcha.pub.model.nugetM
         /// push result
         /// </summary>
         public string PushResult { get; set; }
+        /// <summary>
+        /// 文件的创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
     }
 }
