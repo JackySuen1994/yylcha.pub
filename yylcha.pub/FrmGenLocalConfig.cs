@@ -19,9 +19,16 @@ namespace yylcha.pub
     {
         #region 公共属性
 
+        /// <summary>
+        /// 配置命令集合
+        /// </summary>
         public static List<ExecuteCommandModel> commandList = new List<ExecuteCommandModel>();
 
         #endregion
+
+        /// <summary>
+        /// nuget服务配置窗体
+        /// </summary>
         public FrmGenLocalConfig()
         {
             InitializeComponent();

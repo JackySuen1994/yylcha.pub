@@ -54,6 +54,9 @@ namespace yylcha.pub
 
         #region 主窗体事件
 
+        /// <summary>
+        /// 主窗体
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -491,7 +494,7 @@ namespace yylcha.pub
         /// <param name="apiKey"></param>
         /// <param name="serverPath"></param>
         /// <param name="pItem"></param>
-        private async void ExecuteCommand(string commandStr, string apiKey, string serverPath, PushNugetModel pItem)
+        private void ExecuteCommand(string commandStr, string apiKey, string serverPath, PushNugetModel pItem)
         {
             string command = string.Format(commandStr, pItem.FilePath, apiKey, serverPath);
             using (Process process = new Process { StartInfo = psi })
@@ -794,6 +797,13 @@ namespace yylcha.pub
         {
             this.loadFileInfo();//刷新nuget列表
         }
+  
+        private void uiBtnShowPkgList_Click(object sender, EventArgs e)
+        {
+            FrmNugetList frmNuget = new FrmNugetList();
+            frmNuget.ShowForm(selectStyle);
+        }
+
         #endregion
 
     }
