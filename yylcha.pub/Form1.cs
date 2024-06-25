@@ -1,4 +1,5 @@
 ﻿using ServiceStack;
+using ServiceStack.Commands;
 using ServiceStack.Redis;
 using Sunny.UI;
 using System.Collections.Generic;
@@ -70,6 +71,8 @@ namespace yylcha.pub
                 UIMessageBox.ShowError("只能运行一个程序！");
                 Environment.Exit(0);//退出程序
             }
+
+            this.MaximizeBox = false;
         }
 
         /// <summary>
@@ -743,17 +746,17 @@ namespace yylcha.pub
                 {
                     if (string.IsNullOrEmpty(config.ServicePath)) continue;
 
-                    HttpClient client = new HttpClient();
-                    string response = await client.GetStringAsync(Path.Combine(config.ServicePath, "nuget/Packages"));
-                    if (!string.IsNullOrEmpty(response) && !configDic.ContainsKey(config.ServicePath))
-                    {
-                        XmlSerializer serializer = new XmlSerializer(typeof(Feed));
-                        using (StringReader sr = new StringReader(response))
-                        {
-                            Feed feed = (Feed)serializer.Deserialize(sr);
-                            configDic.Add(config.ServicePath, feed);
-                        }
-                    }
+                    //HttpClient client = new HttpClient();
+                    //string response = await client.GetStringAsync(Path.Combine(config.ServicePath, "nuget/Packages"));
+                    //if (!string.IsNullOrEmpty(response) && !configDic.ContainsKey(config.ServicePath))
+                    //{
+                    //    XmlSerializer serializer = new XmlSerializer(typeof(Feed));
+                    //    using (StringReader sr = new StringReader(response))
+                    //    {
+                    //        Feed feed = (Feed)serializer.Deserialize(sr);
+                    //        configDic.Add(config.ServicePath, feed);
+                    //    }
+                    //}
                 }
             }
         }
@@ -800,7 +803,14 @@ namespace yylcha.pub
   
         private void uiBtnShowPkgList_Click(object sender, EventArgs e)
         {
-            FrmNugetList frmNuget = new FrmNugetList();
+            string commandStr = this.uiCmbCommand.Text;
+            string servicePath = commandList.Where(d => d.Command.Equals(commandStr))?.SingleOrDefault()?.ServicePath;
+            if (string.IsNullOrEmpty(servicePath))
+            {
+                UIMessageBox.ShowWarning("未读取到正确的服务器地址!请查看配置");
+                return;
+            }
+            FrmNugetList frmNuget = new FrmNugetList(servicePath);
             frmNuget.ShowForm(selectStyle);
         }
 
