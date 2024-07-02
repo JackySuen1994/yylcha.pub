@@ -1,6 +1,7 @@
 ﻿using ServiceStack;
 using ServiceStack.Commands;
 using ServiceStack.Redis;
+using ServiceStack.Text;
 using Sunny.UI;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -68,7 +69,7 @@ namespace yylcha.pub
             Mutex mutex = new Mutex(true, this.Name, out isOkOpen);
             if (!isOkOpen)
             {
-                UIMessageBox.ShowError("只能运行一个程序！");
+                UIMessageBox.ShowError("只能运行一个程序!");
                 Environment.Exit(0);//退出程序
             }
 
@@ -361,7 +362,7 @@ namespace yylcha.pub
             string sourcePath = this.uiTxtSourcePath.Text;
             if (string.IsNullOrEmpty(sourcePath))
             {
-                UIMessageBox.ShowWarning("请输入需要解析的文件路径！");
+                UIMessageBox.ShowWarning("请输入需要解析的文件路径!");
                 return;
             }
 
@@ -382,7 +383,7 @@ namespace yylcha.pub
 
             if (deZipList.Count == 0)
             {
-                UIMessageBox.ShowWarning("文件夹中没有待解析的文件！");
+                UIMessageBox.ShowWarning("文件夹中没有待解析的文件!");
             }
 
             this.uiDgvFileInfo.DataSource = deZipList;
@@ -413,12 +414,12 @@ namespace yylcha.pub
             string targetPath = this.uiTxtTargetPath.Text;
             if (string.IsNullOrEmpty(targetPath))
             {
-                UIMessageBox.ShowWarning("请输入压缩路径！");
+                UIMessageBox.ShowWarning("请输入压缩路径!");
                 return;
             }
             if (deZipList.FirstOrDefault().IsDeResult.Equals("解析成功"))
             {
-                UIMessageBox.ShowWarning("已经解析过，不可重复解析！");
+                UIMessageBox.ShowWarning("已经解析过，不可重复解析!");
                 return;
             }
             //0 备份 1 删除 2 保留
@@ -576,7 +577,7 @@ namespace yylcha.pub
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uiBtnSubmit_Click(object sender, EventArgs e)
+        private void uiSBtnSubmit_Click(object sender, EventArgs e)
         {
             this.submitNuget();
         }
@@ -586,53 +587,78 @@ namespace yylcha.pub
         /// </summary>
         private void submitNuget()
         {
-
-            var commandStr = this.uiCmbCommand.SelectedItem.ToString() ?? "";
-            var filePath = this.uiTxtFilePath.Text;
-            var serverPath = string.Empty;
-            var apiKey = string.Empty;
-            //如果redis/本地的xml文件中有配置，则读取配置，原本需要录入的控件隐藏
-            //如果配置文件中录入的是空，则对应的控件会显示
-            if (commandList.Count > 0)
+            this.uiWbNugetWating.Visible = true;
+            this.uiWbNugetWating.Text = "上传中.....请稍后";
+            this.uiWbNugetWating.BringToFront();
+            try
             {
-                ExecuteCommandModel commandModel = commandList.Where(d => d.Command.Equals(commandStr))?.SingleOrDefault();
-                if (commandModel == null)
+                var commandStr = this.uiCmbCommand.SelectedItem.ToString() ?? "";
+                var filePath = this.uiTxtFilePath.Text;
+                var serverPath = string.Empty;
+                var apiKey = string.Empty;
+                //如果redis/本地的xml文件中有配置，则读取配置，原本需要录入的控件隐藏
+                //如果配置文件中录入的是空，则对应的控件会显示
+                if (commandList.Count > 0)
                 {
-                    UIMessageBox.ShowWarning("选中项在基础数据源中不存在，请验证是否有正确录入配置(xml/redis)");
-                    return;
+                    ExecuteCommandModel commandModel = commandList.Where(d => d.Command.Equals(commandStr))?.SingleOrDefault();
+                    if (commandModel == null)
+                    {
+                        UIMessageBox.ShowWarning("选中项在基础数据源中不存在，请验证是否有正确录入配置(xml/redis)");
+                        return;
+                    }
+                    else
+                    {
+                        serverPath = commandModel.ServicePath;
+                        apiKey = commandModel.Apikey;
+                    }
                 }
                 else
                 {
-                    serverPath = commandModel.ServicePath;
-                    apiKey = commandModel.Apikey;
+                    serverPath = this.uiTxtServerPath.Text;
+                    apiKey = this.uiTxtApiKey.Text;
                 }
-            }
-            else
-            {
-                serverPath = this.uiTxtServerPath.Text;
-                apiKey = this.uiTxtApiKey.Text;
-            }
-            if (string.IsNullOrEmpty(commandStr) || string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(serverPath) || string.IsNullOrEmpty(apiKey))
-            {
-                this.Page2ControlIsShow(true);
-                UIMessageBox.ShowWarning("请输入必填项！");
-                return;
-            }
-
-            this.loadFileInfo();
-            if (this.pushList.Count() > 0)
-            {
-                bool result = UIMessageDialog.ShowAskDialog(this, "是否上传？");
-                if (result)
+                StringBuilder sb = new StringBuilder();
+                if (string.IsNullOrEmpty(commandStr))
                 {
-                    foreach (var pItem in pushList)
+                    sb.Append("命令 ");
+                }
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    sb.Append("文件路径 ");
+                }
+                if (string.IsNullOrEmpty(serverPath) || string.IsNullOrEmpty(apiKey))
+                {
+                    this.Page2ControlIsShow(true);
+                    sb.Append("服务器路径 api-key ");
+                }
+                if (sb.Length > 0)
+                {
+                    UIMessageBox.ShowWarning($"{sb.ToString()}为必填项,请核验后再上传");
+                    return;
+                }
+
+                this.loadFileInfo();
+                if (this.pushList.Count() > 0)
+                {
+                    bool result = UIMessageDialog.ShowAskDialog(this, "是否上传？");
+                    if (result)
                     {
-                        Task.Run(() =>
+                        foreach (var pItem in pushList)
                         {
-                            ExecuteCommand(commandStr, apiKey, serverPath, pItem);
-                        });
+                            Task.Run(() =>
+                            {
+                                ExecuteCommand(commandStr, apiKey, serverPath, pItem);
+                            });
+                        }
                     }
                 }
+            }
+            catch
+            {
+            }
+            finally
+            {
+                this.uiWbNugetWating.Visible = false;
             }
         }
 
@@ -645,65 +671,82 @@ namespace yylcha.pub
             var filePath = this.uiTxtFilePath.Text;
             if (string.IsNullOrEmpty(filePath))
             {
-                UIMessageBox.ShowWarning("请填写文件路径！");
+                UIMessageBox.ShowWarning("请填写文件路径!");
                 return;
             }
 
             if (Directory.Exists(filePath))
             {
-                pushList.Clear();
-                this.uiDgvFileLoad.DataSource = null;
-                string[] files = Directory.GetFiles(filePath, "*", SearchOption.AllDirectories);
+                this.uiWbNugetWating.Visible = true;
+                this.uiWbNugetWating.Text = "加载中.....请稍后";
+                this.uiWbNugetWating.BringToFront();
+                try
+                {
+                    pushList.Clear();
+                    this.uiDgvFileLoad.DataSource = null;
+                    string[] files = Directory.GetFiles(filePath, "*", SearchOption.AllDirectories);
 
-                if (files.Length == 0)
-                {
-                    UIMessageBox.ShowWarning("文件目录下没有文件！");
-                }
-                else
-                {
-                    Dictionary<string, DateTime> fileDic = new Dictionary<string, DateTime>();
-                    foreach (var file in files)
+                    if (files.Length == 0)
                     {
-                        string fileName = file.Substring(file.LastIndexOf('\\') + 1);
-
-                        string suffix = fileName.Substring(fileName.LastIndexOf('.') + 1);
-                        if (string.IsNullOrEmpty(suffix))
-                            continue;
-                        if (suffix.Equals("nupkg"))
+                        UIMessageBox.ShowWarning("文件目录下没有文件!");
+                    }
+                    else
+                    {
+                        Dictionary<string, DateTime> fileDic = new Dictionary<string, DateTime>();
+                        foreach (var file in files)
                         {
-                            pushList.Add(new PushNugetModel()
+                            string fileName = file.Substring(file.LastIndexOf('\\') + 1);
+
+                            string suffix = fileName.Substring(fileName.LastIndexOf('.') + 1);
+                            if (string.IsNullOrEmpty(suffix))
+                                continue;
+                            if (suffix.Equals("nupkg"))
                             {
-                                FileName = fileName,
-                                FilePath = file,
-                                PushResult = "暂未推送",
-                                CreateTime = File.GetCreationTime(file)
-                            });
+                                pushList.Add(new PushNugetModel()
+                                {
+                                    FileName = fileName,
+                                    FilePath = file,
+                                    PushResult = "暂未推送",
+                                    CreateTime = File.GetCreationTime(file)
+                                });
+                            }
                         }
                     }
-                }
-                if (pushList.Count > 0)
-                {
-                    PushNugetModel model = pushList.OrderByDescending(d => d.CreateTime)?.FirstOrDefault();
-                    pushList.Clear();
-                    pushList.Add(model);
-                    this.uiDgvFileLoad.DataSource = pushList;
-                    this.uiDgvFileLoad.Columns["FileName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                    this.uiDgvFileLoad.Columns["FileName"].DisplayIndex = 0;
+                    if (pushList.Count > 0)
+                    {
+                        PushNugetModel model = pushList.OrderByDescending(d => d.CreateTime)?.FirstOrDefault();
+                        pushList.Clear();
+                        pushList.Add(model);
+                        this.uiDgvFileLoad.DataSource = pushList;
+                        this.uiDgvFileLoad.Columns["FileName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        this.uiDgvFileLoad.Columns["FileName"].DisplayIndex = 0;
 
-                    this.uiDgvFileLoad.Columns["PushResult"].Width = 100;
-                    this.uiDgvFileLoad.Columns["PushResult"].DisplayIndex = 1;
+                        this.uiDgvFileLoad.Columns["PushResult"].Width = 100;
+                        this.uiDgvFileLoad.Columns["PushResult"].DisplayIndex = 1;
 
-                    this.uiDgvFileLoad.Columns["FilePath"].Width = 100;
-                    this.uiDgvFileLoad.Columns["FilePath"].DisplayIndex = 2;
+                        this.uiDgvFileLoad.Columns["FilePath"].Width = 100;
+                        this.uiDgvFileLoad.Columns["FilePath"].DisplayIndex = 2;
+                    }
+                    else
+                    {
+                        UIMessageBox.ShowError("未找到需要上传的nuget包!");
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    UIMessageBox.ShowError("未找到需要上传的nuget包！");
+                    if (ex.Message.Equals("Access to the path 'C:\\Documents and Settings' is denied."))
+                    {
+                        UIMessageBox.ShowError("权限不足,请降低盘符层级!");
+                    }
+                }
+                finally
+                {
+                    this.uiWbNugetWating.Visible = false;
                 }
             }
             else
             {
-                UIMessageBox.ShowError("文件路径不存在！");
+                UIMessageBox.ShowError("文件路径不存在!");
             }
         }
 
