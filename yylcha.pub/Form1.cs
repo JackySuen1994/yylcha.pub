@@ -73,6 +73,8 @@ namespace yylcha.pub
             }
 
             this.MaximizeBox = false;
+
+            this.wvBlog.Source = new Uri("https://www.yyliucha.com");
         }
 
         /// <summary>
@@ -334,6 +336,16 @@ namespace yylcha.pub
             bool result = UIMessageDialog.ShowAskDialog(this, "确定要退出yyliucha吗？");
             if (result) Environment.Exit(0);
             else e.Cancel = true;
+        }
+
+        /// <summary>
+        /// 页面关闭后,释放浏览器资源
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.wvBlog.Dispose();
         }
         #endregion
 
@@ -800,7 +812,7 @@ namespace yylcha.pub
         {
             this.loadFileInfo();//刷新nuget列表
         }
-  
+
         private void uiBtnShowPkgList_Click(object sender, EventArgs e)
         {
             string commandStr = this.uiCmbCommand.Text;

@@ -76,6 +76,8 @@
             tsmiRemoveSelected = new ToolStripMenuItem();
             tsmiClearNugetList = new ToolStripMenuItem();
             tsmiRefreshNugetList = new ToolStripMenuItem();
+            uiTpWeb = new TabPage();
+            wvBlog = new Microsoft.Web.WebView2.WinForms.WebView2();
             uiTpHelp = new TabPage();
             uiRTxtHelp = new Sunny.UI.UIRichTextBox();
             uiTpLog = new TabPage();
@@ -95,6 +97,8 @@
             uiSplitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).BeginInit();
             uiCmsNugetGrdMenu.SuspendLayout();
+            uiTpWeb.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)wvBlog).BeginInit();
             uiTpHelp.SuspendLayout();
             uiTpLog.SuspendLayout();
             ssFootStatus.SuspendLayout();
@@ -106,6 +110,7 @@
             uiTcMain.ContextMenuStrip = uiCmsMenu;
             uiTcMain.Controls.Add(uiTpDeZip);
             uiTcMain.Controls.Add(uiTpPushNugetPkg);
+            uiTcMain.Controls.Add(uiTpWeb);
             uiTcMain.Controls.Add(uiTpHelp);
             uiTcMain.Controls.Add(uiTpLog);
             uiTcMain.Dock = DockStyle.Fill;
@@ -624,6 +629,28 @@
             tsmiRefreshNugetList.Text = "刷新列表";
             tsmiRefreshNugetList.Click += tsmiRefreshNugetList_Click;
             // 
+            // uiTpWeb
+            // 
+            uiTpWeb.Controls.Add(wvBlog);
+            uiTpWeb.Location = new Point(201, 0);
+            uiTpWeb.Name = "uiTpWeb";
+            uiTpWeb.Size = new Size(819, 562);
+            uiTpWeb.TabIndex = 4;
+            uiTpWeb.Text = "博客";
+            uiTpWeb.UseVisualStyleBackColor = true;
+            // 
+            // wvBlog
+            // 
+            wvBlog.AllowExternalDrop = true;
+            wvBlog.CreationProperties = null;
+            wvBlog.DefaultBackgroundColor = Color.White;
+            wvBlog.Dock = DockStyle.Fill;
+            wvBlog.Location = new Point(0, 0);
+            wvBlog.Name = "wvBlog";
+            wvBlog.Size = new Size(819, 562);
+            wvBlog.TabIndex = 0;
+            wvBlog.ZoomFactor = 1D;
+            // 
             // uiTpHelp
             // 
             uiTpHelp.Controls.Add(uiRTxtHelp);
@@ -717,6 +744,7 @@
             Text = "源远流长:yyliucha.com v6.25";
             ZoomScaleRect = new Rectangle(15, 15, 672, 382);
             FormClosing += Form1_FormClosing;
+            FormClosed += Form1_FormClosed;
             Load += Form1_Load;
             KeyDown += Form1_KeyDown;
             uiTcMain.ResumeLayout(false);
@@ -730,6 +758,8 @@
             uiSplitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).EndInit();
             uiCmsNugetGrdMenu.ResumeLayout(false);
+            uiTpWeb.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)wvBlog).EndInit();
             uiTpHelp.ResumeLayout(false);
             uiTpLog.ResumeLayout(false);
             ssFootStatus.ResumeLayout(false);
@@ -788,5 +818,7 @@
         private Sunny.UI.UIRichTextBox uiRichTextBox1;
         private Sunny.UI.UIButton uiBtnShowPkgList;
         private Sunny.UI.UISplitContainer uiSplitContainer1;
+        private TabPage uiTpWeb;
+        private Microsoft.Web.WebView2.WinForms.WebView2 wvBlog;
     }
 }
