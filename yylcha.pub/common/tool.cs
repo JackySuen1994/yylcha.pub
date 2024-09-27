@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -29,7 +31,7 @@ namespace yylcha.pub.common
         /// <returns></returns>
         public static List<ExecuteCommandModel> GetNugetModel()
         {
-           if (File.Exists(NugetConfig))
+            if (File.Exists(NugetConfig))
             {
                 try
                 {
@@ -62,7 +64,7 @@ namespace yylcha.pub.common
         /// 重置配置文件，默认为空节点
         /// </summary>
         /// <returns></returns>
-        public static List<ExecuteCommandModel> ResetConfig(List<ExecuteCommandModel> list =null)
+        public static List<ExecuteCommandModel> ResetConfig(List<ExecuteCommandModel> list = null)
         {
             Root root = new Root();
             string fileContent = string.Empty;
@@ -94,6 +96,23 @@ namespace yylcha.pub.common
                 File.Delete(NugetConfig);
 
             return ResetConfig(list);
+        }
+
+        /// <summary>
+        /// 通过socket获取IP
+        /// </summary>
+        /// <returns></returns>
+        public static string SocketGetIp()
+        {
+            string localIP = string.Empty;
+            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
+            {
+                socket.Connect("8.8.8.8", 65530);
+                IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+                localIP = endPoint.Address.ToString();
+            }
+            return localIP;
+
         }
     }
 }

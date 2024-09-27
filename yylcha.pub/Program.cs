@@ -10,6 +10,7 @@ namespace yylcha.pub
         [STAThread]
         static void Main()
         {
+            //string redisConn = "redis://用户名:密码@地址:端口号/数据库";//如果没有用户名,则 用户名地址是空就行
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

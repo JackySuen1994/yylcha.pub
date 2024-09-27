@@ -1,8 +1,11 @@
-﻿using ServiceStack;
+﻿using Newtonsoft.Json;
+using ServiceStack;
 using ServiceStack.Commands;
 using ServiceStack.Redis;
+using ServiceStack.Script;
 using ServiceStack.Text;
 using Sunny.UI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Compression;
@@ -11,6 +14,7 @@ using System.Text;
 using System.Xml.Serialization;
 using yylcha.pub.common;
 using yylcha.pub.model.nugetM;
+using yylcha.pub.model.redis;
 using yylcha.pub.model.zip;
 
 namespace yylcha.pub
@@ -52,6 +56,7 @@ namespace yylcha.pub
         static List<string> themeList = new List<string>();
 
         static UIStyle selectStyle = UIStyle.Blue;
+
         #endregion
 
         #region 主窗体事件
@@ -62,6 +67,8 @@ namespace yylcha.pub
         public Form1()
         {
             InitializeComponent();
+
+            redisTools.Init();
             this.tsslCopyRight.Text = $"Copyright © 2024-{System.DateTime.Now.Year} yyliucha. All rights reserved.";
 
             //校验是否已经打开一个程序
@@ -111,7 +118,6 @@ namespace yylcha.pub
 
             commandList = tool.GetNugetModel();
 
-            redisTools.Init();
             isRedis = redisTools.RedisConnectionIsOk();
             if (isRedis)
             {
@@ -264,7 +270,7 @@ namespace yylcha.pub
         {
             var tcM = sender as UITabControlMenu;
             int selIndex = tcM.SelectedIndex;
-            if (selIndex == 1)//tabIndex为1表示为nuget页签
+            if (selIndex.Equals(1))//tabIndex为1表示为nuget页签
             {
                 UIProcessBar uiProcessBar = new UIProcessBar
                 {
@@ -299,6 +305,10 @@ namespace yylcha.pub
 
                     Application.DoEvents();//确保UI及时更新
                 });
+            }
+            else if (selIndex.Equals(2))
+            {
+                this.LoadPage3();
             }
         }
 
@@ -732,7 +742,7 @@ namespace yylcha.pub
                         UIMessageBox.ShowError("未找到需要上传的nuget包!");
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     if (ex.Message.Equals("Access to the path 'C:\\Documents and Settings' is denied."))
                     {
@@ -780,7 +790,6 @@ namespace yylcha.pub
         {
             List<ExecuteCommandModel> defConfigList = tool.GetNugetModel();
 
-            redisTools.Init();
             isRedis = redisTools.RedisConnectionIsOk();
             if (isRedis)
             {
@@ -869,6 +878,125 @@ namespace yylcha.pub
             frmNuget.ShowForm(selectStyle);
         }
 
+        #endregion
+
+        #region tabPage3
+        /// <summary>
+        /// 初始化page3
+        /// </summary>
+        public void LoadPage3()
+        {
+            this.uiTxtIpHost.Text = tool.SocketGetIp();
+            this.GetCodeManageData();
+        }
+
+        /// <summary>
+        /// 通过IP获取对应的代码配置
+        /// </summary>
+        public void GetCodeManageData()
+        {
+            this.uiDgvCodeManage.DataSource = null;
+            List<string> allItems = redisTools.GetList(this.uiTxtIpHost.Text);
+            if (allItems != null && allItems.Count > 0)
+            {
+                List<CodeManagementModel> data = new List<CodeManagementModel>();
+                foreach (string item in allItems)
+                {
+                    data.Add(JsonConvert.DeserializeObject<CodeManagementModel>(item));
+                }
+                this.uiDgvCodeManage.DataSource = data;
+            }
+        }
+
+        /// <summary>
+        /// 代码配置保存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uiBtnCodeSave_Click(object sender, EventArgs e)
+        {
+            List<CodeManagementModel> list = (List<CodeManagementModel>)this.uiDgvCodeManage.DataSource;
+            if (list.Where(d=>d.UniqueKey.Length == 0 || d.CodeType.Length == 0 || d.LocalPath.Length == 0).Count() > 0)
+            {
+                UIMessageBox.ShowError("请输入必填项,列表中的字段都是必填");
+                return;
+            }
+            redisTools.RemoveAllList(this.uiTxtIpHost.Text);
+            List<string> valueList = new List<string>();
+            foreach (var item in list)
+            {
+                item.IsSelected = "0";
+                valueList.Add(JsonConvert.SerializeObject(item));
+            }
+            redisTools.AddList(this.uiTxtIpHost.Text, valueList);
+            this.GetCodeManageData();
+
+            UIMessageBox.ShowSuccess("保存成功!");
+        }
+
+
+        /// <summary>
+        /// 刷新Page3列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RefreshGridView_Click(object sender, EventArgs e)
+        {
+            this.GetCodeManageData();
+        }
+
+        /// <summary>
+        /// 获取code
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uiBtnUploadCode_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 新增行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uiBtnAdd_Click(object sender, EventArgs e)
+        {
+            List<CodeManagementModel> list = (List<CodeManagementModel>)this.uiDgvCodeManage.DataSource;
+            list.Add(new CodeManagementModel() { IsSelected = "0", UniqueKey = "", CodeType = "svn", LocalPath = "" });
+            this.uiDgvCodeManage.DataSource = null;
+            this.uiDgvCodeManage.DataSource = list;
+            this.uiDgvCodeManage.Refresh();
+        }
+
+        /// <summary>
+        /// 删除行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uiBtnDel_Click(object sender, EventArgs e)
+        {
+            List<CodeManagementModel> list = (List<CodeManagementModel>)this.uiDgvCodeManage.DataSource;
+            if (list.Count > 0)
+            {
+                bool isSelected = list.Where(d => d.IsSelected.Equals("1")).Count() > 0;
+                if (isSelected)
+                {
+                    List<CodeManagementModel> newList = new List<CodeManagementModel>();
+                    foreach (var item in list.Where(d=>d.IsSelected.Equals("0")))
+                    {
+                        newList.Add(item);
+                    }
+                    this.uiDgvCodeManage.DataSource = null;
+                    this.uiDgvCodeManage.DataSource = newList;
+                    this.uiDgvCodeManage.Refresh();
+                }
+                else
+                {
+                    UIMessageBox.ShowWarning("请选择要删除的数据!");
+                }
+            }
+        }
         #endregion
 
     }

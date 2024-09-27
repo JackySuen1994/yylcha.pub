@@ -39,6 +39,11 @@
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             uiTcMain = new Sunny.UI.UITabControlMenu();
             uiCmsMenu = new Sunny.UI.UIContextMenuStrip();
@@ -75,16 +80,33 @@
             uiCmbCommand = new Sunny.UI.UIComboBox();
             uiLblCommand = new Sunny.UI.UILabel();
             uiBtnSelectPath = new Sunny.UI.UIButton();
+            tabPage1 = new TabPage();
+            uiBtnDel = new Sunny.UI.UIButton();
+            uiBtnAdd = new Sunny.UI.UIButton();
+            uiBtnUploadCode = new Sunny.UI.UIButton();
+            uiBtnCodeSave = new Sunny.UI.UIButton();
+            uiDgvCodeManage = new Sunny.UI.UIDataGridView();
+            uiCmsCode = new Sunny.UI.UIContextMenuStrip();
+            RefreshGridView = new ToolStripMenuItem();
+            codeManagementModelBindingSource1 = new BindingSource(components);
+            uiTxtIpHost = new Sunny.UI.UITextBox();
+            uiLblIpHost = new Sunny.UI.UILabel();
             uiTpWeb = new TabPage();
             wvBlog = new Microsoft.Web.WebView2.WinForms.WebView2();
             uiTpHelp = new TabPage();
             uiRTxtHelp = new Sunny.UI.UIRichTextBox();
             uiTpLog = new TabPage();
             uiRichTextBox1 = new Sunny.UI.UIRichTextBox();
+            codeManagementModelBindingSource = new BindingSource(components);
             ssFootStatus = new StatusStrip();
             tsslCopyRight = new ToolStripStatusLabel();
             tsslNowTime = new ToolStripStatusLabel();
             tiNowTime = new System.Windows.Forms.Timer(components);
+            codeManagementModelBindingSource2 = new BindingSource(components);
+            dataGridViewTextBoxColumn3 = new DataGridViewCheckBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewComboBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             uiTcMain.SuspendLayout();
             uiCmsMenu.SuspendLayout();
             uiTpDeZip.SuspendLayout();
@@ -92,11 +114,17 @@
             uiTpPushNugetPkg.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).BeginInit();
             uiCmsNugetGrdMenu.SuspendLayout();
+            tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)uiDgvCodeManage).BeginInit();
+            uiCmsCode.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource1).BeginInit();
             uiTpWeb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)wvBlog).BeginInit();
             uiTpHelp.SuspendLayout();
             uiTpLog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource).BeginInit();
             ssFootStatus.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource2).BeginInit();
             SuspendLayout();
             // 
             // uiTcMain
@@ -105,6 +133,7 @@
             uiTcMain.ContextMenuStrip = uiCmsMenu;
             uiTcMain.Controls.Add(uiTpDeZip);
             uiTcMain.Controls.Add(uiTpPushNugetPkg);
+            uiTcMain.Controls.Add(tabPage1);
             uiTcMain.Controls.Add(uiTpWeb);
             uiTcMain.Controls.Add(uiTpHelp);
             uiTcMain.Controls.Add(uiTpLog);
@@ -606,6 +635,169 @@
             uiBtnSelectPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSelectPath.Click += uiBtnSelectPath_Click;
             // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(uiBtnDel);
+            tabPage1.Controls.Add(uiBtnAdd);
+            tabPage1.Controls.Add(uiBtnUploadCode);
+            tabPage1.Controls.Add(uiBtnCodeSave);
+            tabPage1.Controls.Add(uiDgvCodeManage);
+            tabPage1.Controls.Add(uiTxtIpHost);
+            tabPage1.Controls.Add(uiLblIpHost);
+            tabPage1.Location = new Point(201, 0);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Size = new Size(819, 562);
+            tabPage1.TabIndex = 5;
+            tabPage1.Text = "Code管理";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // uiBtnDel
+            // 
+            uiBtnDel.FillColor = Color.FromArgb(230, 80, 80);
+            uiBtnDel.FillColor2 = Color.FromArgb(230, 80, 80);
+            uiBtnDel.FillHoverColor = Color.FromArgb(235, 115, 115);
+            uiBtnDel.FillPressColor = Color.FromArgb(184, 64, 64);
+            uiBtnDel.FillSelectedColor = Color.FromArgb(184, 64, 64);
+            uiBtnDel.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnDel.LightColor = Color.FromArgb(253, 243, 243);
+            uiBtnDel.Location = new Point(457, 3);
+            uiBtnDel.MinimumSize = new Size(1, 1);
+            uiBtnDel.Name = "uiBtnDel";
+            uiBtnDel.RectColor = Color.FromArgb(230, 80, 80);
+            uiBtnDel.RectHoverColor = Color.FromArgb(235, 115, 115);
+            uiBtnDel.RectPressColor = Color.FromArgb(184, 64, 64);
+            uiBtnDel.RectSelectedColor = Color.FromArgb(184, 64, 64);
+            uiBtnDel.Size = new Size(100, 35);
+            uiBtnDel.Style = Sunny.UI.UIStyle.Custom;
+            uiBtnDel.TabIndex = 12;
+            uiBtnDel.Text = "删除";
+            uiBtnDel.Click += uiBtnDel_Click;
+            // 
+            // uiBtnAdd
+            // 
+            uiBtnAdd.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnAdd.Location = new Point(351, 3);
+            uiBtnAdd.MinimumSize = new Size(1, 1);
+            uiBtnAdd.Name = "uiBtnAdd";
+            uiBtnAdd.Size = new Size(100, 35);
+            uiBtnAdd.TabIndex = 11;
+            uiBtnAdd.Text = "新增";
+            uiBtnAdd.Click += uiBtnAdd_Click;
+            // 
+            // uiBtnUploadCode
+            // 
+            uiBtnUploadCode.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnUploadCode.Location = new Point(669, 3);
+            uiBtnUploadCode.MinimumSize = new Size(1, 1);
+            uiBtnUploadCode.Name = "uiBtnUploadCode";
+            uiBtnUploadCode.Size = new Size(145, 35);
+            uiBtnUploadCode.TabIndex = 10;
+            uiBtnUploadCode.Text = "获取code";
+            uiBtnUploadCode.Click += uiBtnUploadCode_Click;
+            // 
+            // uiBtnCodeSave
+            // 
+            uiBtnCodeSave.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnCodeSave.Location = new Point(563, 3);
+            uiBtnCodeSave.MinimumSize = new Size(1, 1);
+            uiBtnCodeSave.Name = "uiBtnCodeSave";
+            uiBtnCodeSave.Size = new Size(100, 35);
+            uiBtnCodeSave.TabIndex = 9;
+            uiBtnCodeSave.Text = "保存";
+            uiBtnCodeSave.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            uiBtnCodeSave.Click += uiBtnCodeSave_Click;
+            // 
+            // uiDgvCodeManage
+            // 
+            dataGridViewCellStyle11.BackColor = Color.FromArgb(235, 243, 255);
+            uiDgvCodeManage.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            uiDgvCodeManage.AutoGenerateColumns = false;
+            uiDgvCodeManage.BackgroundColor = Color.White;
+            uiDgvCodeManage.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle12.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.ForeColor = Color.White;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
+            uiDgvCodeManage.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            uiDgvCodeManage.ColumnHeadersHeight = 32;
+            uiDgvCodeManage.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            uiDgvCodeManage.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
+            uiDgvCodeManage.ContextMenuStrip = uiCmsCode;
+            uiDgvCodeManage.DataSource = codeManagementModelBindingSource2;
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = SystemColors.Window;
+            dataGridViewCellStyle13.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle13.ForeColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle13.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.False;
+            uiDgvCodeManage.DefaultCellStyle = dataGridViewCellStyle13;
+            uiDgvCodeManage.EnableHeadersVisualStyles = false;
+            uiDgvCodeManage.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiDgvCodeManage.GridColor = Color.FromArgb(80, 160, 255);
+            uiDgvCodeManage.Location = new Point(6, 41);
+            uiDgvCodeManage.Name = "uiDgvCodeManage";
+            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = Color.FromArgb(235, 243, 255);
+            dataGridViewCellStyle14.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle14.ForeColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle14.SelectionBackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle14.SelectionForeColor = Color.White;
+            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
+            uiDgvCodeManage.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle15.BackColor = Color.White;
+            dataGridViewCellStyle15.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiDgvCodeManage.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            uiDgvCodeManage.RowTemplate.Height = 25;
+            uiDgvCodeManage.SelectedIndex = -1;
+            uiDgvCodeManage.Size = new Size(808, 486);
+            uiDgvCodeManage.StripeOddColor = Color.FromArgb(235, 243, 255);
+            uiDgvCodeManage.TabIndex = 8;
+            // 
+            // uiCmsCode
+            // 
+            uiCmsCode.BackColor = Color.FromArgb(243, 249, 255);
+            uiCmsCode.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiCmsCode.Items.AddRange(new ToolStripItem[] { RefreshGridView });
+            uiCmsCode.Name = "uiCmsCode";
+            uiCmsCode.Size = new Size(139, 26);
+            // 
+            // RefreshGridView
+            // 
+            RefreshGridView.Name = "RefreshGridView";
+            RefreshGridView.Size = new Size(138, 22);
+            RefreshGridView.Text = "刷新列表";
+            RefreshGridView.Click += RefreshGridView_Click;
+            // 
+            // uiTxtIpHost
+            // 
+            uiTxtIpHost.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiTxtIpHost.Location = new Point(62, 8);
+            uiTxtIpHost.Margin = new Padding(4, 5, 4, 5);
+            uiTxtIpHost.MinimumSize = new Size(1, 16);
+            uiTxtIpHost.Name = "uiTxtIpHost";
+            uiTxtIpHost.Padding = new Padding(5);
+            uiTxtIpHost.ReadOnly = true;
+            uiTxtIpHost.ShowText = false;
+            uiTxtIpHost.Size = new Size(282, 29);
+            uiTxtIpHost.TabIndex = 1;
+            uiTxtIpHost.TextAlignment = ContentAlignment.MiddleLeft;
+            uiTxtIpHost.Watermark = "";
+            // 
+            // uiLblIpHost
+            // 
+            uiLblIpHost.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            uiLblIpHost.ForeColor = Color.FromArgb(48, 48, 48);
+            uiLblIpHost.Location = new Point(15, 12);
+            uiLblIpHost.Name = "uiLblIpHost";
+            uiLblIpHost.Size = new Size(40, 23);
+            uiLblIpHost.TabIndex = 0;
+            uiLblIpHost.Text = "IPv4";
+            uiLblIpHost.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // uiTpWeb
             // 
             uiTpWeb.Controls.Add(wvBlog);
@@ -707,6 +899,42 @@
             // 
             tiNowTime.Tick += tiNowTime_Tick;
             // 
+            // codeManagementModelBindingSource2
+            // 
+            codeManagementModelBindingSource2.DataSource = typeof(model.redis.CodeManagementModel);
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.DataPropertyName = "IsSelected";
+            dataGridViewTextBoxColumn3.FalseValue = "0";
+            dataGridViewTextBoxColumn3.HeaderText = "选择";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.Resizable = DataGridViewTriState.True;
+            dataGridViewTextBoxColumn3.SortMode = DataGridViewColumnSortMode.Automatic;
+            dataGridViewTextBoxColumn3.TrueValue = "1";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.DataPropertyName = "UniqueKey";
+            dataGridViewTextBoxColumn4.HeaderText = "唯一标识";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.DataPropertyName = "CodeType";
+            dataGridViewTextBoxColumn5.HeaderText = "代码类别";
+            dataGridViewTextBoxColumn5.Items.AddRange(new object[] { "svn", "git" });
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.Resizable = DataGridViewTriState.True;
+            dataGridViewTextBoxColumn5.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn6.DataPropertyName = "LocalPath";
+            dataGridViewTextBoxColumn6.HeaderText = "代码路径";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
             // Form1
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -718,7 +946,7 @@
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
             Style = Sunny.UI.UIStyle.Custom;
-            Text = "源远流长:yyliucha.com v7.2";
+            Text = "源远流长:yyliucha.com v9.27";
             ZoomScaleRect = new Rectangle(15, 15, 672, 382);
             FormClosing += Form1_FormClosing;
             FormClosed += Form1_FormClosed;
@@ -731,12 +959,18 @@
             uiTpPushNugetPkg.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)uiDgvFileLoad).EndInit();
             uiCmsNugetGrdMenu.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)uiDgvCodeManage).EndInit();
+            uiCmsCode.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource1).EndInit();
             uiTpWeb.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)wvBlog).EndInit();
             uiTpHelp.ResumeLayout(false);
             uiTpLog.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource).EndInit();
             ssFootStatus.ResumeLayout(false);
             ssFootStatus.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -792,5 +1026,26 @@
         private Sunny.UI.UIButton uiBtnGenerateLocalConfig;
         private Sunny.UI.UISymbolButton uiSBtnSubmit;
         private Sunny.UI.UIWaitingBar uiWbNugetWating;
+        private TabPage tabPage1;
+        private Sunny.UI.UITextBox uiTxtIpHost;
+        private Sunny.UI.UILabel uiLblIpHost;
+        private Sunny.UI.UIDataGridView uiDgvCodeManage;
+        private Sunny.UI.UIButton uiBtnCodeSave;
+        private BindingSource codeManagementModelBindingSource;
+        private Sunny.UI.UIContextMenuStrip uiCmsCode;
+        private ToolStripMenuItem RefreshGridView;
+        private Sunny.UI.UIButton uiBtnUploadCode;
+        private BindingSource codeManagementModelBindingSource1;
+        private DataGridViewCheckBoxColumn isSelectedDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn uniqueKeyDataGridViewTextBoxColumn;
+        private DataGridViewComboBoxColumn codeTypeDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn localPathDataGridViewTextBoxColumn;
+        private Sunny.UI.UIButton uiBtnDel;
+        private Sunny.UI.UIButton uiBtnAdd;
+        private DataGridViewCheckBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewComboBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private BindingSource codeManagementModelBindingSource2;
     }
 }
