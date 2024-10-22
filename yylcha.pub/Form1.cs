@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
+using NuGet.Protocol.Plugins;
 using ServiceStack;
 using ServiceStack.Commands;
 using ServiceStack.Redis;
@@ -11,11 +13,13 @@ using System.Diagnostics;
 using System.IO.Compression;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Windows.Input;
 using System.Xml.Serialization;
 using yylcha.pub.common;
 using yylcha.pub.model.nugetM;
 using yylcha.pub.model.redis;
 using yylcha.pub.model.zip;
+using yylcha.pub.views;
 
 namespace yylcha.pub
 {
@@ -34,6 +38,11 @@ namespace yylcha.pub
         public static Dictionary<string, Feed> configDic = new Dictionary<string, Feed>();
 
         /// <summary>
+        /// 代码类别
+        /// </summary>
+        public static List<string> codeTypeList = new List<string>();
+
+        /// <summary>
         /// 判定redis是否有配置
         /// </summary>
         bool isRedis = false;
@@ -46,8 +55,11 @@ namespace yylcha.pub
             FileName = "cmd.exe",
             RedirectStandardInput = true,
             RedirectStandardOutput = true,
+            RedirectStandardError = true,
             CreateNoWindow = true,
-            UseShellExecute = false
+            UseShellExecute = false,
+            StandardOutputEncoding = Encoding.UTF8,
+            StandardErrorEncoding = Encoding.UTF8
         };
 
         /// <summary>
@@ -57,6 +69,8 @@ namespace yylcha.pub
 
         static UIStyle selectStyle = UIStyle.Blue;
 
+        static string svnInstallPath = string.Empty;
+        static string gitInstallPath = string.Empty;
         #endregion
 
         #region 主窗体事件
@@ -526,7 +540,6 @@ namespace yylcha.pub
             using (Process process = new Process { StartInfo = psi })
             {
                 process.StartInfo.Arguments = $"/c {command} /n";
-                process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
                 process.Start();
                 string commandResult = process.StandardOutput.ReadToEnd();
                 if (commandResult.IndexOf("已推送包") > -1)
@@ -881,6 +894,7 @@ namespace yylcha.pub
         #endregion
 
         #region tabPage3
+
         /// <summary>
         /// 初始化page3
         /// </summary>
@@ -916,7 +930,7 @@ namespace yylcha.pub
         private void uiBtnCodeSave_Click(object sender, EventArgs e)
         {
             List<CodeManagementModel> list = (List<CodeManagementModel>)this.uiDgvCodeManage.DataSource;
-            if (list.Where(d=>d.UniqueKey.Length == 0 || d.CodeType.Length == 0 || d.LocalPath.Length == 0).Count() > 0)
+            if (list.Where(d => d.UniqueKey.Length == 0 || d.CodeType.Length == 0 || d.LocalPath.Length == 0).Count() > 0)
             {
                 UIMessageBox.ShowError("请输入必填项,列表中的字段都是必填");
                 return;
@@ -952,8 +966,194 @@ namespace yylcha.pub
         /// <param name="e"></param>
         private void uiBtnUploadCode_Click(object sender, EventArgs e)
         {
+            codeTypeList.Add("svn"); codeTypeList.Add("git");
+            this.GenerateGitOrSvnInstallPath();
+            if (svnInstallPath.Length == 0 || gitInstallPath.Length == 0)
+            {
+                UIMessageBox.ShowWarning("获取本地svn/git安装路径失败!");
+                return;
+            }
+            List<CodeManagementModel> list = (List<CodeManagementModel>)this.uiDgvCodeManage.DataSource;
+            int isSelected = list.Where(d => d.IsSelected.Equals("1")).Count();
+            if (isSelected == 0)
+            {
+                UIMessageBox.ShowWarning("务必保证一条数据选中!");
+                return;
+            }
+            List<RedisPullResult> resultList = new List<RedisPullResult>();
+            foreach (var item in list.Where(d => d.IsSelected.Equals("1")))
+            {
+                RedisPullResult result = new RedisPullResult()
+                {
+                    UniqueKey = item.UniqueKey,
+                };
+                if (!Directory.Exists(item.LocalPath))
+                {
+                    result.PullLog = "无效路径,请保证文件路径是否有效";
+                    resultList.Add(result);
+                    continue;
+                }
+                if (!codeTypeList.Contains(item.CodeType))
+                {
+                    result.PullLog = $"类型仅支持:{string.Join(',', codeTypeList)}";
+                    resultList.Add(result);
+                    continue;
+                }
 
+                if (item.CodeType.Equals("svn"))
+                {
+                    result.PullLog = DoTortoiseSvn(item.LocalPath);
+                }
+                else
+                {
+                    result.PullLog = DoTortoiseGit(item.LocalPath);
+                }
+                resultList.Add(result);
+            }
+            bool isOk = UIMessageDialog.ShowAskDialog(this, "执行结束,是否要查看执行结果?");
+            if (isOk)
+            {
+                FrmPullCodeResult frmResult = new FrmPullCodeResult(resultList);
+                frmResult.ShowDialog();
+            }
+            else
+            {
+
+                UIMessageBox.ShowSuccess("获取成功,具体结果请以本地文件为准!");
+            }
         }
+
+        #region svn/git相关操作
+
+        /// <summary>
+        /// 在注册表中找到git/svn的安装路径
+        /// </summary>
+        private void GenerateGitOrSvnInstallPath()
+        {
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\GitForWindows"))
+            {
+                gitInstallPath = key?.GetValue("InstallPath")?.ToString() + "\\bin\\git.exe";
+            }
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\TortoiseSVN"))
+            {
+                svnInstallPath = key?.GetValue("Directory")?.ToString() + "bin\\svn.exe";
+            }
+        }
+
+        /// <summary>
+        /// 执行svn命令
+        /// </summary>
+        /// <param name="codePath"></param>
+        static string DoTortoiseSvn(string codePath)
+        {
+            StringBuilder sb = new StringBuilder();
+            try
+            {
+                // 先尝试执行 update 命令
+                string updateResult = ExecuteCommandByCode(svnInstallPath, "update", codePath, false);
+                sb.AppendLine(updateResult);
+            }
+            catch (Exception ex)
+            {
+                sb.AppendLine($"svn Update failed: {ex.Message}");
+                if (ex.Message.Contains("E155004")) // 检查是否需要 clean up 的特定错误代码
+                {
+                    try
+                    {
+                        // 执行 cleanup 命令
+                        string cleanupResult = ExecuteCommandByCode(svnInstallPath, "cleanup", codePath, false);
+                        sb.AppendLine(cleanupResult);
+                        // 再次尝试执行 update 命令
+                        string updateResult = ExecuteCommandByCode(svnInstallPath, "update", codePath, false);
+                        sb.AppendLine(updateResult);
+                    }
+                    catch (Exception cleanupEx)
+                    {
+                        sb.AppendLine($"Cleanup failed: {cleanupEx.Message}");
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 执行git明楼
+        /// </summary>
+        /// <param name="codePath"></param>
+        /// <returns></returns>
+        static string DoTortoiseGit(string codePath)
+        {
+            StringBuilder sb = new StringBuilder();
+            try
+            {
+                // 执行 TortoiseGit 的 pull 命令
+                string pullResult = ExecuteCommandByCode(gitInstallPath, "pull", codePath);
+                sb.AppendLine(pullResult);
+            }
+            catch (Exception ex)
+            {
+                sb.AppendLine($"git Pull failed: {ex.Message}");
+                if (ex.Message.Contains("run 'git gc'"))
+                {
+                    try
+                    {
+                        // 执行 git gc 命令
+                        string gcResult = ExecuteCommandByCode(gitInstallPath, "gc", codePath);
+                        sb.AppendLine(gcResult);
+
+                        // 再次尝试执行 pull 命令
+                        string pullResult = ExecuteCommandByCode(gitInstallPath, "pull", codePath);
+                        sb.AppendLine(pullResult);
+                    }
+                    catch (Exception gcEx)
+                    {
+                        sb.AppendLine($"Garbage collection failed: {gcEx.Message}");
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 执行命令
+        /// </summary>
+        /// <param name="softPath"></param>
+        /// <param name="command"></param>
+        /// <param name="codePath"></param>
+        /// <param name="isGit"></param>
+        /// <returns></returns>
+        private static string ExecuteCommandByCode(string softPath, string command, string codePath, bool isGit = true)
+        {
+            string doComand = string.Empty;
+            if (isGit)
+            {
+                doComand = $"/C cd \"{codePath}\" && chcp 65001 > nul && \"{softPath}\" {command} --rebase --strategy-option=theirs";
+            }
+            else
+            {
+                doComand = $"/C \"{softPath}\" {command} --accept theirs-full {codePath}";
+            }
+            using (Process process = new Process { StartInfo = psi })
+            {
+                //process.StartInfo.FileName=softPath;
+                process.StartInfo.Arguments = doComand;
+                process.Start();
+
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    return $"command '{command}' failed! code {process.ExitCode}: {error}";
+                }
+
+                return output;
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 新增行
@@ -983,7 +1183,7 @@ namespace yylcha.pub
                 if (isSelected)
                 {
                     List<CodeManagementModel> newList = new List<CodeManagementModel>();
-                    foreach (var item in list.Where(d=>d.IsSelected.Equals("0")))
+                    foreach (var item in list.Where(d => d.IsSelected.Equals("0")))
                     {
                         newList.Add(item);
                     }

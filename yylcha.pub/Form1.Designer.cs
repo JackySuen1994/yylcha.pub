@@ -86,9 +86,13 @@
             uiBtnUploadCode = new Sunny.UI.UIButton();
             uiBtnCodeSave = new Sunny.UI.UIButton();
             uiDgvCodeManage = new Sunny.UI.UIDataGridView();
+            dataGridViewTextBoxColumn3 = new DataGridViewCheckBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewComboBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             uiCmsCode = new Sunny.UI.UIContextMenuStrip();
             RefreshGridView = new ToolStripMenuItem();
-            codeManagementModelBindingSource1 = new BindingSource(components);
+            codeManagementModelBindingSource2 = new BindingSource(components);
             uiTxtIpHost = new Sunny.UI.UITextBox();
             uiLblIpHost = new Sunny.UI.UILabel();
             uiTpWeb = new TabPage();
@@ -97,16 +101,12 @@
             uiRTxtHelp = new Sunny.UI.UIRichTextBox();
             uiTpLog = new TabPage();
             uiRichTextBox1 = new Sunny.UI.UIRichTextBox();
+            codeManagementModelBindingSource1 = new BindingSource(components);
             codeManagementModelBindingSource = new BindingSource(components);
             ssFootStatus = new StatusStrip();
             tsslCopyRight = new ToolStripStatusLabel();
             tsslNowTime = new ToolStripStatusLabel();
             tiNowTime = new System.Windows.Forms.Timer(components);
-            codeManagementModelBindingSource2 = new BindingSource(components);
-            dataGridViewTextBoxColumn3 = new DataGridViewCheckBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn5 = new DataGridViewComboBoxColumn();
-            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             uiTcMain.SuspendLayout();
             uiCmsMenu.SuspendLayout();
             uiTpDeZip.SuspendLayout();
@@ -117,14 +117,14 @@
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)uiDgvCodeManage).BeginInit();
             uiCmsCode.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource2).BeginInit();
             uiTpWeb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)wvBlog).BeginInit();
             uiTpHelp.SuspendLayout();
             uiTpLog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource).BeginInit();
             ssFootStatus.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource2).BeginInit();
             SuspendLayout();
             // 
             // uiTcMain
@@ -278,6 +278,7 @@
             uiBtnDecompression.Size = new Size(100, 30);
             uiBtnDecompression.TabIndex = 4;
             uiBtnDecompression.Text = "解压";
+            uiBtnDecompression.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnDecompression.Click += uiBtnDecompression_Click;
             // 
             // uiTxtTargetPath
@@ -304,7 +305,6 @@
             uiBtnOk.Size = new Size(100, 30);
             uiBtnOk.TabIndex = 3;
             uiBtnOk.Text = "解析文件";
-            uiBtnOk.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnOk.Click += uiBtnOk_Click;
             // 
             // uiTxtSourcePath
@@ -387,7 +387,6 @@
             uiSBtnSubmit.Size = new Size(76, 29);
             uiSBtnSubmit.TabIndex = 16;
             uiSBtnSubmit.Text = "上传";
-            uiSBtnSubmit.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiSBtnSubmit.Click += uiSBtnSubmit_Click;
             // 
             // uiDgvFileLoad
@@ -518,7 +517,6 @@
             uiBtnShowPkgList.Size = new Size(100, 35);
             uiBtnShowPkgList.TabIndex = 15;
             uiBtnShowPkgList.Text = "查看包列表";
-            uiBtnShowPkgList.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnShowPkgList.Click += uiBtnShowPkgList_Click;
             // 
             // uiLblApiKey
@@ -591,7 +589,6 @@
             uiBtnGenerateLocalConfig.Size = new Size(100, 35);
             uiBtnGenerateLocalConfig.TabIndex = 12;
             uiBtnGenerateLocalConfig.Text = "生成本地配置";
-            uiBtnGenerateLocalConfig.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnGenerateLocalConfig.Click += uiBtnGenerateLocalConfig_Click;
             // 
             // uiCmbCommand
@@ -632,7 +629,6 @@
             uiBtnSelectPath.Size = new Size(123, 29);
             uiBtnSelectPath.TabIndex = 9;
             uiBtnSelectPath.Text = "选择文件路径";
-            uiBtnSelectPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSelectPath.Click += uiBtnSelectPath_Click;
             // 
             // tabPage1
@@ -671,6 +667,7 @@
             uiBtnDel.Style = Sunny.UI.UIStyle.Custom;
             uiBtnDel.TabIndex = 12;
             uiBtnDel.Text = "删除";
+            uiBtnDel.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnDel.Click += uiBtnDel_Click;
             // 
             // uiBtnAdd
@@ -682,6 +679,7 @@
             uiBtnAdd.Size = new Size(100, 35);
             uiBtnAdd.TabIndex = 11;
             uiBtnAdd.Text = "新增";
+            uiBtnAdd.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnAdd.Click += uiBtnAdd_Click;
             // 
             // uiBtnUploadCode
@@ -693,6 +691,7 @@
             uiBtnUploadCode.Size = new Size(145, 35);
             uiBtnUploadCode.TabIndex = 10;
             uiBtnUploadCode.Text = "获取code";
+            uiBtnUploadCode.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnUploadCode.Click += uiBtnUploadCode_Click;
             // 
             // uiBtnCodeSave
@@ -704,7 +703,6 @@
             uiBtnCodeSave.Size = new Size(100, 35);
             uiBtnCodeSave.TabIndex = 9;
             uiBtnCodeSave.Text = "保存";
-            uiBtnCodeSave.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnCodeSave.Click += uiBtnCodeSave_Click;
             // 
             // uiDgvCodeManage
@@ -757,6 +755,38 @@
             uiDgvCodeManage.StripeOddColor = Color.FromArgb(235, 243, 255);
             uiDgvCodeManage.TabIndex = 8;
             // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.DataPropertyName = "IsSelected";
+            dataGridViewTextBoxColumn3.FalseValue = "0";
+            dataGridViewTextBoxColumn3.HeaderText = "选择";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.Resizable = DataGridViewTriState.True;
+            dataGridViewTextBoxColumn3.SortMode = DataGridViewColumnSortMode.Automatic;
+            dataGridViewTextBoxColumn3.TrueValue = "1";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.DataPropertyName = "UniqueKey";
+            dataGridViewTextBoxColumn4.HeaderText = "唯一标识";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.DataPropertyName = "CodeType";
+            dataGridViewTextBoxColumn5.HeaderText = "代码类别";
+            dataGridViewTextBoxColumn5.Items.AddRange(new object[] { "svn", "git" });
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.Resizable = DataGridViewTriState.True;
+            dataGridViewTextBoxColumn5.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn6.DataPropertyName = "LocalPath";
+            dataGridViewTextBoxColumn6.HeaderText = "代码路径";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
             // uiCmsCode
             // 
             uiCmsCode.BackColor = Color.FromArgb(243, 249, 255);
@@ -771,6 +801,10 @@
             RefreshGridView.Size = new Size(138, 22);
             RefreshGridView.Text = "刷新列表";
             RefreshGridView.Click += RefreshGridView_Click;
+            // 
+            // codeManagementModelBindingSource2
+            // 
+            codeManagementModelBindingSource2.DataSource = typeof(model.redis.CodeManagementModel);
             // 
             // uiTxtIpHost
             // 
@@ -873,7 +907,7 @@
             uiRichTextBox1.ShowText = false;
             uiRichTextBox1.Size = new Size(816, 561);
             uiRichTextBox1.TabIndex = 1;
-            uiRichTextBox1.Text = "2024-04-03\n  Nuget=>展示列表只显示并上传最新的nuget文件\n-------------------------------------------------------------------------\n2024-07-02\n  新增:博客 卡片\n  Nuget=>调整页面布局,优化提示信息\n  Zip解压缩=>调整列表布局";
+            uiRichTextBox1.Text = resources.GetString("uiRichTextBox1.Text");
             uiRichTextBox1.TextAlignment = ContentAlignment.MiddleCenter;
             // 
             // ssFootStatus
@@ -899,42 +933,6 @@
             // 
             tiNowTime.Tick += tiNowTime_Tick;
             // 
-            // codeManagementModelBindingSource2
-            // 
-            codeManagementModelBindingSource2.DataSource = typeof(model.redis.CodeManagementModel);
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.DataPropertyName = "IsSelected";
-            dataGridViewTextBoxColumn3.FalseValue = "0";
-            dataGridViewTextBoxColumn3.HeaderText = "选择";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.Resizable = DataGridViewTriState.True;
-            dataGridViewTextBoxColumn3.SortMode = DataGridViewColumnSortMode.Automatic;
-            dataGridViewTextBoxColumn3.TrueValue = "1";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.DataPropertyName = "UniqueKey";
-            dataGridViewTextBoxColumn4.HeaderText = "唯一标识";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            dataGridViewTextBoxColumn5.DataPropertyName = "CodeType";
-            dataGridViewTextBoxColumn5.HeaderText = "代码类别";
-            dataGridViewTextBoxColumn5.Items.AddRange(new object[] { "svn", "git" });
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            dataGridViewTextBoxColumn5.Resizable = DataGridViewTriState.True;
-            dataGridViewTextBoxColumn5.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            dataGridViewTextBoxColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn6.DataPropertyName = "LocalPath";
-            dataGridViewTextBoxColumn6.HeaderText = "代码路径";
-            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            // 
             // Form1
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -946,7 +944,7 @@
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
             Style = Sunny.UI.UIStyle.Custom;
-            Text = "源远流长:yyliucha.com v9.27";
+            Text = "源远流长:yyliucha.com v10.22";
             ZoomScaleRect = new Rectangle(15, 15, 672, 382);
             FormClosing += Form1_FormClosing;
             FormClosed += Form1_FormClosed;
@@ -962,15 +960,15 @@
             tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)uiDgvCodeManage).EndInit();
             uiCmsCode.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource2).EndInit();
             uiTpWeb.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)wvBlog).EndInit();
             uiTpHelp.ResumeLayout(false);
             uiTpLog.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource).EndInit();
             ssFootStatus.ResumeLayout(false);
             ssFootStatus.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)codeManagementModelBindingSource2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

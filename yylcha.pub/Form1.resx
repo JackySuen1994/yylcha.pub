@@ -154,6 +154,22 @@ Nuget：nuget包 上传小工具
   选择文件路径(L-Ctrl + O )：选择要上传的文件路径
   上传(L-Ctrl + S )：把文件路径里的nuget包全部上传</value>
   </data>
+  <data name="uiRichTextBox1.Text" xml:space="preserve">
+    <value>2024-04-03
+  Nuget=&gt;展示列表只显示并上传最新的nuget文件
+-------------------------------------------------------------------------
+2024-07-02
+  新增:博客 卡片
+  Nuget=&gt;调整页面布局,优化提示信息
+  Zip解压缩=&gt;调整列表布局
+-------------------------------------------------------------------------
+2024-10-22
+   新增:Code管理 卡片
+     1 本地源码维护
+     2 svn/git源码获取
+     3 获取后结果查看
+</value>
+  </data>
   <metadata name="codeManagementModelBindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 55</value>
   </metadata>
