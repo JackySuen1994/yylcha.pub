@@ -980,47 +980,51 @@ namespace yylcha.pub
                 UIMessageBox.ShowWarning("务必保证一条数据选中!");
                 return;
             }
-            List<RedisPullResult> resultList = new List<RedisPullResult>();
-            foreach (var item in list.Where(d => d.IsSelected.Equals("1")))
-            {
-                RedisPullResult result = new RedisPullResult()
-                {
-                    UniqueKey = item.UniqueKey,
-                };
-                if (!Directory.Exists(item.LocalPath))
-                {
-                    result.PullLog = "无效路径,请保证文件路径是否有效";
-                    resultList.Add(result);
-                    continue;
-                }
-                if (!codeTypeList.Contains(item.CodeType))
-                {
-                    result.PullLog = $"类型仅支持:{string.Join(',', codeTypeList)}";
-                    resultList.Add(result);
-                    continue;
-                }
 
-                if (item.CodeType.Equals("svn"))
+            Task.Run(() =>
+            {
+                List<RedisPullResult> resultList = new List<RedisPullResult>();
+                foreach (var item in list.Where(d => d.IsSelected.Equals("1")))
                 {
-                    result.PullLog = DoTortoiseSvn(item.LocalPath);
+                    RedisPullResult result = new RedisPullResult()
+                    {
+                        UniqueKey = item.UniqueKey,
+                    };
+                    if (!Directory.Exists(item.LocalPath))
+                    {
+                        result.PullLog = "无效路径,请保证文件路径是否有效";
+                        resultList.Add(result);
+                        continue;
+                    }
+                    if (!codeTypeList.Contains(item.CodeType))
+                    {
+                        result.PullLog = $"类型仅支持:{string.Join(',', codeTypeList)}";
+                        resultList.Add(result);
+                        continue;
+                    }
+
+                    if (item.CodeType.Equals("svn"))
+                    {
+                        result.PullLog = DoTortoiseSvn(item.LocalPath);
+                    }
+                    else
+                    {
+                        result.PullLog = DoTortoiseGit(item.LocalPath);
+                    }
+                    resultList.Add(result);
+                }
+                bool isOk = UIMessageDialog.ShowAskDialog(this, "执行结束,是否要查看执行结果?");
+                if (isOk)
+                {
+                    FrmPullCodeResult frmResult = new FrmPullCodeResult(resultList);
+                    frmResult.ShowDialog();
                 }
                 else
                 {
-                    result.PullLog = DoTortoiseGit(item.LocalPath);
-                }
-                resultList.Add(result);
-            }
-            bool isOk = UIMessageDialog.ShowAskDialog(this, "执行结束,是否要查看执行结果?");
-            if (isOk)
-            {
-                FrmPullCodeResult frmResult = new FrmPullCodeResult(resultList);
-                frmResult.ShowDialog();
-            }
-            else
-            {
 
-                UIMessageBox.ShowSuccess("获取成功,具体结果请以本地文件为准!");
-            }
+                    UIMessageBox.ShowSuccess("获取成功,具体结果请以本地文件为准!");
+                }
+            });
         }
 
         #region svn/git相关操作

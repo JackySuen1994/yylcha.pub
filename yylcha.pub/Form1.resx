@@ -152,7 +152,12 @@ Nuget：nuget包 上传小工具
 
   生成本地配置：页面中的控件，如果嫌麻烦，可以在这里进行配置
   选择文件路径(L-Ctrl + O )：选择要上传的文件路径
-  上传(L-Ctrl + S )：把文件路径里的nuget包全部上传</value>
+  上传(L-Ctrl + S )：把文件路径里的nuget包全部上传
+
+打开报错:!
+ D:\XXX\net6.0-windows.7z: 未知方式于 runtimes\win-arm64\native\WebView2Loader.dll
+ 去https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH
+下载安装最新的WebView2</value>
   </data>
   <data name="uiRichTextBox1.Text" xml:space="preserve">
     <value>2024-04-03

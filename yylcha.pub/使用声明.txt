@@ -4,3 +4,8 @@ yylcha基于.Net6.0框架开发，本软件旨在解决开发过程中重复劳�
 使用过程中有任何bug，可以去github中体issues
 邮件沟通，作者概不回复
 软件免费，修复问题全看作者时间
+
+打开软件时,报错:
+! D:\XXX\net6.0-windows.7z: 未知方式于 runtimes\win-arm64\native\WebView2Loader.dll
+去微软官网下载最新的WebView2
+https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH
