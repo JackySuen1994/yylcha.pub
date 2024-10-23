@@ -1,4 +1,5 @@
 using yylcha.pub.common;
+using yylcha.pub.views;
 
 namespace yylcha.pub
 {

@@ -21,7 +21,7 @@ using yylcha.pub.model.redis;
 using yylcha.pub.model.zip;
 using yylcha.pub.views;
 
-namespace yylcha.pub
+namespace yylcha.pub.views
 {
     public partial class Form1 : UIForm
     {
@@ -526,6 +526,8 @@ namespace yylcha.pub
         #region tabPage2
 
         private List<PushNugetModel> pushList = new List<PushNugetModel>();
+
+
 
         /// <summary>
         /// 异步执行cmd命令

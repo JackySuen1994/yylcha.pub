@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using yylcha.pub.common;
 using yylcha.pub.model.nugetM;
 
-namespace yylcha.pub
+namespace yylcha.pub.views
 {
     public partial class FrmGenLocalConfig : UIForm
     {

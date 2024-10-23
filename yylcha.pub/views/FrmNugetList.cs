@@ -19,7 +19,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using yylcha.pub.model.nugetM;
 
-namespace yylcha.pub
+namespace yylcha.pub.views
 {
     public partial class FrmNugetList : UIForm
     {

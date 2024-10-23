@@ -1,4 +1,4 @@
-﻿namespace yylcha.pub
+﻿namespace yylcha.pub.views
 {
     partial class Form1
     {
