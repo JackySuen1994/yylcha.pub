@@ -188,6 +188,7 @@ namespace yylcha.pub.views
         /// </summary>
         private void ChangeTheme()
         {
+            this.tsmiChangeTheme.DropDownItems.Clear();//清空防止数据源重复
             foreach (var theme in themeList)
             {
                 this.tsmiChangeTheme.DropDownItems.Add(theme);
