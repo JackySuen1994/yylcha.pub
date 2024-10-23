@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yylcha.pub", "yylcha.pub\yylcha.pub.csproj", "{5A3B0327-7E83-4BAC-80A9-8F2A5262BA46}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "yylcha.pubSetup", "yylcha.pubSetup\yylcha.pubSetup.vdproj", "{00E835E0-71F2-43CB-98D9-B3E2286861EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,9 @@ Global
 		{5A3B0327-7E83-4BAC-80A9-8F2A5262BA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A3B0327-7E83-4BAC-80A9-8F2A5262BA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A3B0327-7E83-4BAC-80A9-8F2A5262BA46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00E835E0-71F2-43CB-98D9-B3E2286861EB}.Debug|Any CPU.ActiveCfg = Debug
+		{00E835E0-71F2-43CB-98D9-B3E2286861EB}.Release|Any CPU.ActiveCfg = Release
+		{00E835E0-71F2-43CB-98D9-B3E2286861EB}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
