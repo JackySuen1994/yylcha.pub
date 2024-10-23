@@ -278,6 +278,7 @@
             uiBtnDecompression.Size = new Size(100, 30);
             uiBtnDecompression.TabIndex = 4;
             uiBtnDecompression.Text = "解压";
+            uiBtnDecompression.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnDecompression.Click += uiBtnDecompression_Click;
             // 
             // uiTxtTargetPath
@@ -304,7 +305,6 @@
             uiBtnOk.Size = new Size(100, 30);
             uiBtnOk.TabIndex = 3;
             uiBtnOk.Text = "解析文件";
-            uiBtnOk.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnOk.Click += uiBtnOk_Click;
             // 
             // uiTxtSourcePath
@@ -387,7 +387,6 @@
             uiSBtnSubmit.Size = new Size(76, 29);
             uiSBtnSubmit.TabIndex = 16;
             uiSBtnSubmit.Text = "上传";
-            uiSBtnSubmit.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiSBtnSubmit.Click += uiSBtnSubmit_Click;
             // 
             // uiDgvFileLoad
@@ -518,7 +517,6 @@
             uiBtnShowPkgList.Size = new Size(100, 35);
             uiBtnShowPkgList.TabIndex = 15;
             uiBtnShowPkgList.Text = "查看包列表";
-            uiBtnShowPkgList.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnShowPkgList.Click += uiBtnShowPkgList_Click;
             // 
             // uiLblApiKey
@@ -591,7 +589,6 @@
             uiBtnGenerateLocalConfig.Size = new Size(100, 35);
             uiBtnGenerateLocalConfig.TabIndex = 12;
             uiBtnGenerateLocalConfig.Text = "生成本地配置";
-            uiBtnGenerateLocalConfig.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnGenerateLocalConfig.Click += uiBtnGenerateLocalConfig_Click;
             // 
             // uiCmbCommand
@@ -632,7 +629,6 @@
             uiBtnSelectPath.Size = new Size(123, 29);
             uiBtnSelectPath.TabIndex = 9;
             uiBtnSelectPath.Text = "选择文件路径";
-            uiBtnSelectPath.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnSelectPath.Click += uiBtnSelectPath_Click;
             // 
             // tabPage1
@@ -671,6 +667,7 @@
             uiBtnDel.Style = Sunny.UI.UIStyle.Custom;
             uiBtnDel.TabIndex = 12;
             uiBtnDel.Text = "删除";
+            uiBtnDel.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnDel.Click += uiBtnDel_Click;
             // 
             // uiBtnAdd
@@ -682,6 +679,7 @@
             uiBtnAdd.Size = new Size(100, 35);
             uiBtnAdd.TabIndex = 11;
             uiBtnAdd.Text = "新增";
+            uiBtnAdd.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnAdd.Click += uiBtnAdd_Click;
             // 
             // uiBtnUploadCode
@@ -693,6 +691,7 @@
             uiBtnUploadCode.Size = new Size(145, 35);
             uiBtnUploadCode.TabIndex = 10;
             uiBtnUploadCode.Text = "获取code";
+            uiBtnUploadCode.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnUploadCode.Click += uiBtnUploadCode_Click;
             // 
             // uiBtnCodeSave
@@ -704,7 +703,6 @@
             uiBtnCodeSave.Size = new Size(100, 35);
             uiBtnCodeSave.TabIndex = 9;
             uiBtnCodeSave.Text = "保存";
-            uiBtnCodeSave.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point);
             uiBtnCodeSave.Click += uiBtnCodeSave_Click;
             // 
             // uiDgvCodeManage
@@ -879,7 +877,7 @@
             uiRTxtHelp.Padding = new Padding(2);
             uiRTxtHelp.ScrollBarStyleInherited = false;
             uiRTxtHelp.ShowText = false;
-            uiRTxtHelp.Size = new Size(816, 561);
+            uiRTxtHelp.Size = new Size(816, 535);
             uiRTxtHelp.TabIndex = 0;
             uiRTxtHelp.Text = resources.GetString("uiRTxtHelp.Text");
             uiRTxtHelp.TextAlignment = ContentAlignment.MiddleCenter;
@@ -907,7 +905,7 @@
             uiRichTextBox1.Padding = new Padding(2);
             uiRichTextBox1.ScrollBarStyleInherited = false;
             uiRichTextBox1.ShowText = false;
-            uiRichTextBox1.Size = new Size(816, 561);
+            uiRichTextBox1.Size = new Size(816, 535);
             uiRichTextBox1.TabIndex = 1;
             uiRichTextBox1.Text = resources.GetString("uiRichTextBox1.Text");
             uiRichTextBox1.TextAlignment = ContentAlignment.MiddleCenter;
